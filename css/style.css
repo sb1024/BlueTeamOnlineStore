@@ -130,7 +130,7 @@ footer{
 .background-picture{
     image-rendering: -webkit-optimize-contrast;
     background-repeat: no-repeat;
-    background-size: auto 200%;
+    background-size: auto 250%;
 }
 .borderRight{
     border-right: 2px solid  rgba(190, 190, 190, .1);
