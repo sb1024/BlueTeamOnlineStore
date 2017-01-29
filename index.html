@@ -5,19 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="description" content="">
-    <meta name="author" content="Bryce P.">
+    <meta name="description" content="Centennial High School's Worldfest celebrates Earth's eclectic cultural history.">
+    <meta name="author" content="Bryce Plunkett">
     <link rel="icon" href="">
 
     <title>Worldfest</title>
     
     <!-- Bootstrap core CSS -->
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <!-- Fontawesome and fonts--->
     <script src="https://use.fontawesome.com/b82ca030e6.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
     <!-- Style sheet -->
-    <link href="style.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
     <!--- JQuery---->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
@@ -27,13 +27,63 @@
 	<script src="js/classie.js"></script>
 	<script src="js/photostack.js"></script>
     
+    <!---Other scrolling library to change scrolling velocity -->
+    <script src="js/jquery.stellar.js"></script>
+    
+    <!--Smoothifies scrolling done by anchors.-->
+    <script src="js/jquery.smooth-scroll.min.js"></script>
+
+    
     <script>
+        //Photoslider, parallax, smoothscroll, and other scripts
         jQuery(document).ready(function(){
 			new Photostack( document.getElementById( 'slider'), {
 				callback : function( item ) {
 				}
 			} );
+     
+
+            var height = $(window).height();
+            if(height<=768){//When the navbar becomes a dropdown - a bootstrap feature
+                document.getElementById("navBar").style.zIndex = 3; //Sets the dropdown menu to be above the photo slider. By default, it is below to add a "layering effect"
+            }
+
+            //For slower background scrolling
+            /*
+            if(height>1100){
+                var scrollSpeed = height/(height+100);
+                var elementsWithPictures = document.getElementsByClassName("pPicture");
+                for(var elementCounter=0; elementCounter<elementsWithPictures.length; elementCounter++){
+                    var element = elementsWithPictures[elementCounter];
+                    element.setAttribute("data-stellar-background-ratio", scrollSpeed);
+                }
+            }
+            */
+            $.stellar({
+                horizontalScrolling: false
+            });
+            $('a').smoothScroll({speed: 1500}); //Initiates smoothe scrolling
+            $('.carousel').carousel({ //Autoplays all slideshows
+              interval: 4000
+            });
+            
+            //For fading in body
+            window.onload = function(){
+                $('body').removeClass('hideElement');
+            };
+            //For selecting the section of the navbar that represents the section the user is currently viewing
+            $('body').scrollspy({
+                target: '#navBar',
+                offset: 50
+            });
+         
         });
+        function credits(){
+            alert("Author: Bryce Plunkett \nPlugins: Bootstrap, Tympanus' Polaroid Photo Slider, FontAwesome, Stellar.js (for parallax), and Smoothescroll.js");
+        }
+        function email(){
+            alert('The Worldfest E-mail: ');
+        }
     </script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -41,186 +91,342 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <script src="js/smooth-scroll.js"></script>        <!--Smoothifies scrolling done by anchors. Javascript library called "smooth-scroll"-->
 
   </head>
 
-  <body>
-
-    <div class="container">
-
+  <body id="top" class="background-picture hideElement" style="background-image: url(img/world.jpg); background-size: auto 100%; background-position: 20% 500px!important;" data-stellar-background-ratio=".15">
+    <!---Picture background (Design choice) that scrolls slowly --->
+    <div class="container-fluid" style="padding: 0px;">
       <!-- Static navbar -->
-      <nav class="navbar navbar-default">
+      <nav class="navbar navbar-default navbar-fixed-top" id="navBar">
         <div class="container-fluid">
           <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Worldfest</a>
+            <a class="navbar-brand" href="#home" style="pointer-events: none; color: white;">Worldfest</a> <!--- Easier just to use a link (that boostrap has built in) to get equal heights than create a flexbox. Disabling pointer-events really just makes it a text box -->
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a data-scroll href="#1">Section 1</a></li>
-              <li><a data-scroll href="#2">Section 2</a></li>
-
+              <li><a href="#top">Home</a></li>
+              <li><a href="#1">Section 1</a></li>
+              <li><a href="#2">Section 2</a></li>
+              <li><a href="#3">Section 3</a></li>
+              <li><a href="#4">Section 4</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
       </nav>
     </div>
-    <!---Slider --->
-    <div class="container-fluid" style="padding: 0px">
-			<section id="slider" class="photostack photostack-start">
-				<div>
-					<figure>
-						<a href="#" class="photostack-img"><img src="img/slider.jpg" class="fitImageToSlider" alt="bla"/></a>
-						<figcaption>
-							<h2 class="photostack-title">aiepericula vis at Minim deleniti</h2>
-							<div class="photostack-back">
-								<p> Eos in brute option maiepericula vis at Minim deleniti instructior ei mel, eum et putant argumentum. Ad ludus doming duo.</p>
-							</div>
-						</figcaption>
-					</figure>
-					<figure>
-						<a href="#" class="photostack-img"><img src="img/1.jpg" class="fitImageToSlider" alt="bla"/></a>
-						<figcaption>
-							<h2 class="photostack-title">aiepericula vis at Minim deleniti</h2>
-							<div class="photostack-back">
-								<p> Eos in brute option maiepericula vis at Minim deleniti instructior ei mel, eum et putant argumentum. Ad ludus doming duo.</p>
-							</div>                            
-						</figcaption>
-					</figure>
-					<figure data-shuffle-iteration="2">
-						<a href="#" class="photostack-img"><img src="img/2.jpg" class="fitImageToSlider" alt="bla"/></a>
-						<figcaption>
-							<h2 class="photostack-title">aiepericula vis at Minim deleniti</h2>
-							<div class="photostack-back">
-								<p> Eos in brute option maiepericula vis at Minim deleniti instructior ei mel, eum et putant argumentum. Ad ludus doming duo.</p>
-							</div>
-						</figcaption>
-					</figure>
-					<figure data-dummy>
-						<a href="#" class="photostack-img"><img src="img/3.jpg" class="fitImageToSlider" alt="bla"/></a>
-						<figcaption>
-							<h2 class="photostack-title">aiepericula vis at Minim deleniti</h2>
-							<div class="photostack-back">
-								<p> Eos in brute option maiepericula vis at Minim deleniti instructior ei mel, eum et putant argumentum. Ad ludus doming duo.</p>
-							</div>
-						</figcaption>
-                    </figure>
-                    <figure data-dummy>
-						<a href="#" class="photostack-img"><img src="img/4.jpg" class="fitImageToSlider" alt="bla"/></a>
-						<figcaption>
-							<h2 class="photostack-title">aiepericula vis at Minim deleniti</h2>
-							<div class="photostack-back">
-								<p> Eos in brute option maiepericula vis at Minim deleniti instructior ei mel, eum et putant argumentum. Ad ludus doming duo.</p>
-							</div>
-						</figcaption>
-                    </figure>
-                    <figure>
-						<a href="#" class="photostack-img"><img src="img/5.jpg" class="fitImageToSlider" alt="bla"/></a>
-						<figcaption>
-							<h2 class="photostack-title">aiepericula vis at Minim deleniti</h2>
-							<div class="photostack-back">
-								<p> Eos in brute option maiepericula vis at Minim deleniti instructior ei mel, eum et putant argumentum. Ad ludus doming duo.</p>
-							</div>
-						</figcaption>
-                    </figure>
-                                        <figure>
-						<a href="#" class="photostack-img"><img src="img/6.png" class="fitImageToSlider" alt="bla"/></a>
-						<figcaption>
-							<h2 class="photostack-title">aiepericula vis at Minim deleniti</h2>
-							<div class="photostack-back">
-								<p> Eos in brute option maiepericula vis at Minim deleniti instructior ei mel, eum et putant argumentum. Ad ludus doming duo.</p>
-							</div>
-						</figcaption>
-                    </figure>
-                    <figure>
-						<a href="#" class="photostack-img"><img src="img/7.jpg" class="fitImageToSlider" alt="bla"/></a>
-						<figcaption>
-							<h2 class="photostack-title">aiepericula vis at Minim deleniti</h2>
-							<div class="photostack-back">
-								<p> Eos in brute option maiepericula vis at Minim deleniti instructior ei mel, eum et putant argumentum. Ad ludus doming duo.</p>
-							</div>
-						</figcaption>
-                    </figure>
-                    <figure data-dummy>
-						<a href="#" class="photostack-img"><img src="img/8.jpg" class="fitImageToSlider" alt="bla"/></a>
-						<figcaption>
-							<h2 class="photostack-title">aiepericula vis at Minim deleniti</h2>
-							<div class="photostack-back">
-								<p> Eos in brute option maiepericula vis at Minim deleniti instructior ei mel, eum et putant argumentum. Ad ludus doming duo.</p>
-							</div>
-						</figcaption>
-                    </figure>
-            </section>
-    </div>
-    
-    
-    <div class="container">
-        <div class="section" id="1">
-            <h1>Navbar example</h1>
-            <p> Lorem ipsum dolor sit amet, dolorum liberavisse ne mel. At odio rebum omittam his, no per enim delenit. Et his prodesset assueverit. Verear persecuti pri ad, at cibo verear accumsan est. Mutat error eu sed, vim eu meis facer summo. Ei sed alienum praesent conceptam, decore invenire pericula nam ne, pri te clita principes. Sea te minim accusamus, vix cu utroque oportere, vis in cibo dolor decore.
+    <!--Content --->
+    <div class="content-wrap">
+
+            <!---Slider --->
+        <div class="container-fluid" style="padding: 0px; z-index: 2; position: relative; margin-top: 60px;">
+                <section id="slider" class="photostack photostack-start">
+                    <div>
+                        <figure>
+                            <a href="#" class="photostack-img"><img src="img/world.jpg" class="fitImageToSlider" alt="bla"/></a>
+                            <figcaption>
+                                <h2 class="photostack-title">aiepericula vis at Minim deleniti</h2>
+                                <div class="photostack-back">
+                                    <p> Eos in brute option maiepericula vis at Minim deleniti instructior ei mel, eum et putant argumentum. Ad ludus doming duo.</p>
+                                </div>
+                            </figcaption>
+                        </figure>
+                        <figure>
+                            <a href="#" class="photostack-img"><img src="img/1.jpg" class="fitImageToSlider" alt="bla"/></a>
+                            <figcaption>
+                                <h2 class="photostack-title">aiepericula vis at Minim deleniti</h2>
+                                <div class="photostack-back">
+                                    <p> Eos in brute option maiepericula vis at Minim deleniti instructior ei mel, eum et putant argumentum. Ad ludus doming duo.</p>
+                                </div>                            
+                            </figcaption>
+                        </figure>
+                        <figure data-shuffle-iteration="2">
+                            <a href="#" class="photostack-img"><img src="img/2.jpg" class="fitImageToSlider" alt="bla"/></a>
+                            <figcaption>
+                                <h2 class="photostack-title">aiepericula vis at Minim deleniti</h2>
+                                <div class="photostack-back">
+                                    <p> Eos in brute option maiepericula vis at Minim deleniti instructior ei mel, eum et putant argumentum. Ad ludus doming duo.</p>
+                                </div>
+                            </figcaption>
+                        </figure>
+                        <figure data-dummy>
+                            <a href="#" class="photostack-img"><img src="img/3.jpg" class="fitImageToSlider" alt="bla"/></a>
+                            <figcaption>
+                                <h2 class="photostack-title">aiepericula vis at Minim deleniti</h2>
+                                <div class="photostack-back">
+                                    <p> Eos in brute option maiepericula vis at Minim deleniti instructior ei mel, eum et putant argumentum. Ad ludus doming duo.</p>
+                                </div>
+                            </figcaption>
+                        </figure>
+                        <figure data-dummy>
+                            <a href="#" class="photostack-img"><img src="img/4.jpg" class="fitImageToSlider" alt="bla"/></a>
+                            <figcaption>
+                                <h2 class="photostack-title">aiepericula vis at Minim deleniti</h2>
+                                <div class="photostack-back">
+                                    <p> Eos in brute option maiepericula vis at Minim deleniti instructior ei mel, eum et putant argumentum. Ad ludus doming duo.</p>
+                                </div>
+                            </figcaption>
+                        </figure>
+                        <figure>
+                            <a href="#" class="photostack-img"><img src="img/5.jpg" class="fitImageToSlider" alt="bla"/></a>
+                            <figcaption>
+                                <h2 class="photostack-title">aiepericula vis at Minim deleniti</h2>
+                                <div class="photostack-back">
+                                    <p> Eos in brute option maiepericula vis at Minim deleniti instructior ei mel, eum et putant argumentum. Ad ludus doming duo.</p>
+                                </div>
+                            </figcaption>
+                        </figure>
+                                            <figure>
+                            <a href="#" class="photostack-img"><img src="img/6.png" class="fitImageToSlider" alt="bla"/></a>
+                            <figcaption>
+                                <h2 class="photostack-title">aiepericula vis at Minim deleniti</h2>
+                                <div class="photostack-back">
+                                    <p> Eos in brute option maiepericula vis at Minim deleniti instructior ei mel, eum et putant argumentum. Ad ludus doming duo.</p>
+                                </div>
+                            </figcaption>
+                        </figure>
+                        <figure>
+                            <a href="#" class="photostack-img"><img src="img/7.jpg" class="fitImageToSlider" alt="bla"/></a>
+                            <figcaption>
+                                <h2 class="photostack-title">aiepericula vis at Minim deleniti</h2>
+                                <div class="photostack-back">
+                                    <p> Eos in brute option maiepericula vis at Minim deleniti instructior ei mel, eum et putant argumentum. Ad ludus doming duo.</p>
+                                </div>
+                            </figcaption>
+                        </figure>
+                        <figure data-dummy>
+                            <a href="#" class="photostack-img"><img src="img/8.jpg" class="fitImageToSlider" alt="bla"/></a>
+                            <figcaption>
+                                <h2 class="photostack-title">aiepericula vis at Minim deleniti</h2>
+                                <div class="photostack-back">
+                                    <p> Eos in brute option maiepericula vis at Minim deleniti instructior ei mel, eum et putant argumentum. Ad ludus doming duo.</p>
+                                </div>
+                            </figcaption>
+                        </figure>
+                        <figure data-dummy>
+                            <a href="#" class="photostack-img"><img src="img/world1.jpg" class="fitImageToSlider" alt="bla"/></a>
+                            <figcaption>
+                                <h2 class="photostack-title">aiepericula vis at Minim deleniti</h2>
+                                <div class="photostack-back">
+                                    <p> Eos in brute option maiepericula vis at Minim deleniti instructior ei mel, eum et putant argumentum. Ad ludus doming duo.</p>
+                                </div>
+                            </figcaption>
+                        </figure>
+                </section>
+        </div>
+
+        <div class="container-fluid" style="padding: 0px; height: 100%; width: 100%; margin: 0px;">
+            <div class="section" id="1">
+                <div class="container textSection" style="background-color: rgba(183, 183, 183, .8);">
+                    <h1>Lorem ipsum</h1>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-9">
+                            <p> Lorem ipsum dolor sit amet, dolorum liberavisse ne mel. At odio rebum omittam his, no per enim delenit. Et his prodesset assueverit. Verear persecuti pri ad, at cibo verear accumsan est. Mutat error eu sed, vim eu meis facer summo. Ei sed alienum praesent conceptam, decore invenire pericula nam ne, pri te clita principes. Sea te minim accusamus, vix cu utroque oportere, vis in cibo dolor decore.
+                    
+                                Mei noster suscipit abhorreant cu, magna tollit denique ei duo, eum probo simul interesset te. Quo te assum aliquid corpora. Sit et eros pertinax, sit id euismod epicuri invenire. Porro inani prompta nam ut, te usu nibh interesset. Nec sale salutandi te. Qui et nibh elit deleniti, odio civibus molestie ne est. Mei te tantas deserunt nominati, in sed munere labores.
+                                
+                                Et his impedit oporteat. Suas nobis eleifend per cu, no qui omittam suscipit incorrupte. Audiam labitur sadipscing pri et. Pri suscipit atomorum quaerendum cu. Sed no delicata suscipiantur, reque affert cu vim, vis sale delectus elaboraret et.
+                                
+                                Per eu corpora lucilius, ei ferri consulatu patrioque vis. Homero albucius corrumpit mei id, quodsi tritani tamquam pri ne. Pericula facilisis vituperata quo ut, in exerci insolens est. At eam ludus libris adipisci, errem corpora periculis in vel. Qui ea duis vivendo detracto, at sit viderer oblique. Inermis dissentiet est et, cu dolor audire comprehensam est.
+                                
+                                Pri integre oblique denique id, ad purto eius nominati sea. No vim purto vocent molestie, vis impetus graecis evertitur at, dolorum eleifend sed ei. Te eam quot quaerendum. Ne dolores atomorum moderatius pri, eam cu hinc denique.
+                                
+                                Eos in brute option maiestatis, eam latine regione eu. Id fabulas posidonium mei, has cu agam voluptua, purto sanctus pericula vis at. Sea ea nullam eligendi cotidieque, vix atqui discere ne. Minim deleniti instructior ei mel, eum et putant argumentum. Ad ludus doming duo.
+                                
+                                Eam et quis forensibus, usu at omnes dolorem civibus. Ne mel vidit putent. An graeci adolescens cum, utinam signiferumque eos in, idque splendide cu ius. Nulla interesset at vis.
+                                
+                                Te has dicam legimus nominati, an vim noluisse efficiantur. Ius ut nisl verterem. Quo mazim mediocrem moderatius ea. Mea dico falli copiosae ne. Nobis exerci posidonium ea vel, ius ne ludus pertinacia. Mea simul nobis dicant te, cu vide explicari qui, eum et debet essent voluptatibus.
+                                
+                                Mucius detraxit vim ne, commune sententiae vis ne. Qui zril mucius ad. His ex malis ocurreret deseruisse, ut has reque dicta fabellas, per soluta meliore vituperata no. Quo oratio persequeris te, mel in vitae perfecto, ullum vocibus pro an. Ne ius affert posidonium.
+                                
+                                No vel fabulas recusabo atomorum. Postea ullamcorper mel in, eu aliquam delenit propriae his. Eros sonet dolor cu mei, detraxit lobortis quaerendum nam te, no pri probo iudico. Sonet mandamus at ius. Eum at iisque definiebas accommodare, id maiorum pertinax eos.
+                            </p>                       
+                        </div>
+                        <div class="col-md-6 col-sm-3">
+                            <img src="img/paris.jpg" class="img-responsive img-rounded">
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
             
-                Mei noster suscipit abhorreant cu, magna tollit denique ei duo, eum probo simul interesset te. Quo te assum aliquid corpora. Sit et eros pertinax, sit id euismod epicuri invenire. Porro inani prompta nam ut, te usu nibh interesset. Nec sale salutandi te. Qui et nibh elit deleniti, odio civibus molestie ne est. Mei te tantas deserunt nominati, in sed munere labores.
-                
-                Et his impedit oporteat. Suas nobis eleifend per cu, no qui omittam suscipit incorrupte. Audiam labitur sadipscing pri et. Pri suscipit atomorum quaerendum cu. Sed no delicata suscipiantur, reque affert cu vim, vis sale delectus elaboraret et.
-                
-                Per eu corpora lucilius, ei ferri consulatu patrioque vis. Homero albucius corrumpit mei id, quodsi tritani tamquam pri ne. Pericula facilisis vituperata quo ut, in exerci insolens est. At eam ludus libris adipisci, errem corpora periculis in vel. Qui ea duis vivendo detracto, at sit viderer oblique. Inermis dissentiet est et, cu dolor audire comprehensam est.
-                
-                Pri integre oblique denique id, ad purto eius nominati sea. No vim purto vocent molestie, vis impetus graecis evertitur at, dolorum eleifend sed ei. Te eam quot quaerendum. Ne dolores atomorum moderatius pri, eam cu hinc denique.
-                
-                Eos in brute option maiestatis, eam latine regione eu. Id fabulas posidonium mei, has cu agam voluptua, purto sanctus pericula vis at. Sea ea nullam eligendi cotidieque, vix atqui discere ne. Minim deleniti instructior ei mel, eum et putant argumentum. Ad ludus doming duo.
-                
-                Eam et quis forensibus, usu at omnes dolorem civibus. Ne mel vidit putent. An graeci adolescens cum, utinam signiferumque eos in, idque splendide cu ius. Nulla interesset at vis.
-                
-                Te has dicam legimus nominati, an vim noluisse efficiantur. Ius ut nisl verterem. Quo mazim mediocrem moderatius ea. Mea dico falli copiosae ne. Nobis exerci posidonium ea vel, ius ne ludus pertinacia. Mea simul nobis dicant te, cu vide explicari qui, eum et debet essent voluptatibus.
-                
-                Mucius detraxit vim ne, commune sententiae vis ne. Qui zril mucius ad. His ex malis ocurreret deseruisse, ut has reque dicta fabellas, per soluta meliore vituperata no. Quo oratio persequeris te, mel in vitae perfecto, ullum vocibus pro an. Ne ius affert posidonium.
-                
-                No vel fabulas recusabo atomorum. Postea ullamcorper mel in, eu aliquam delenit propriae his. Eros sonet dolor cu mei, detraxit lobortis quaerendum nam te, no pri probo iudico. Sonet mandamus at ius. Eum at iisque definiebas accommodare, id maiorum pertinax eos..
-            </p>
-
-          
+            <div class="section background-picture pPicture" style="background-image: url(img/hagia.jpg);" data-stellar-background-ratio="0.3" id="2">
+                <div class="container textSection" style="background-color: rgba(130, 130, 130, .8);">
+                    <h1>Lorem ipsum</h1>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <p> Lorem ipsum dolor sit amet, dolorum liberavisse ne mel. At odio rebum omittam his, no per enim delenit. Et his prodesset assueverit. Verear persecuti pri ad, at cibo verear accumsan est. Mutat error eu sed, vim eu meis facer summo. Ei sed alienum praesent conceptam, decore invenire pericula nam ne, pri te clita principes. Sea te minim accusamus, vix cu utroque oportere, vis in cibo dolor decore.
+                    
+                                Mei noster suscipit abhorreant cu, magna tollit denique ei duo, eum probo simul interesset te. Quo te assum aliquid corpora. Sit et eros pertinax, sit id euismod epicuri invenire. Porro inani prompta nam ut, te usu nibh interesset. Nec sale salutandi te. Qui et nibh elit deleniti, odio civibus molestie ne est. Mei te tantas deserunt nominati, in sed munere labores.
+                                
+                                Et his impedit oporteat. Suas nobis eleifend per cu, no qui omittam suscipit incorrupte. Audiam labitur sadipscing pri et. Pri suscipit atomorum quaerendum cu. Sed no delicata suscipiantur, reque affert cu vim, vis sale delectus elaboraret et.
+                                
+                                Per eu corpora lucilius, ei ferri consulatu patrioque vis. Homero albucius corrumpit mei id, quodsi tritani tamquam pri ne. Pericula facilisis vituperata quo ut, in exerci insolens est. At eam ludus libris adipisci, errem corpora periculis in vel. Qui ea duis vivendo detracto, at sit viderer oblique. Inermis dissentiet est et, cu dolor audire comprehensam est.
+                                
+                                Pri integre oblique denique id, ad purto eius nominati sea. No vim purto vocent molestie, vis impetus graecis evertitur at, dolorum eleifend sed ei. Te eam quot quaerendum. Ne dolores atomorum moderatius pri, eam cu hinc denique.
+                                
+                                Eos in brute option maiestatis, eam latine regione eu. Id fabulas posidonium mei, has cu agam voluptua, purto sanctus pericula vis at. Sea ea nullam eligendi cotidieque, vix atqui discere ne. Minim deleniti instructior ei mel, eum et putant argumentum. Ad ludus doming duo.
+                                
+                                Eam et quis forensibus, usu at omnes dolorem civibus. Ne mel vidit putent. An graeci adolescens cum, utinam signiferumque eos in, idque splendide cu ius. Nulla interesset at vis.
+                                
+                                Te has dicam legimus nominati, an vim noluisse efficiantur. Ius ut nisl verterem. Quo mazim mediocrem moderatius ea. Mea dico falli copiosae ne. Nobis exerci posidonium ea vel, ius ne ludus pertinacia. Mea simul nobis dicant te, cu vide explicari qui, eum et debet essent voluptatibus.
+                                
+                                Mucius detraxit vim ne, commune sententiae vis ne. Qui zril mucius ad. His ex malis ocurreret deseruisse, ut has reque dicta fabellas, per soluta meliore vituperata no. Quo oratio persequeris te, mel in vitae perfecto, ullum vocibus pro an. Ne ius affert posidonium.
+                                
+                                No vel fabulas recusabo atomorum. Postea ullamcorper mel in, eu aliquam delenit propriae his. Eros sonet dolor cu mei, detraxit lobortis quaerendum nam te, no pri probo iudico. Sonet mandamus at ius. Eum at iisque definiebas accommodare, id maiorum pertinax eos.
+                            </p>                       
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+            <div class="section center-block" id="3">
+                <div class="container textSection" style="background-color: rgba(183, 183, 183, .8); width:55%; padding-top: 50px;">
     
-        </div> <!-- /container -->
-        <div class="section" id="2">
-            <h1>Navbar example</h1>
-            <p>Lorem ipsum dolor sit amet, dolorum liberavisse ne mel. At odio rebum omittam his, no per enim delenit. Et his prodesset assueverit. Verear persecuti pri ad, at cibo verear accumsan est. Mutat error eu sed, vim eu meis facer summo. Ei sed alienum praesent conceptam, decore invenire pericula nam ne, pri te clita principes. Sea te minim accusamus, vix cu utroque oportere, vis in cibo dolor decore.
-    
-                Mei noster suscipit abhorreant cu, magna tollit denique ei duo, eum probo simul interesset te. Quo te assum aliquid corpora. Sit et eros pertinax, sit id euismod epicuri invenire. Porro inani prompta nam ut, te usu nibh interesset. Nec sale salutandi te. Qui et nibh elit deleniti, odio civibus molestie ne est. Mei te tantas deserunt nominati, in sed munere labores.
-                
-                Et his impedit oporteat. Suas nobis eleifend per cu, no qui omittam suscipit incorrupte. Audiam labitur sadipscing pri et. Pri suscipit atomorum quaerendum cu. Sed no delicata suscipiantur, reque affert cu vim, vis sale delectus elaboraret et.
-                
-                Per eu corpora lucilius, ei ferri consulatu patrioque vis. Homero albucius corrumpit mei id, quodsi tritani tamquam pri ne. Pericula facilisis vituperata quo ut, in exerci insolens est. At eam ludus libris adipisci, errem corpora periculis in vel. Qui ea duis vivendo detracto, at sit viderer oblique. Inermis dissentiet est et, cu dolor audire comprehensam est.
-                
-                Pri integre oblique denique id, ad purto eius nominati sea. No vim purto vocent molestie, vis impetus graecis evertitur at, dolorum eleifend sed ei. Te eam quot quaerendum. Ne dolores atomorum moderatius pri, eam cu hinc denique.
-                
-                Eos in brute option maiestatis, eam latine regione eu. Id fabulas posidonium mei, has cu agam voluptua, purto sanctus pericula vis at. Sea ea nullam eligendi cotidieque, vix atqui discere ne. Minim deleniti instructior ei mel, eum et putant argumentum. Ad ludus doming duo.
-                
-                Eam et quis forensibus, usu at omnes dolorem civibus. Ne mel vidit putent. An graeci adolescens cum, utinam signiferumque eos in, idque splendide cu ius. Nulla interesset at vis.
-                
-                Te has dicam legimus nominati, an vim noluisse efficiantur. Ius ut nisl verterem. Quo mazim mediocrem moderatius ea. Mea dico falli copiosae ne. Nobis exerci posidonium ea vel, ius ne ludus pertinacia. Mea simul nobis dicant te, cu vide explicari qui, eum et debet essent voluptatibus.
-                
-                Mucius detraxit vim ne, commune sententiae vis ne. Qui zril mucius ad. His ex malis ocurreret deseruisse, ut has reque dicta fabellas, per soluta meliore vituperata no. Quo oratio persequeris te, mel in vitae perfecto, ullum vocibus pro an. Ne ius affert posidonium.
-                
-                No vel fabulas recusabo atomorum. Postea ullamcorper mel in, eu aliquam delenit propriae his. Eros sonet dolor cu mei, detraxit lobortis quaerendum nam te, no pri probo iudico. Sonet mandamus at ius. Eum at iisque definiebas accommodare, id maiorum pertinax eos.
-            </p>
-
+                      <div id="imageSlider2" class="carousel carousel-fade slide center-block" style="width:90%; height: 400px;" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                          <li data-target="#myCarousel" data-slide-to="1"></li>
+                          <li data-target="#myCarousel" data-slide-to="2"></li>
+                          <li data-target="#myCarousel" data-slide-to="3"></li>
+                        </ol>
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner" role="listbox">
+                          <div class="item active">
+                            <img src="img/1.jpg" class="img-rounded" style="width:100%; height: 400px; object-fit: cover;" ">
+                            <div class="carousel-caption">
+                                <p class="caption-text">Postea ullamcorper mel in, eu aliquam delenit propriae his.<p>
+                            </div>
+                          </div>
+                    
+                          <div class="item">
+                            <img src="img/2.jpg" class="img-rounded" style="width:100%; height: 400px; object-fit: cover;">
+                            <div class="carousel-caption">
+                                <p class="caption-text">Postea ullamcorper mel in, eu aliquam delenit propriae his.<p>
+                            </div>
+                          </div>
+                        
+                          <div class="item">
+                            <img src="img/3.jpg" class="img-rounded" style="width:100%; height: 400px; object-fit: cover;" >
+                            <div class="carousel-caption">
+                                <p class="caption-text">Postea ullamcorper mel in, eu aliquam delenit propriae his.<p>
+                            </div>                            
+                          </div>
+                    
+                          <div class="item">
+                            <img src="img/4.jpg" class="img-rounded" style="width:100%; height: 400px; object-fit: cover;" >
+                            <div class="carousel-caption">
+                                <p class="caption-text">Postea ullamcorper mel in, eu aliquam delenit propriae his.<p>
+                            </div>                          
+                          </div>
+                        </div>
+                    
+                        <!-- Left and right controls -->
+                        <a class="left carousel-control" data-target="#imageSlider2" role="button" data-slide="prev">
+                          <span class="fa fa-arrow-left fa-2x" style="position: relative; top: 175px; "></span>
+ 
+                        </a>
+                        <a class="right carousel-control" data-target="#imageSlider2" role="button" data-slide="next">
+                          <span class="fa fa-arrow-right fa-2x" style="position: relative; top: 175px; background: transparent;"></span>
+                        </a>
+                      </div>  
+                </div>
+            </div>
+            <div class="section" id="4">
+                <div class="container textSection" style="background-color: rgba(130, 130, 130, .8);">
+                    <h1>Lorem ipsum</h1>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-3">
+                            <img src="img/dubai.jpg" class="img-responsive img-rounded">
+                        </div>
+                        <div class="col-md-6 col-sm-9">
+                            <p> Lorem ipsum dolor sit amet, dolorum liberavisse ne mel. At odio rebum omittam his, no per enim delenit. Et his prodesset assueverit. Verear persecuti pri ad, at cibo verear accumsan est. Mutat error eu sed, vim eu meis facer summo. Ei sed alienum praesent conceptam, decore invenire pericula nam ne, pri te clita principes. Sea te minim accusamus, vix cu utroque oportere, vis in cibo dolor decore.
+                    
+                                Mei noster suscipit abhorreant cu, magna tollit denique ei duo, eum probo simul interesset te. Quo te assum aliquid corpora. Sit et eros pertinax, sit id euismod epicuri invenire. Porro inani prompta nam ut, te usu nibh interesset. Nec sale salutandi te. Qui et nibh elit deleniti, odio civibus molestie ne est. Mei te tantas deserunt nominati, in sed munere labores.
+                                
+                                Et his impedit oporteat. Suas nobis eleifend per cu, no qui omittam suscipit incorrupte. Audiam labitur sadipscing pri et. Pri suscipit atomorum quaerendum cu. Sed no delicata suscipiantur, reque affert cu vim, vis sale delectus elaboraret et.
+                                
+                                Per eu corpora lucilius, ei ferri consulatu patrioque vis. Homero albucius corrumpit mei id, quodsi tritani tamquam pri ne. Pericula facilisis vituperata quo ut, in exerci insolens est. At eam ludus libris adipisci, errem corpora periculis in vel. Qui ea duis vivendo detracto, at sit viderer oblique. Inermis dissentiet est et, cu dolor audire comprehensam est.
+                                
+                                Pri integre oblique denique id, ad purto eius nominati sea. No vim purto vocent molestie, vis impetus graecis evertitur at, dolorum eleifend sed ei. Te eam quot quaerendum. Ne dolores atomorum moderatius pri, eam cu hinc denique.
+                                
+                                Eos in brute option maiestatis, eam latine regione eu. Id fabulas posidonium mei, has cu agam voluptua, purto sanctus pericula vis at. Sea ea nullam eligendi cotidieque, vix atqui discere ne. Minim deleniti instructior ei mel, eum et putant argumentum. Ad ludus doming duo.
+                                
+                                Eam et quis forensibus, usu at omnes dolorem civibus. Ne mel vidit putent. An graeci adolescens cum, utinam signiferumque eos in, idque splendide cu ius. Nulla interesset at vis.
+                                
+                                Te has dicam legimus nominati, an vim noluisse efficiantur. Ius ut nisl verterem. Quo mazim mediocrem moderatius ea. Mea dico falli copiosae ne. Nobis exerci posidonium ea vel, ius ne ludus pertinacia. Mea simul nobis dicant te, cu vide explicari qui, eum et debet essent voluptatibus.
+                                
+                                Mucius detraxit vim ne, commune sententiae vis ne. Qui zril mucius ad. His ex malis ocurreret deseruisse, ut has reque dicta fabellas, per soluta meliore vituperata no. Quo oratio persequeris te, mel in vitae perfecto, ullum vocibus pro an. Ne ius affert posidonium.
+                                
+                                No vel fabulas recusabo atomorum. Postea ullamcorper mel in, eu aliquam delenit propriae his. Eros sonet dolor cu mei, detraxit lobortis quaerendum nam te, no pri probo iudico. Sonet mandamus at ius. Eum at iisque definiebas accommodare, id maiorum pertinax eos.
+                            </p>                       
+                        </div>
+                    </div>
+                   
+                </div>
         </div>
     </div>
-    <script>
-        smoothScroll.init(); //For smoothe scrolling when clicking navbar
-    </script>
+    <footer>
+         <div class="row" id="footer" style="height: auto; display: flex;">
+            <div class="col-sm-4 borderRight" style="flex: 1;">
+                <h4 class="text-right">What is Worldfest?</h4>
+                <p style="margin-left: 70%;" class="text-right">
+                Quo oratio persequeris te, mel in vitae perfecto, ullum vocibus pro an. Ne ius affert posidonium. No vel fabulas recusabo atomorum. Postea ullamcorper mel in, eu aliquam delenit propriae his.
+                </p>
+            </div>
+            <div class="col-sm-4 borderRight" style="flex: 1;">
+                <p>Quo oratio persequeris te, mel in vitae perfecto, ullum vocibus pro an. Ne ius affert posidonium. No vel fabulas recusabo atomorum. Postea ullamcorper mel in, eu aliquam delenit propriae his.</p>
+                
+            </div>
+            <div class="col-sm-4"> 
+                <div id="footer-icons" style="width: 100%; height: 90%;"><!--- Used to center vertically ---->
+                    <div class="row-fluid">
+                        <div class="col-sm-3">
+                            <a>
+                                <span class="fa-stack fa-2x">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="col-sm-3">
+                            <a onClick="email()">
+                                <span class="fa-stack fa-2x">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="col-sm-3">
+                            <a>
+                                <span class="fa-stack fa-2x">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-calendar fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="col-sm-3">
+                            <a onclick="credits();">
+                                <span class="fa-stack fa-2x">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-gears fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-right" style="margin-right: 10px">Website by Bryce Plunkett</p>
+            </div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>>
+         
+        </div>
+    </footer>
+
+    <!-- BootStrap JavaScript -->
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
   </body>
 
 </html>

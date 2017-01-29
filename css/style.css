@@ -31,7 +31,7 @@ footer{
 #navBar{
     margin-top: 0px;
     margin-bottom: 0px;
-    background-color: rgba(94, 94, 94, .6);
+    background-color: rgba(50, 50, 50, 1);
     border: 0px;
     z-index: 1;
     
@@ -135,3 +135,66 @@ footer{
 .borderRight{
     border-right: 2px solid  rgba(190, 190, 190, .1);
 }
+
+
+.navbar-default .navbar-nav>li>a{
+    color: white;
+}
+.navbar-default .navbar-nav>li>a:focus{
+    color: white; /*Sets the color to white (the normal text color) when "focused" but scrollspy (because of smoothescroll) will automatically set it to black (an inverse) when it reaches the section and the link is set to "active".*/
+    outline: none;
+    
+}
+.carousel-fade .carousel-inner .item {
+  opacity: 0;
+  transition-property: opacity;
+  
+}
+
+.carousel-fade .carousel-inner .active {
+  opacity: 1;
+}
+
+.carousel-fade .carousel-inner .active.left,
+.carousel-fade .carousel-inner .active.right {
+  left: 0;
+  opacity: 0;
+  z-index: 1;
+}
+/* For fading transitions on bootstrap carousel. Courtesy of a guy named Simon*/
+.carousel-fade .carousel-inner .next.left,
+.carousel-fade .carousel-inner .prev.right {
+  opacity: 1;
+}
+
+.carousel-fade .carousel-control {
+  z-index: 2;
+}
+@media all and (transform-3d), (-webkit-transform-3d) {
+    .carousel-fade .carousel-inner > .item.next,
+    .carousel-fade .carousel-inner > .item.active.right {
+      opacity: 0;
+      -webkit-transform: translate3d(0, 0, 0);
+              transform: translate3d(0, 0, 0);
+    }
+    .carousel-fade .carousel-inner > .item.prev,
+    .carousel-fade .carousel-inner > .item.active.left {
+      opacity: 0;
+      -webkit-transform: translate3d(0, 0, 0);
+              transform: translate3d(0, 0, 0);
+    }
+    .carousel-fade .carousel-inner > .item.next.left,
+    .carousel-fade .carousel-inner > .item.prev.right,
+    .carousel-fade .carousel-inner > .item.active {
+      opacity: 1;
+      -webkit-transform: translate3d(0, 0, 0);
+              transform: translate3d(0, 0, 0);
+    }
+}
+.caption-text{
+    background-color: rgba(30, 30, 30, .7);
+    border-radius: 10px;
+}
+
+
+
