@@ -15,7 +15,7 @@ public class HomePage extends JPanel {
 		this.window = window;
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		JPanel a = new JPanel();
-		a.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		a.setLayout(new BoxLayout(a, BoxLayout.X_AXIS));
 		logoPanel = new JPanel();
 		logo = new JLabel(getStoreLogo());
 		logoPanel.add(logo);
@@ -36,15 +36,15 @@ public class HomePage extends JPanel {
 		
 	}
 	public ArrayList<Department> getDepartments() {
-		
+		return ;
 	}
 	public String getStoreName() {
-		
+		return ;
 	}
 	public ImageIcon getStoreLogo() {
-		
+		return ;
 	}
 	public String getStoreDescription() {
-		
+		return ;
 	}
 }
