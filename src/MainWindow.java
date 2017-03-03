@@ -13,7 +13,6 @@ public class MainWindow {
 	private JFrame frame; 
 	private JPanel currentContentPane; //Holds the content pane
 	private ShoppingCart currentShoppingcart;
-	private JPanel mainPanel;
 	
 	MainWindow(boolean editMode){		
 		xmlReaderWriter = new XMLReaderWriter();
@@ -55,7 +54,7 @@ public class MainWindow {
 		
 		frame = new JFrame("Store");
 		
-		mainPanel = new JPanel(); //Holds the navBar and the currentContentPane
+		JPanel mainPanel = new JPanel(); //Holds the navBar and the currentContentPane
 		mainPanel.setPreferredSize(new Dimension(1200, 720));
 		mainPanel.add(navBar);
 		mainPanel.add(currentContentPane);
@@ -77,22 +76,6 @@ public class MainWindow {
 		mainPanel.remove(currentContentPane); //Removes the old pane. 
 		mainPanel.add(newContentPane); //Places the new content pane
 		currentContentPane = newContentPane; //Stores the newContentPane in the currentContentPane becausae it is now the the current content pane being displayed
-	}
-	public void setContentArea(Department department){
-		JPanel newContentPane;
-		if(editor){
-			newContentPane = new ProductPageEditor(department);
-		}else{
-			newContentPane = new ProductPage(department);
-		}
-		mainPanel.remove(currentContentPane); //Removes the old pane. 
-		mainPanel.add(newContentPane); //Places the new content pane
-		currentContentPane = newContentPane; //Stores the newContentPane in the currentContentPane becausae it is now the the current content pane being displayed
-	}
-	public void setContentArea(JPanel panel){ //General set content area method
-		mainPanel.remove(currentContentPane);
-		mainPanel.add(panel);
-		currentContentPane=panel;
 	}
 	
 }
