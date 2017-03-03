@@ -12,7 +12,7 @@ public class DepartmentPageEditor extends DepartmentPage implements ActionListen
 		addDepartment.add(new JLabel(PLUS SIGN IMG));
 		addDepartment.add(new JLabel("Add Product"));
 		//addDepartment.addActionListener(this);
-		J a;
+
 	}
 	public void addEditingButtons() {
 		for (int i = 0; i < productButtons.size(); i++) {
