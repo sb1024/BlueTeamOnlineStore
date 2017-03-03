@@ -1,6 +1,10 @@
 
 import org.w3c.dom.*;
 import javax.xml.parsers.*;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.*;
+import javax.xml.transform.stream.*;
+
 import java.io.*;
 
 public class XMLReaderWriter {
@@ -21,13 +25,13 @@ public class XMLReaderWriter {
 
 	         // setting attribute to element
 	         Attr attr = doc.createAttribute("name");
-	         attr.setValue(store.getName());
+	         attr.setValue("Test");
 	         supercar.setAttributeNode(attr);
 
 	         //Department element
 	         Element carname = doc.createElement("Department");
 	         Attr attrType = doc.createAttribute("name");
-	         attrType.setValue();
+	         attrType.setValue("Other Test");
 	         carname.setAttributeNode(attrType);
 	         carname.appendChild(
 	         doc.createTextNode("Ferrari 101"));
@@ -40,7 +44,23 @@ public class XMLReaderWriter {
 	         carname1.appendChild(
 	         doc.createTextNode("Ferrari 202"));
 	         supercar.appendChild(carname1);
+	         
+	         // write the content into xml file
+	         TransformerFactory transformerFactory =
+	         TransformerFactory.newInstance();
+	         Transformer transformer =
+	         transformerFactory.newTransformer();
+	         DOMSource source = new DOMSource(doc);
+	         StreamResult result =
+	         new StreamResult(new File("Z:\\cars.xml"));
+	         transformer.transform(source, result);
+	         // Output to console for testing
+	         StreamResult consoleResult =
+	         new StreamResult(System.out);
+	         transformer.transform(source, consoleResult);
+	         
 		}catch(Exception e){
+			e.printStackTrace();
 		}
 	}
 	
