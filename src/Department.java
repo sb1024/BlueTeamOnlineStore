@@ -12,6 +12,9 @@ public class Department {
 		productList = new ArrayList<Product>();
 		name = inputName;
 	}
+	Department(){
+		productList = new ArrayList<Product>();
+	}
 	
 	// get methods
 	public String getName(){
