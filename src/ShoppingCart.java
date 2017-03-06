@@ -42,4 +42,23 @@ public class ShoppingCart {
 			productOrders.add(new ProductOrder(inputProduct, inputQuantity));
 		}
 	}
+	public void addProductOrder(ProductOrder inputProductOrder){
+		boolean duplicate = false;
+		int duplicateIndex = 0;
+		for(ProductOrder activeProductOrder : productOrders){
+			if(activeProductOrder.getProduct() == inputProductOrder.getProduct()){
+				duplicateIndex = productOrders.indexOf(this);
+				duplicate = true;
+			}
+		}
+		if(duplicate){
+			ProductOrder activeProductOrder = productOrders.get(duplicateIndex);
+			productOrders.remove(duplicateIndex);
+			activeProductOrder.setQuantity(activeProductOrder.getQuantity() + inputProductOrder.getQuantity());
+			productOrders.add(duplicateIndex, activeProductOrder);
+		}
+		else{
+			productOrders.add(inputProductOrder);
+		}
+	}
 }
