@@ -14,17 +14,17 @@ public class HomePage extends JPanel {
 	HomePage(MainWindow window) {
 		this.window = window;
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		JPanel a = new JPanel();
-		a.setLayout(new BoxLayout(a, BoxLayout.X_AXIS));
+		JPanel logoNamePanel = new JPanel();
+		logoNamePanel.setLayout(new BoxLayout(logoNamePanel, BoxLayout.X_AXIS));
 		logoPanel = new JPanel();
 		logo = new JLabel(getStoreLogo());
 		logoPanel.add(logo);
-		a.add(logoPanel);
+		logoNamePanel.add(logoPanel);
 		titlePanel = new JPanel();
 		title = new JLabel(getStoreName());
 		titlePanel.add(title);
-		a.add(titlePanel);
-		this.add(a);
+		logoNamePanel.add(titlePanel);
+		this.add(logoNamePanel);
 		descriptionPanel = new JPanel();
 		description = new JLabel(getStoreDescription());
 		this.add(descriptionPanel);
