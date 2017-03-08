@@ -1,4 +1,3 @@
-
 import org.w3c.dom.*;
 import javax.xml.parsers.*;
 import javax.xml.transform.*;
@@ -6,44 +5,59 @@ import javax.xml.transform.dom.*;
 import javax.xml.transform.stream.*;
 
 import java.io.*;
+import java.util.*;
 
 public class XMLReaderWriter {
 	
-	public void createStore(Store store){
+	public static void createStore(Store oStore){
 		try{
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			Document doc = builder.newDocument();
 			
-			//root element
-			Element rootElement = doc.createElement("Store");
-			doc.appendChild(rootElement);
-
-	         //Stores element
-	         Element supercar = doc.createElement("Stores");
-	         rootElement.appendChild(supercar);
-
-	         // setting attribute to element
-	         Attr attr = doc.createAttribute("name");
-	         attr.setValue("Test");
-	         supercar.setAttributeNode(attr);
-
-	         //Department element
-	         Element carname = doc.createElement("Department");
-	         Attr attrType = doc.createAttribute("name");
-	         attrType.setValue("Other Test");
-	         carname.setAttributeNode(attrType);
-	         carname.appendChild(
-	         doc.createTextNode("Ferrari 101"));
-	         supercar.appendChild(carname);
-
-	         Element carname1 = doc.createElement("carname");
-	         Attr attrType1 = doc.createAttribute("type");
-	         attrType1.setValue("sports");
-	         carname1.setAttributeNode(attrType1);
-	         carname1.appendChild(
-	         doc.createTextNode("Ferrari 202"));
-	         supercar.appendChild(carname1);
+			//store element
+			Element store = doc.createElement("Store");
+			doc.appendChild(store);
+	        Attr storeName = doc.createAttribute("name");
+	        storeName.setValue(oStore.getStoreName());
+	        store.setAttributeNode(storeName);
+	        Attr storeLogo = doc.createAttribute("logo");
+	        storeLogo.setValue(oStore.getStoreLogo().getFilePath());
+	        
+	        //ArrayList <Element> EL = new ArrayList(5);
+	        ArrayList <Department> DH = oStore.getDepartments();
+	        for(int x=0; x < DH.size(); x++){
+	        	Element department = doc.createElement("Department"); 
+		        Attr departmentName = doc.createAttribute("name");
+		        departmentName.setValue(DH.get(0).getName());
+		        department.setAttributeNode(departmentName);
+		        store.appendChild(department);
+		        ArrayList <Product> PL = DH.get(x).getProductList();
+		        
+		        for(int y=0; y < PL.size(); y++){
+		        	Element product = doc.createElement("product");
+		        	Attr productName = doc.createAttribute("name");
+		        	productName.setValue(PL.get(y).getName());
+		        	product.setAttributeNode(productName);
+		        	department.appendChild(product);
+		        	
+		        	Element price = doc.createElement("price");
+		        	doc.createTextNode(Double.toString(PL.get(y).getPrice()));
+		        	product.appendChild(price);
+		        	
+		        	Element desc = doc.createElement("description");
+		        	doc.createTextNode(PL.get(y).getDesc());
+		        	product.appendChild(price);
+		        	
+		        	Element sale = doc.createElement("sale");
+		        	doc.createTextNode(Boolean.toString(PL.get(y).getSale()));
+		        	product.appendChild(price);
+		        	
+		        	Element image = doc.createElement("image");
+		        	doc.createTextNode(PL.get(y).getImage().getFilePath());
+		        	product.appendChild(price);
+		        }
+	        }
 	         
 	         // write the content into xml file
 	         TransformerFactory transformerFactory =
@@ -68,11 +82,11 @@ public class XMLReaderWriter {
 		
 	}
 	
-	public void saveStore(Store store){
+	public void saveStore(){
 		
 	}
 	
-	public void addOrder(Order order){
+	public void addOrder(){
 		
 	}
 }
