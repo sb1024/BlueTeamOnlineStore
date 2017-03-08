@@ -18,6 +18,14 @@ public class Product {
 		department = inputDepartment;
 		image = inputImage;
 	}
+	Product(){
+		price = 0;
+		name = null;
+		desc = null;
+		sale = false;
+		department = null;
+		image = null;
+	}
 	
 	// get methods
 	public double getPrice(){
