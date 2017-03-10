@@ -12,7 +12,8 @@ public class MainWindow {
 	private NavBar navBar;
 	private JFrame frame; 
 	private JPanel currentContentPane; //Holds the content pane
-	private ShoppingCart currentShoppingcart;
+	private ShoppingCart currentShoppingCart;
+	private JPanel mainPanel;
 	
 	MainWindow(boolean editMode){		
 		xmlReaderWriter = new XMLReaderWriter();
@@ -32,12 +33,12 @@ public class MainWindow {
 			ParsedImageIcon departmentLogo = new ParsedImageIcon("departmentLogo.png", 300, 300);
 			genericDepartment.setImage(departmentLogo);
 			Product genericProduct = new Product(10.0, "Phone", "A lovely new phone", false, genericDepartment, null);
-			genericProduct.addProduct(genericProduct);
+			genericDepartment.addProduct(genericProduct);
 			
 			departments.add(genericDepartment);
 			
 			ArrayList<Order> orders = new ArrayList();
-			Order order = new Order()
+			Order order = new Order();
 
 			
 			store = new Store(storeName, storeLogo, storeDescription, departments, orders);
@@ -50,11 +51,11 @@ public class MainWindow {
 		navBar = new NavBar(this);
 		
 		HomePage homePage = new HomePage(this);
-		currentContentPane=homePage;
+		currentContentPane=homePage;  //Stores the homepage as the current content page. The home page will open by default when the store is started
 		
 		frame = new JFrame("Store");
 		
-		JPanel mainPanel = new JPanel(); //Holds the navBar and the currentContentPane
+		mainPanel = new JPanel(); //Holds the navBar and the currentContentPane
 		mainPanel.setPreferredSize(new Dimension(1200, 720));
 		mainPanel.add(navBar);
 		mainPanel.add(currentContentPane);
@@ -69,13 +70,37 @@ public class MainWindow {
 	public void setContentArea(Product product){
 		JPanel newContentPane;
 		if(editor){
-			newContentPane = new ProductPageEditor(product);
+			newContentPane = new ProductPageEditor(this, product);
 		}else{
-			newContentPane = new ProductPage(product);
+			newContentPane = new ProductPage(this, product);
 		}
 		mainPanel.remove(currentContentPane); //Removes the old pane. 
 		mainPanel.add(newContentPane); //Places the new content pane
 		currentContentPane = newContentPane; //Stores the newContentPane in the currentContentPane becausae it is now the the current content pane being displayed
+	}
+	public void setContentArea(Department department){
+		JPanel newContentPane;
+		if(editor){
+			newContentPane = new DepartmentPageEditor(this, department);
+		}else{
+			newContentPane = new DepartmentPage(this, department);
+		}
+		mainPanel.remove(currentContentPane); //Removes the old pane. 
+		mainPanel.add(newContentPane); //Places the new content pane
+		currentContentPane = newContentPane; //Stores the newContentPane in the currentContentPane becausae it is now the the current content pane being displayed
+	}
+	public void setContentArea(JPanel newPage){
+		JPanel newContentPane=newPage;
+		mainPanel.remove(currentContentPane); //Removes the old pane. 
+		mainPanel.add(newContentPane); //Places the new content pane
+		currentContentPane = newContentPane; //Stores the newContentPane in the currentContentPane becausae it is now the the current content pane being displayed
+	}
+	public boolean isEditor(){
+		return editor;
+	}
+	public static void main(String args[]){
+		boolean editor=false;
+		new MainWindow(false);
 	}
 	
 }
