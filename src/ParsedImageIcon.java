@@ -35,6 +35,16 @@ public class ParsedImageIcon extends ImageIcon{
 		}
 		
 	}
+	public void setWidth(int width){
+		Image image = this.getImage();
+		image=image.getScaledInstance(width, this.getIconHeight(), Image.SCALE_SMOOTH);
+		this.setImage(image);
+	}
+	public void setHeight(int height){
+		Image image = this.getImage();
+		image=image.getScaledInstance(this.getIconWidth(), height, Image.SCALE_SMOOTH);
+		this.setImage(image);
+	}
 	
 	public String getFilePath(){
 		return filePath;
