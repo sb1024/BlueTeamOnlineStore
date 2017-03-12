@@ -12,15 +12,17 @@ public class DepartmentPage{
 	private JPanel mainPanel;
 	private Department mainDepartment;
 	private boolean editor;
-	private int numberOfRows;
+	private JPanel productsGrid;
+	private JFrame frame;
+
 	private ArrayList<Product> productList;
 
 	
 	DepartmentPage() {
 		Store store = createStore();
 
-		JFrame frame = new JFrame("Test");
-		JScrollPane scrollPane = new JScrollPane();
+		frame = new JFrame("Test");
+		 JScrollPane scrollPane = new JScrollPane();
 
 
 		Department department = store.getDepartments().get(0);
@@ -43,32 +45,33 @@ public class DepartmentPage{
 		
 		//Determines the number of rows for the product layout
 		editor = false;
-		if(editor){
-			numberOfRows = (int) Math.ceil(((double)productList.size() + 1.0)/4.0); //Rounds up. Double cast in there to ensure rounds properly.
-		}else{
-			numberOfRows = (int) Math.ceil(((double)productList.size())/4.0);
-		}
-		
+
 		JComponent departmentNameSpacer1 = (JComponent)Box.createRigidArea(new Dimension(1200, 50));
 		JComponent departmentNameSpacer2 = (JComponent)Box.createRigidArea(new Dimension(1200, 50));
-		JLabel departmentName = new JLabel("<HTML><u>" + department.getName() + "</u></HTML>");
+		JLabel departmentName = new JLabel("<HTML><u><b>" + department.getName() + "</u></b></HTML>");
 		departmentName.setAlignmentX(Component.CENTER_ALIGNMENT); //I have no idea why without this,it aligns to the right.
 		departmentName.setFont(new Font("Arial", Font.PLAIN, 50));
 		mainPanel.add(departmentNameSpacer1);
 		mainPanel.add(departmentName);
 		mainPanel.add(departmentNameSpacer2);
-					
-		JPanel productsGrid = new JPanel();
+		
+
+		productsGrid = new JPanel();
 		productsGrid.setBackground(Color.white);
 		
-		productsGrid.setLayout(new GridLayout(numberOfRows, 4, 5, 5));
+		productsGrid.setLayout(new GridLayout(0, 4, 5, 5));
 
 		createProductPanels();
 		for(JPanel panel: productButtons){
 			productsGrid.add(panel); //Gridlayout automatically expands panel to fit cell
 		}
+		JPanel gridHolder = new JPanel(); //Has margins for products grid
+		gridHolder.setBackground(Color.white);
+		gridHolder.setLayout(new BoxLayout(gridHolder, BoxLayout.X_AXIS));
+		gridHolder.add(Box.createRigidArea(new Dimension(70, 100)));
+		gridHolder.add(productsGrid);
 		
-		mainPanel.add(productsGrid);
+		mainPanel.add(gridHolder);
 		
 
 
@@ -87,8 +90,13 @@ public class DepartmentPage{
 		for(int elementCounter=0; elementCounter<products.size(); elementCounter++){
 			final Product product = products.get(elementCounter); //Final so action listeners can access it
 			JPanel productButtonPanel=new JPanel();
+			productButtonPanel.setLayout(new BoxLayout(productButtonPanel, BoxLayout.X_AXIS));
 			productButtonPanel.setBackground(Color.white);
-			productButtonPanel.setLayout(new BoxLayout(productButtonPanel, BoxLayout.Y_AXIS));
+			
+			JPanel productButtonSubPanel = new JPanel(); //Holds the actual product image, price, img. The reason for dividing it into two panels is to allow the ability to add editing icons in DepartmentPageEditor.
+			productButtonPanel.add(productButtonSubPanel);
+			productButtonSubPanel.setBackground(Color.white);
+			productButtonSubPanel.setLayout(new BoxLayout(productButtonSubPanel, BoxLayout.Y_AXIS));
 			
 			ParsedImageIcon productLogo = product.getImage();
 			if(productLogo==null){ //If the product doesn't have an image
@@ -98,17 +106,17 @@ public class DepartmentPage{
 			productLogo.setHeight(200);
 			JLabel productLogoLabel = new JLabel(productLogo);
 			productLogoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);//Aligns horizontally in cell
-			productButtonPanel.add(productLogoLabel);
+			productButtonSubPanel.add(productLogoLabel);
 			JLabel productName = new JLabel(product.getName());
 			productName.setAlignmentX(Component.CENTER_ALIGNMENT);//Aligns horizontally in cell
-			productButtonPanel.add(productName);
+			productButtonSubPanel.add(productName);
 			JLabel price = new JLabel("$" + product.getPrice());//Aligns horizontally in cell
 			price.setAlignmentX(Component.CENTER_ALIGNMENT);
 			if(product.getSale()){ //If it is a sale
 				price.setText("Sale -- " + price.getText());
 				price.setForeground(Color.red);
 			}
-			productButtonPanel.add(price);
+			productButtonSubPanel.add(price);
 
 			MouseListener productListener = new MouseListener(){
 
@@ -144,7 +152,7 @@ public class DepartmentPage{
 				}
 				
 			};
-			productButtonPanel.addMouseListener(productListener);
+			productButtonSubPanel.addMouseListener(productListener);
 
 
 			productButtons.add(productButtonPanel);
@@ -171,6 +179,20 @@ public class DepartmentPage{
 		genericDepartment.addProduct(genericProduct);
 		genericProduct = new Product(15.0, "Computer", "A lovely new computer", true, genericDepartment, new ParsedImageIcon("computer.jpg"));
 		genericDepartment.addProduct(genericProduct);
+		genericProduct = new Product(15.0, "Computer", "A lovely new computer", true, genericDepartment, new ParsedImageIcon("computer.jpg"));
+		genericDepartment.addProduct(genericProduct);
+		genericProduct = new Product(15.0, "Computer", "A lovely new computer", true, genericDepartment, new ParsedImageIcon("computer.jpg"));
+		genericDepartment.addProduct(genericProduct);
+		genericProduct = new Product(10.0, "Phone", "A lovely new phone", false, genericDepartment, null);
+		genericDepartment.addProduct(genericProduct);
+		genericProduct = new Product(10.0, "Phone", "A lovely new phone", false, genericDepartment, null);
+		genericDepartment.addProduct(genericProduct);
+		genericProduct = new Product(10.0, "Phone", "A lovely new phone", false, genericDepartment, null);
+		genericDepartment.addProduct(genericProduct);
+		genericProduct = new Product(10.0, "Phone", "A lovely new phone", false, genericDepartment, null);
+		genericDepartment.addProduct(genericProduct);
+		genericProduct = new Product(15.0, "Computer", "A lovely new computer", true, genericDepartment, new ParsedImageIcon("computer.jpg"));
+		genericDepartment.addProduct(genericProduct);
 		
 		
 		departments.add(genericDepartment);
@@ -180,5 +202,22 @@ public class DepartmentPage{
 		return new Store(storeName, storeDescription, departments, orders, storeLogo);
 
 
+	}
+	public ArrayList<JPanel> getProductButtons(){
+		return productButtons;
+	}
+	public ArrayList<Product> getProductList(){
+		return products;
+	}
+
+	public void frameUpdate(){
+		frame.pack();
+		frame.repaint();
+	}
+	public JPanel getProductsGrid(){ //Used when deleting items
+		return productsGrid;
+	}
+	public JPanel getMainPanel(){
+		return mainPanel;
 	}
 }

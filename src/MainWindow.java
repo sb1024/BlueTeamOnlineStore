@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 
 public class MainWindow {
@@ -13,7 +14,7 @@ public class MainWindow {
 	private JFrame frame; 
 	private JPanel currentContentPane; //Holds the content pane
 	private ShoppingCart currentShoppingCart;
-	private JPanel mainPanel;
+	private JScrollPane mainPanel;
 	
 	MainWindow(boolean editMode){		
 		xmlReaderWriter = new XMLReaderWriter();
@@ -38,10 +39,9 @@ public class MainWindow {
 			departments.add(genericDepartment);
 			
 			ArrayList<Order> orders = new ArrayList();
-			Order order = new Order();
 
 			
-			store = new Store(storeName, storeLogo, storeDescription, departments, orders);
+			store = new Store(storeName, storeDescription, departments, orders, storeLogo);
 			
 			xmlReaderWriter.createStore(store);
 
@@ -55,10 +55,10 @@ public class MainWindow {
 		
 		frame = new JFrame("Store");
 		
-		mainPanel = new JPanel(); //Holds the navBar and the currentContentPane
+		mainPanel = new JScrollPane(); //Holds the navBar and the currentContentPane
 		mainPanel.setPreferredSize(new Dimension(1200, 720));
 		mainPanel.add(navBar);
-		mainPanel.add(currentContentPane);
+		mainPanel.setViewportView(currentContentPane);
 	}
 	
 	public Store getStore(){
@@ -86,13 +86,13 @@ public class MainWindow {
 			newContentPane = new DepartmentPage(this, department);
 		}
 		mainPanel.remove(currentContentPane); //Removes the old pane. 
-		mainPanel.add(newContentPane); //Places the new content pane
+		mainPanel.setViewportView(newContentPane); //Places the new content pane
 		currentContentPane = newContentPane; //Stores the newContentPane in the currentContentPane becausae it is now the the current content pane being displayed
 	}
 	public void setContentArea(JPanel newPage){
 		JPanel newContentPane=newPage;
 		mainPanel.remove(currentContentPane); //Removes the old pane. 
-		mainPanel.add(newContentPane); //Places the new content pane
+		mainPanel.setViewportView(newContentPane); //Places the new content pane
 		currentContentPane = newContentPane; //Stores the newContentPane in the currentContentPane becausae it is now the the current content pane being displayed
 	}
 	public boolean isEditor(){
