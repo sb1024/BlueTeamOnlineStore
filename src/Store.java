@@ -4,16 +4,18 @@ public class Store {
 
 	// variables
 	private String storeName;
+	private String storeDescription;
 	private ArrayList<Department> departments;
 	private ArrayList<Order> orders;
 	private ParsedImageIcon storeLogo;
 	
 	// constructors
-	Store(String inputStoreName, ParsedImageIcon inputImageIcon){
+	Store(String inputStoreName, String inputStoreDescription, ArrayList<Department> inputDepartments, ArrayList<Order> inputOrders, ParsedImageIcon inputImageIcon){
 		storeName = inputStoreName;
+		storeDescription = inputStoreDescription;
 		storeLogo = inputImageIcon;
-		departments = new ArrayList<Department>();
-		orders = new ArrayList<Order>();
+		departments = inputDepartments;
+		orders = inputOrders;
 	}
 	Store(){
 		departments = new ArrayList<Department>();
@@ -23,6 +25,9 @@ public class Store {
 	// get methods
 	public String getStoreName(){
 		return storeName;
+	}
+	public String getStoreDescription(){
+		return storeDescription;
 	}
 	public ParsedImageIcon getStoreLogo(){
 		return storeLogo;
@@ -37,6 +42,9 @@ public class Store {
 	// set methods
 	public void setStoreName(String inputStoreName){
 		storeName = inputStoreName;
+	}
+	public void setStoreDescription(String inputStoreDescription){
+		storeDescription = inputStoreDescription;
 	}
 	public void setStoreLogo(ParsedImageIcon inputStoreLogo){
 		storeLogo = inputStoreLogo;
