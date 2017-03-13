@@ -43,8 +43,7 @@ public class DepartmentPage{
 		productList = department.getProductList();
 		
 		
-		//Determines the number of rows for the product layout
-		editor = false;
+
 
 		JComponent departmentNameSpacer1 = (JComponent)Box.createRigidArea(new Dimension(1200, 50));
 		JComponent departmentNameSpacer2 = (JComponent)Box.createRigidArea(new Dimension(1200, 50));

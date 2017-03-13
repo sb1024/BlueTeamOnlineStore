@@ -102,5 +102,9 @@ public class MainWindow {
 		boolean editor=false;
 		new MainWindow(false);
 	}
+	public void updateFrame(){
+		frame.repaint();
+		frame.pack();
+	}
 	
 }

@@ -135,6 +135,7 @@ public class DepartmentPageEditor extends DepartmentPage{
 		JLabel plusText = new JLabel("Add Product");
 		plusText.setAlignmentX(Component.CENTER_ALIGNMENT);
 		plusText.setFont(new Font("Arial", Font.PLAIN, 25));
+		addProductButton.add(Box.createRigidArea(new Dimension(10, 100)));
 		addProductButton.add(plusImage);
 		addProductButton.add(plusText);
 		addProductButton.addMouseListener(new MouseListener(){
