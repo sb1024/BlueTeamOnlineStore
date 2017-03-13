@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.text.NumberFormat;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -78,7 +79,9 @@ public class ProductPage {
 		priceAndQuantity.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 		priceAndQuantity.setBackground(Color.white);
 		priceAndQuantity.setLayout(new BoxLayout(priceAndQuantity, BoxLayout.PAGE_AXIS));
-		JLabel price = new JLabel("Price: $" + product.getPrice());
+		NumberFormat USD = NumberFormat.getCurrencyInstance();
+		
+		JLabel price = new JLabel("Price: " + USD.format(product.getPrice()));
 		price.setFont(new Font("Arial", Font.PLAIN, 24));
 		price.setAlignmentX(Component.LEFT_ALIGNMENT);
 		priceAndQuantity.add(price);
