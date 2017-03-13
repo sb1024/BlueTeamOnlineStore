@@ -51,6 +51,8 @@ public class ProductPage {
 		
 		addProductInfo();
 		
+		mainJPanel.setPreferredSize(new Dimension(1200, 720));
+		
 		frame.setPreferredSize(new Dimension(1200, 720));
 		frame.setTitle("Test");
 		frame.setContentPane(mainJPanel);
@@ -98,22 +100,34 @@ public class ProductPage {
 		plus.setFont(new Font("Arial", Font.PLAIN, 24));
 		plus.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 		quantity.add(plus);
-		number = new JLabel("0");
+		number = new JLabel("1");
 		number.setFont(new Font("Arial", Font.PLAIN, 24));
 		number.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 		quantity.add(number);
-		JLabel minus = new JLabel("–");
+		JLabel minus = new JLabel("â€“");
 		minus.setFont(new Font("Arial", Font.PLAIN, 24));
 		plus.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 		quantity.add(minus);
-		
-
-		priceAndQuantity.setAlignmentX(Component.LEFT_ALIGNMENT);
 		priceAndQuantity.add(quantity);
 		
 		
+		
+		JLabel total = new JLabel("Total Price: " + USD.format(product.getPrice()*quantity));
+		total.setFont(new Font("Arial", Font.PLAIN, 24));
+		total.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+		total.setAlignmentX(Component.LEFT_ALIGNMENT);
+		
+		JButton addToCart = new JButton("Add to Shopping Cart");
+		addToCart.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+		
+		//????
+		priceAndQuantity.add(total);
+		priceAndQuantity.add(addToCart);
+		
+		priceAndQuantity.setAlignmentX(Component.LEFT_ALIGNMENT);
 		gbc.gridx = 1;
-		gbc.gridy = 2;
+		gbc.gridy = 1;
+		gbc.gridheight = 2;
 		mainJPanel.add(priceAndQuantity, gbc);
 		
 		description = new JLabel(product.getDesc());
