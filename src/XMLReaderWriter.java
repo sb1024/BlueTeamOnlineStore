@@ -44,20 +44,20 @@ public class XMLReaderWriter {
 		        	
 		        	// elements in product
 		        	Element price = doc.createElement("price");
-		        	doc.createTextNode(Double.toString(PL.get(y).getPrice()));
+		        	price.appendChild(doc.createTextNode(Double.toString(PL.get(y).getPrice())));
 		        	product.appendChild(price);
 		        	
 		        	Element desc = doc.createElement("description");
-		        	doc.createTextNode(PL.get(y).getDesc());
-		        	product.appendChild(price);
+		        	desc.appendChild(doc.createTextNode(PL.get(y).getDesc()));
+		        	product.appendChild(desc);
 		        	
 		        	Element sale = doc.createElement("sale");
-		        	doc.createTextNode(Boolean.toString(PL.get(y).getSale()));
-		        	product.appendChild(price);
+		        	sale.appendChild(doc.createTextNode(Boolean.toString(PL.get(y).getSale())));
+		        	product.appendChild(sale);
 		        	
-		        	Element image = doc.createElement("image");
-		        	doc.createTextNode(PL.get(y).getImage().getFilePath());
-		        	product.appendChild(price);
+		        	//Element image = doc.createElement("image");
+		        	//sale.appendChild(doc.createTextNode(PL.get(y).getImage().getFilePath()));
+		        	//product.appendChild(image);
 		        }
 	        }
 	        
@@ -75,16 +75,16 @@ public class XMLReaderWriter {
 	         new StreamResult(new File("Z:\\Store.xml"));
 	         transformer.transform(source, result);
 	         // Output to console for testing
-	         StreamResult consoleResult =
+	         /*StreamResult consoleResult =
 	         new StreamResult(System.out);
-	         transformer.transform(source, consoleResult);
+	         transformer.transform(source, consoleResult);*/
 	         
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
 	
-	public Store loadStore(){
+	public static Store loadStore(){
 		try{
 			File inputFile = new File("Z:\\Store.xml");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -111,6 +111,7 @@ public class XMLReaderWriter {
 					d.addProduct(p);
 				}
 				s.addDepartment(d);
+				System.out.println(d.getName());
 			}
 		
 			return(s);
@@ -126,6 +127,52 @@ public class XMLReaderWriter {
 	
 	public void addOrder(){
 		
+	}
+	
+	public static void main(String[] args){
+		createStore(createStore());
+		Store testStore = loadStore();
+		//System.out.println(testStore.getDepartments().get(0).getName());
+		/*System.out.println(testStore.getStoreDescription());
+		System.out.println(testStore.getStoreName());
+		System.out.println(testStore.getStoreLogo());
+		
+		ArrayList <Department> arris = testStore.getDepartments();
+		for(int x=0; x<arris.size(); x++){
+			Department Partment = arris.get(x);
+			System.out.println(Partment.getName());
+			System.out.println(Partment.getImage());
+			ArrayList <Product> ducts = Partment.getProductList();
+			for(int y=0; y<ducts.size();y++){
+				Product pro = ducts.get(y);
+				System.out.println(pro.getName());
+				System.out.println(pro.getDesc());
+				System.out.println(pro.getSale());
+				System.out.println(pro.getPrice());
+			}
+		}*/
+	}
+	
+	public static Store createStore(){
+		String storeName = "Generic Store";
+		ParsedImageIcon storeLogo = new ParsedImageIcon("logo.png", 256, 256);
+		String storeDescription = "A generic store. All values should be changed";
+		
+		
+		ArrayList<Department> departments = new ArrayList();
+		Department genericDepartment = new Department("Electronics");
+		ParsedImageIcon departmentLogo = new ParsedImageIcon("departmentLogo.png", 300, 300);
+		genericDepartment.setImage(departmentLogo);
+		Product genericProduct = new Product(10.0, "Phone", "A lovely new phone", false, genericDepartment, null);
+		genericDepartment.addProduct(genericProduct);
+		
+		departments.add(genericDepartment);
+		
+		ArrayList<Order> orders = new ArrayList();
+		
+		return new Store(storeName, storeDescription, departments, orders, storeLogo);
+
+
 	}
 	
 }
