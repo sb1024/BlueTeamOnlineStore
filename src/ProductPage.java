@@ -4,13 +4,13 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.text.NumberFormat;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 
 public class ProductPage {
@@ -18,9 +18,9 @@ public class ProductPage {
 	private Product product;
 	
 	private JPanel mainJPanel;
-	private JLabel name, description, image, number;
+	private JLabel name, description, image, number, total, dept;
 	private JPanel priceAndQuantity, quantity, totalAndCart;
-	//private JPanel[][] panels = new JPanel[4][3];
+	private int num = 1;
 	
 	private GridBagConstraints gbc;
 	
@@ -31,23 +31,18 @@ public class ProductPage {
 		//this.window = window;
 		//this.product = product;
 		product = new Product(0, null, null, false, null, null);
-		product.setName("New shoes");
-		product.setDesc("i am a cool product. buy me!");
-		product.setImage(new ParsedImageIcon("noImage.jpg", 250, 250));
+		product.setName("Black Leather Boots");
+		product.setDesc("These boots are offered with fast two-day shipping!");
+		product.setImage(new ParsedImageIcon("noImage.jpg", 350, 350));
 		product.setPrice(12.30);
 		product.setSale(false);
+		product.setDepartment(new Department("Shoes"));
 		
 		mainJPanel = new JPanel();
 		mainJPanel.setBackground(Color.white);
 		mainJPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 		mainJPanel.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
-		
-		/*for(JPanel[] rows : panels) {
-			for(JPanel panel : rows) {
-				panel = new JPanel();
-			}
-		}*/
 		
 		addProductInfo();
 		
@@ -68,88 +63,144 @@ public class ProductPage {
 		gbc.gridy = 0;
 		gbc.anchor = GridBagConstraints.LINE_START;
 		mainJPanel.add(name, gbc);
-		//panels[0][0].add(name);
 		
 		image = new JLabel(product.getImage());
 		image.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		gbc.gridheight = 2;
+		gbc.gridheight = 4;
 		mainJPanel.add(image, gbc);
 		
-		priceAndQuantity = new JPanel();
-		priceAndQuantity.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-		priceAndQuantity.setBackground(Color.white);
-		priceAndQuantity.setLayout(new BoxLayout(priceAndQuantity, BoxLayout.PAGE_AXIS));
-		NumberFormat USD = NumberFormat.getCurrencyInstance();
+		final NumberFormat USD = NumberFormat.getCurrencyInstance();
 		
 		JLabel price = new JLabel("Price: " + USD.format(product.getPrice()));
-		price.setFont(new Font("Arial", Font.PLAIN, 24));
+		price.setFont(new Font("Arial", Font.PLAIN, 32));
 		price.setAlignmentX(Component.LEFT_ALIGNMENT);
-		priceAndQuantity.add(price);
+		gbc.gridx = 1;
+		gbc.gridy = 1;
+		gbc.gridheight = 1;
+		mainJPanel.add(price, gbc);
 
 		quantity = new JPanel();
 		quantity.setBackground(Color.white);
 		quantity.setLayout(new BoxLayout(quantity, BoxLayout.LINE_AXIS));
 		quantity.setAlignmentX(Component.LEFT_ALIGNMENT);
 		JLabel quantityPrompt = new JLabel("Quantity: ");
-		quantityPrompt.setFont(new Font("Arial", Font.PLAIN, 24));
+		quantityPrompt.setFont(new Font("Arial", Font.PLAIN, 32));
 		quantity.add(quantityPrompt);
 		
-		JLabel plus = new JLabel("+");
-		plus.setFont(new Font("Arial", Font.PLAIN, 24));
-		plus.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-		quantity.add(plus);
-		number = new JLabel("1");
-		number.setFont(new Font("Arial", Font.PLAIN, 24));
-		number.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-		quantity.add(number);
-		JLabel minus = new JLabel("–");
-		minus.setFont(new Font("Arial", Font.PLAIN, 24));
-		plus.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+		JLabel minus = new JLabel("\u2014");
+		minus.setFont(new Font("Arial", Font.BOLD, 20));
+		minus.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+		minus.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(num > 1) {
+					num-=1;
+					number.setText(" "+num+" ");
+					total.setText("Total Price: " + USD.format(product.getPrice()*num));
+				}
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {	}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {	}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {	}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {	}
+			
+		});
 		quantity.add(minus);
-		priceAndQuantity.add(quantity);
+		number = new JLabel(" "+ num+ " ");
+		number.setFont(new Font("Arial", Font.PLAIN, 32));
+		number.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+		quantity.add(number);
+		JLabel plus = new JLabel("+");
+		plus.setFont(new Font("Arial", Font.PLAIN, 36));
+		plus.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+		plus.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				num+=1;
+				number.setText(" "+num+" ");
+				total.setText("Total Price: " + USD.format(product.getPrice()*num));
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {	}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {	}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {	}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {	}
+			
+		});
+		quantity.add(plus);
 		
+		gbc.gridx = 1;
+		gbc.gridy = 2;
+		mainJPanel.add(quantity, gbc);
 		
-		
-		JLabel total = new JLabel("Total Price: " + USD.format(product.getPrice()*quantity));
-		total.setFont(new Font("Arial", Font.PLAIN, 24));
-		total.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+		total = new JLabel("Total Price: " + USD.format(product.getPrice()));
+		total.setFont(new Font("Arial", Font.PLAIN, 32));
+		total.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 		total.setAlignmentX(Component.LEFT_ALIGNMENT);
+		gbc.gridx = 1;
+		gbc.gridy = 3;
+		mainJPanel.add(total, gbc);
 		
 		JButton addToCart = new JButton("Add to Shopping Cart");
-		addToCart.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-		
-		//????
-		priceAndQuantity.add(total);
-		priceAndQuantity.add(addToCart);
-		
-		priceAndQuantity.setAlignmentX(Component.LEFT_ALIGNMENT);
+		addToCart.setFont(new Font("Arial", Font.PLAIN, 32));
+		addToCart.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+		addToCart.setAlignmentX(Component.LEFT_ALIGNMENT);
+		addToCart.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				addProductToCart(num);
+				
+			}
+			
+		});
 		gbc.gridx = 1;
-		gbc.gridy = 1;
-		gbc.gridheight = 2;
-		mainJPanel.add(priceAndQuantity, gbc);
+		gbc.gridy = 4;
+		mainJPanel.add(addToCart, gbc);
 		
 		description = new JLabel(product.getDesc());
+		description.setFont(new Font("Arial", Font.PLAIN, 20));
 		description.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 		gbc.gridx = 0;
-		gbc.gridy = 3;
+		gbc.gridy = 5;
 		gbc.gridwidth = 2;
+		gbc.gridheight = 2;
 		mainJPanel.add(description, gbc);
-		//panels[3][0].add(description);
 		
-		
+		dept = new JLabel("Department: " + product.getDepartment().getName());
+		dept.setFont(new Font("Arial", Font.PLAIN, 24));
+		dept.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+		gbc.gridx = 2;
+		gbc.gridy = 0;
+		gbc.gridwidth = 1;
+		gbc.gridheight = 1;
+		mainJPanel.add(dept, gbc);
 	}
 	
-	
-	private class PriceQuantityJLabel extends JPanel {
-		JLabel price, quantityPrompt;
-		
-		public PriceQuantityJLabel() {
-			setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-			
-			
-		}
+	private void addProductToCart(int num) {
+		//mainWindow.getStore().getShoppingCart().addProduct(product, num);
+		System.out.println(num);
 	}
 	
 	public static void main(String args[]){
