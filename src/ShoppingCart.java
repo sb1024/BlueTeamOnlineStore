@@ -61,4 +61,13 @@ public class ShoppingCart {
 			productOrders.add(inputProductOrder);
 		}
 	}
+	
+	public double getPrice(){
+		double price=0;
+		for(ProductOrder productOrder: productOrders){
+			double productPrice = productOrder.getProduct().getPrice();
+			price+=productPrice*(int)productOrder.getQuantity();
+		}
+		return price;
+	}
 }

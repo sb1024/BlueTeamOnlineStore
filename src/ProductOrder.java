@@ -5,6 +5,7 @@ public class ProductOrder {
 	// variables
 	private Product product;
 	private int quantity;
+	protected Object getProduct;
 	
 	// constructor
 	ProductOrder(Product inputProduct, int inputQuantity){

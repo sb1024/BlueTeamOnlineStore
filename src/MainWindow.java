@@ -75,7 +75,7 @@ public class MainWindow {
 			newContentPane = new ProductPage(this, product);
 		}
 		mainPanel.remove(currentContentPane); //Removes the old pane. 
-		mainPanel.add(newContentPane); //Places the new content pane
+		mainPanel.setViewportView(newContentPane); //Places the new content pane
 		currentContentPane = newContentPane; //Stores the newContentPane in the currentContentPane becausae it is now the the current content pane being displayed
 	}
 	public void setContentArea(Department department){
