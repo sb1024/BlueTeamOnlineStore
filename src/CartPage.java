@@ -351,7 +351,7 @@ public class CartPage {
 
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
-					int delete = JOptionPane.showConfirmDialog(mainPanel, "Are you sure you want to delete " + order.getProduct().getName() + "?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
+					int delete = JOptionPane.showConfirmDialog(mainPanel, "Are you sure you want to remove the " + order.getProduct().getName() + "(s) from your cart?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
 					if(delete==0){
 						int orderIndex=-1;
 						for(int orderCounter=0; orderIndex<productOrders.size() && orderIndex==-1; orderCounter++){
