@@ -208,14 +208,13 @@ public class CartPage {
 			quantity.setLayout(new BoxLayout(quantity, BoxLayout.X_AXIS));
 			JLabel plus = new JLabel("+");
 			plus.setFont(new Font("Arial", Font.PLAIN, 24));
-			final JLabel counter = new JLabel(""+order.getQuantity());
+			final JLabel counter = new JLabel(" "+order.getQuantity() + " ");
 			counter.setOpaque(true);
 			counter.setFont(new Font("Arial", Font.PLAIN, 24));
 			counter.setBackground(Color.white);
 			JLabel minus = new JLabel("-");
 			minus.setFont(new Font("Arial", Font.PLAIN, 24));
 			JLabel delete = new JLabel(new ParsedImageIcon("trashBin.png", 35, 35));
-			quantity.add(plus);
 			plus.addMouseListener(new MouseListener(){
 
 				@Override
@@ -268,7 +267,7 @@ public class CartPage {
 						quantity--;
 					}
 					order.setQuantity(quantity); //Updates actual quantity in order object which in turn is stored in the shopping cart in an arraylist
-					counter.setText(""+ quantity); //Updates displayed quantity
+					counter.setText(" "+ quantity + " "); //Updates displayed quantity
 					costOfItem.setText("$" + quantity * order.getProduct().getPrice()); //Updates the displayed price of the item
 					priceText.setText("Total: $" + cart.getPrice()); //Updates the displayed price of the shopping cart
 					
@@ -311,7 +310,7 @@ public class CartPage {
 					int quantity = order.getQuantity();
 					quantity++;
 					order.setQuantity(quantity); //Updates actual quantity in order object which in turn is stored in the shopping cart in an arraylist
-					counter.setText(""+ quantity); //Updates displayed quantity
+					counter.setText(" "+ quantity + " "); //Updates displayed quantity
 					costOfItem.setText("$" + quantity * order.getProduct().getPrice()); //Updates the displayed price of the item
 					priceText.setText("Total: $" + cart.getPrice()); //Updates the displayed price of the shopping cart
 					
@@ -399,8 +398,12 @@ public class CartPage {
 				}
 				
 			});
-			quantity.add(counter);
 			quantity.add(minus);
+			quantity.add(Box.createRigidArea(new Dimension(5, 10)));
+			counter.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+			quantity.add(counter);
+			quantity.add(Box.createRigidArea(new Dimension(5, 10)));
+			quantity.add(plus);
 			quantity.add(Box.createRigidArea(new Dimension(10, 10)));
 			quantity.add(delete);
 			
