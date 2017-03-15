@@ -12,6 +12,10 @@ public class ProductPageEditor extends ProductPage {
 		super();
 
 		addEditorButtons();
+		
+		frame.setTitle("EditorTest");
+		frame.pack();
+		frame.repaint();
 	}
 
 	private void addEditorButtons() {
@@ -19,12 +23,13 @@ public class ProductPageEditor extends ProductPage {
 		total.setVisible(false);
 		addToCart.setVisible(false);
 		
+		ParsedImageIcon pencil = new ParsedImageIcon("pencil.png",30, 30);
 		
 		nameEditor = new JPanel();
 		nameEditor.setBackground(Color.white);
 		nameEditor.setLayout(new BoxLayout(nameEditor, BoxLayout.LINE_AXIS));
 		nameEditor.setAlignmentX(Component.LEFT_ALIGNMENT);
-		JLabel editName = new JLabel("edit");
+		JLabel editName = new JLabel(pencil);
 		nameEditor.add(name);
 		nameEditor.add(editName);
 		gbc.gridx = 0;
@@ -36,8 +41,9 @@ public class ProductPageEditor extends ProductPage {
 		imageEditor.setBackground(Color.white);
 		imageEditor.setLayout(new BoxLayout(imageEditor, BoxLayout.LINE_AXIS));
 		imageEditor.setAlignmentX(Component.LEFT_ALIGNMENT);
-		JLabel editImage = new JLabel("edit");
+		JLabel editImage = new JLabel(pencil);
 		editImage.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+		editImage.setVerticalAlignment(JLabel.BOTTOM);
 		imageEditor.add(image);
 		imageEditor.add(editImage);
 		gbc.gridx = 0;
@@ -50,7 +56,7 @@ public class ProductPageEditor extends ProductPage {
 		priceEditor.setBackground(Color.white);
 		priceEditor.setLayout(new BoxLayout(priceEditor, BoxLayout.LINE_AXIS));
 		priceEditor.setAlignmentX(Component.LEFT_ALIGNMENT);
-		JLabel editPrice = new JLabel("edit");
+		JLabel editPrice = new JLabel(pencil);
 		editPrice.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		priceEditor.add(price);
 		priceEditor.add(editPrice);
@@ -64,7 +70,7 @@ public class ProductPageEditor extends ProductPage {
 		descEditor.setBackground(Color.white);
 		descEditor.setLayout(new BoxLayout(descEditor, BoxLayout.LINE_AXIS));
 		descEditor.setAlignmentX(Component.LEFT_ALIGNMENT);
-		JLabel editDesc = new JLabel("edit");
+		JLabel editDesc = new JLabel(pencil);
 		editDesc.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		descEditor.add(description);
 		descEditor.add(editDesc);
@@ -77,7 +83,7 @@ public class ProductPageEditor extends ProductPage {
 		deptEditor.setBackground(Color.white);
 		deptEditor.setLayout(new BoxLayout(deptEditor, BoxLayout.LINE_AXIS));
 		deptEditor.setAlignmentX(Component.LEFT_ALIGNMENT);
-		JLabel editDept = new JLabel("edit");
+		JLabel editDept = new JLabel(pencil);
 		editDept.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		deptEditor.add(dept);
 		deptEditor.add(editDept);

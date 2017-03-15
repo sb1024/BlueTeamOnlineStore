@@ -14,19 +14,21 @@ import javax.swing.*;
 
 
 public class ProductPage {
-	private MainWindow window;
-	private Product product;
+	protected MainWindow window;
+	protected Product product;
 	
-	private JPanel mainJPanel;
-	private JLabel name, description, image, number, total, dept;
-	private JPanel priceAndQuantity, quantity, totalAndCart;
+	protected JFrame frame;
+	protected JButton addToCart;
+	protected JPanel mainJPanel;
+	protected JLabel name, description, image, price, number, total, dept;
+	protected JPanel quantity;
 	private int num = 1;
 	
-	private GridBagConstraints gbc;
+	protected GridBagConstraints gbc;
 	
 	//public ProductPage(MainWindow window, Product product) {
 	public ProductPage() {
-		JFrame frame = new JFrame();
+		frame = new JFrame();
 		
 		//this.window = window;
 		//this.product = product;
@@ -46,9 +48,9 @@ public class ProductPage {
 		
 		addProductInfo();
 		
-		mainJPanel.setPreferredSize(new Dimension(1200, 720));
+		mainJPanel.setPreferredSize(new Dimension(1200, 670));
 		
-		frame.setPreferredSize(new Dimension(1200, 720));
+		frame.setPreferredSize(new Dimension(1200, 670));
 		frame.setTitle("Test");
 		frame.setContentPane(mainJPanel);
 		frame.pack();
@@ -73,7 +75,7 @@ public class ProductPage {
 		
 		final NumberFormat USD = NumberFormat.getCurrencyInstance();
 		
-		JLabel price = new JLabel("Price: " + USD.format(product.getPrice()));
+		price = new JLabel("Price: " + USD.format(product.getPrice()));
 		price.setFont(new Font("Arial", Font.PLAIN, 32));
 		price.setAlignmentX(Component.LEFT_ALIGNMENT);
 		gbc.gridx = 1;
@@ -162,7 +164,7 @@ public class ProductPage {
 		gbc.gridy = 3;
 		mainJPanel.add(total, gbc);
 		
-		JButton addToCart = new JButton("Add to Shopping Cart");
+		addToCart = new JButton("Add to Shopping Cart");
 		addToCart.setFont(new Font("Arial", Font.PLAIN, 32));
 		addToCart.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		addToCart.setAlignmentX(Component.LEFT_ALIGNMENT);
