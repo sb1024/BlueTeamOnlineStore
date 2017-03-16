@@ -1,10 +1,10 @@
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.*;
 
 public class ProductPageEditor extends ProductPage {
-	private MainWindow window;
-	private Product product;
 	
 	private JPanel nameEditor, imageEditor, priceEditor, descEditor, deptEditor;
 	//public ProductPageEditor(MainWindow window, Product product) {
@@ -30,6 +30,35 @@ public class ProductPageEditor extends ProductPage {
 		nameEditor.setLayout(new BoxLayout(nameEditor, BoxLayout.LINE_AXIS));
 		nameEditor.setAlignmentX(Component.LEFT_ALIGNMENT);
 		JLabel editName = new JLabel(pencil);
+		editName.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				String input = (String)JOptionPane.showInputDialog(frame, "Edit the product name: ","Product Name Editor", JOptionPane.PLAIN_MESSAGE);
+				
+				if((input!=null) && (input.length()>0)) {
+					System.out.println(input);
+					product.setName(input);
+					name.setName(input);
+					frame.repaint();
+				}
+				
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {	}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {	}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {	}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) { }
+			
+		});
+		
 		nameEditor.add(name);
 		nameEditor.add(editName);
 		gbc.gridx = 0;

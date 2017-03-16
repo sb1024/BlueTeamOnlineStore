@@ -147,7 +147,7 @@ public class ProductPage {
 			public void mousePressed(MouseEvent arg0) {	}
 
 			@Override
-			public void mouseReleased(MouseEvent arg0) {	}
+			public void mouseReleased(MouseEvent arg0) { }
 			
 		});
 		quantity.add(plus);
