@@ -1,15 +1,10 @@
 import javax.swing.*;
+import javax.imageio.*;
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
 public class HomePageEditor extends HomePage {
-	/**
-	JLabel descriptionLabel;
-	JLabel nameLabel;
-	ImageIcon logo;
-	MainWindow window;
-	ArrayList<JButton> editButtons, deleteButtons;
-	*/
 	ArrayList<JPanel> departmentButtons;
 	MainWindow window;
 	JPanel mainPanel;
@@ -27,34 +22,27 @@ public class HomePageEditor extends HomePage {
 	}
 	public void setStoreName(String name) {
 		store.setStoreName(name);
-		//nameLabel = new JLabel(name);
-		titlePanel = new JPanel();
-		JLabel newNameLabel = new JLabel();
-		newNameLabel.setFont(new Font("Arial", Font.BOLD, 100));
-		titlePanel.add(newNameLabel);
-		frameUpdate();
+		storeName.setText(name);
 	}
 	public void setDescription(String description) {
-		descriptionLabel = new JLabel(description);
+		store.setStoreDescription(description);
+		storeDescription.setText(description);
 	}
-	/**
 	public void setStoreLogo() {
-		JFileChooser fileChooser = new JFileChooser();
-		//DO JFILECHOOSER PART
-		int returnVal = fileChooser.showOpenDialog(this);
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			File file = fileChooser.getSelectedFile();
+		JFileChooser fc = new JFileChooser();
+		int result = fc.showOpenDialog(null);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			File file = fc.getSelectedFile();
 			try {
-				// What to do with the file, e.g. display it in a TextArea
-				textarea.read( new FileReader( file.getAbsolutePath() ), null );
-			} catch (IOException ex) {
-				System.out.println("problem accessing file"+file.getAbsolutePath());
+				ParsedImageIcon logo = new ParsedImageIcon(file.getPath());
+				resizeLogo(logo);
+				store.setStoreLogo(logo);
+				storeLogo.setIcon(logo);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} else {
-			System.out.println("File access cancelled by user.");
 		}
 	}
-	*/
 	public void addEditingButtons() {
 		JPanel editingButtons;
 		JLabel pencilIcon, deleteIcon;
