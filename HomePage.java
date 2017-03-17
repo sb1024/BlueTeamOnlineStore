@@ -20,7 +20,7 @@ public class HomePage extends JPanel {
 	JPanel mainPanel;
 	//Department mainDepartment;
 	boolean editor;
-	JPanel headerPanel, departmentsGrid;
+	JPanel headerPanel, logoPanel, titlePanel, descriptionPanel, departmentsGrid;
 	JFrame frame;
 	ArrayList<Department> departmentList;
 	
@@ -43,40 +43,9 @@ public class HomePage extends JPanel {
 		scrollPane.setPreferredSize(new Dimension(1200, 670));
 		departmentList = getDepartments();
 		editor = false;
-		/**
-		//needs navbar
-		navbarLogoTitleSpacer = (JComponent)Box.createRigidArea(new Dimension(1200, 50));
-		logoTitleSpacer = (JComponent)Box.createRigidArea(new Dimension(50, 150));
-		logoTitleDescriptionSpacer = (JComponent)Box.createRigidArea(new Dimension(1200, 10));
-		descriptionDepartmentsSpacer = (JComponent)Box.createRigidArea(new Dimension(1200, 20));
 		
-		logoTitlePanel = new JPanel();
-		logoTitlePanel.setBackground(Color.WHITE);
-		logoTitlePanel.setLayout(new BoxLayout(logoTitlePanel, BoxLayout.X_AXIS));
-		
-		storeName = new JLabel(getStoreName());
-		storeName.setFont(new Font("Arial", Font.BOLD, 100));
-		
-		logoImage = getStoreLogo();
-		logoImage.setWidth(150);
-		logoImage.setHeight(logoImage.getIconWidth());
-		storeLogo = new JLabel(logoImage);
-		
-		logoTitlePanel.add(storeLogo);
-		logoTitlePanel.add(logoTitleSpacer);
-		logoTitlePanel.add(storeName);
-		logoTitlePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		mainPanel.add(navbarLogoTitleSpacer);
-		mainPanel.add(logoTitlePanel);
-		mainPanel.add(logoTitleDescriptionSpacer);
-		
-		storeDescription = new JLabel(getStoreDescription());
-		storeDescription.setFont(new Font("Arial", Font.PLAIN, 30));
-		storeDescription.setAlignmentX(Component.CENTER_ALIGNMENT);
-		mainPanel.add(storeDescription);
-		mainPanel.add(descriptionDepartmentsSpacer);
-		*/
 		addHeader();
+		
 		departmentsGrid = new JPanel();
 		departmentsGrid.setBackground(Color.WHITE);
 		departmentsGrid.setLayout(new GridLayout(0, 4, 5, 5));
@@ -98,13 +67,17 @@ public class HomePage extends JPanel {
 	}
 	public void addHeader() {
 		JComponent navbarLogoTitleSpacer, logoTitleSpacer, logoTitleDescriptionSpacer, descriptionDepartmentsSpacer;
-		JPanel logoTitlePanel, logoPanel, titlePanel, descriptionPanel;
+		JPanel logoTitlePanel;//, logoPanel, titlePanel, descriptionPanel;
 		JLabel storeName, storeLogo, storeDescription;
 		ParsedImageIcon logoImage;
 		
+		headerPanel = new JPanel();
+		headerPanel.setBackground(Color.WHITE);
+		headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
+		
 		//needs navbar
 		navbarLogoTitleSpacer = (JComponent)Box.createRigidArea(new Dimension(1200, 50));
-		logoTitleSpacer = (JComponent)Box.createRigidArea(new Dimension(50, 150));
+		//logoTitleSpacer = (JComponent)Box.createRigidArea(new Dimension(50, 150));
 		logoTitleDescriptionSpacer = (JComponent)Box.createRigidArea(new Dimension(1200, 10));
 		descriptionDepartmentsSpacer = (JComponent)Box.createRigidArea(new Dimension(1200, 20));
 
@@ -112,27 +85,37 @@ public class HomePage extends JPanel {
 		logoTitlePanel.setBackground(Color.WHITE);
 		logoTitlePanel.setLayout(new BoxLayout(logoTitlePanel, BoxLayout.X_AXIS));
 
+		titlePanel = new JPanel();
+		titlePanel.setBackground(Color.WHITE);
 		storeName = new JLabel(getStoreName());
 		storeName.setFont(new Font("Arial", Font.BOLD, 100));
+		titlePanel.add(storeName);
 
+		logoPanel = new JPanel();
+		logoPanel.setBackground(Color.WHITE);
 		logoImage = getStoreLogo();
 		logoImage.setWidth(150);
 		logoImage.setHeight(logoImage.getIconWidth());
 		storeLogo = new JLabel(logoImage);
+		logoPanel.add(storeLogo);
 
-		logoTitlePanel.add(storeLogo);
-		logoTitlePanel.add(logoTitleSpacer);
-		logoTitlePanel.add(storeName);
+		logoTitlePanel.add(logoPanel);
+		//logoTitlePanel.add(logoTitleSpacer);
+		logoTitlePanel.add(titlePanel);
 		logoTitlePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		mainPanel.add(navbarLogoTitleSpacer);
-		mainPanel.add(logoTitlePanel);
-		mainPanel.add(logoTitleDescriptionSpacer);
+		
+		headerPanel.add(navbarLogoTitleSpacer);
+		headerPanel.add(logoTitlePanel);
+		headerPanel.add(logoTitleDescriptionSpacer);
 
+		descriptionPanel = new JPanel();
+		descriptionPanel.setBackground(Color.WHITE);
 		storeDescription = new JLabel(getStoreDescription());
 		storeDescription.setFont(new Font("Arial", Font.PLAIN, 30));
 		storeDescription.setAlignmentX(Component.CENTER_ALIGNMENT);
-		mainPanel.add(storeDescription);
-		mainPanel.add(descriptionDepartmentsSpacer);
+		descriptionPanel.add(storeDescription);
+		headerPanel.add(descriptionPanel);
+		headerPanel.add(descriptionDepartmentsSpacer);
 		
 		mainPanel.add(headerPanel);
 	}

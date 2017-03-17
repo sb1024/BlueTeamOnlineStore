@@ -26,7 +26,13 @@ public class HomePageEditor extends HomePage {
 		addEditingButtons();
 	}
 	public void setStoreName(String name) {
-		nameLabel = new JLabel(name);
+		store.setStoreName(name);
+		//nameLabel = new JLabel(name);
+		titlePanel = new JPanel();
+		JLabel newNameLabel = new JLabel();
+		newNameLabel.setFont(new Font("Arial", Font.BOLD, 100));
+		titlePanel.add(newNameLabel);
+		frameUpdate();
 	}
 	public void setDescription(String description) {
 		descriptionLabel = new JLabel(description);
@@ -50,10 +56,65 @@ public class HomePageEditor extends HomePage {
 	}
 	*/
 	public void addEditingButtons() {
-		JPanel editingButtons, logoPanel, titlePanel, descriptionPanel;
+		JPanel editingButtons;
 		JLabel pencilIcon, deleteIcon;
 		
-		logoPanel = 
+		editingButtons = new JPanel();
+		editingButtons.setBackground(Color.WHITE);
+		pencilIcon = new JLabel(new ParsedImageIcon("pencil.png", 25, 25));
+		pencilIcon.addMouseListener(new MouseListener() {
+			public void mouseClicked(MouseEvent e) {
+				setStoreName(JOptionPane.showInputDialog("Please enter the store's new name:", "Store name"));
+			}
+			public void mouseEntered(MouseEvent e) {
+				mainPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+			public void mouseExited(MouseEvent e) {
+				mainPanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+			public void mousePressed(MouseEvent e) {}
+			public void mouseReleased(MouseEvent e) {}
+		});
+		editingButtons.add(pencilIcon);
+		titlePanel.add(editingButtons);
+		
+		editingButtons = new JPanel();
+		editingButtons.setBackground(Color.WHITE);
+		pencilIcon = new JLabel(new ParsedImageIcon("pencil.png", 25, 25));
+		pencilIcon.addMouseListener(new MouseListener() {
+			public void mouseClicked(MouseEvent e) {
+				setStoreLogo();
+			}
+			public void mouseEntered(MouseEvent e) {
+				mainPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+			public void mouseExited(MouseEvent e) {
+				mainPanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+			public void mousePressed(MouseEvent e) {}
+			public void mouseReleased(MouseEvent e) {}
+		});
+		editingButtons.add(pencilIcon);
+		logoPanel.add(editingButtons);
+		
+		editingButtons = new JPanel();
+		editingButtons.setBackground(Color.WHITE);
+		pencilIcon = new JLabel(new ParsedImageIcon("pencil.png", 25, 25));
+		pencilIcon.addMouseListener(new MouseListener() {
+			public void mouseClicked(MouseEvent e) {
+				setDescription(JOptionPane.showInputDialog("Please enter the store's new description:", "Store description"));
+			}
+			public void mouseEntered(MouseEvent e) {
+				mainPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+			public void mouseExited(MouseEvent e) {
+				mainPanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+			public void mousePressed(MouseEvent e) {}
+			public void mouseReleased(MouseEvent e) {}
+		});
+		editingButtons.add(pencilIcon);
+		descriptionPanel.add(editingButtons);
 		
 		for (int i = 0; i < departmentButtons.size(); i++) {
 			final Department currentDepartment = departments.get(i);
