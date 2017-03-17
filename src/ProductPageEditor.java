@@ -34,7 +34,7 @@ public class ProductPageEditor extends ProductPage {
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				String input = JOptionPane.showInputDialog("Edit Product Name:");
+				String input = JOptionPane.showInputDialog("Edit Product Name:", product.getName());
 				if(input!=null && !input.equals("")){
 					product.setName(input);
 					System.out.println(product.getName());
@@ -89,12 +89,17 @@ public class ProductPageEditor extends ProductPage {
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				String input = JOptionPane.showInputDialog("Edit Product Price:");
+				String input = JOptionPane.showInputDialog("Edit Product Price:", product.getPrice());
 				boolean error = true;
 				double newPrice = 0;
+				System.out.println(input);
 				while(error) {
 					try {
-						newPrice = Double.parseDouble(input);
+						if(input == null) {
+							newPrice = product.getPrice();
+						} else {
+							newPrice = Double.parseDouble(input);
+						}
 						
 						if(newPrice != 0) {
 							error = false;
@@ -102,6 +107,7 @@ public class ProductPageEditor extends ProductPage {
 						}
 			
 					} catch (Exception e) {
+						
 						input = JOptionPane.showInputDialog("The input was not understood. Please enter a decimal number. \nEdit Product Price:");
 					
 					}
@@ -140,6 +146,47 @@ public class ProductPageEditor extends ProductPage {
 		descEditor.setAlignmentX(Component.LEFT_ALIGNMENT);
 		JLabel editDesc = new JLabel(pencil);
 		editDesc.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+		editDesc.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				String s = "hello world\n\n\n";
+		        JScrollPane scrollPane = new JScrollPane(new JLabel(s));
+		        scrollPane.setPreferredSize(new Dimension(200,100));
+		        Object message = scrollPane;
+		  
+		        JTextArea textArea = new JTextArea(s);
+		        textArea.setLineWrap(true);
+		        textArea.setWrapStyleWord(true);
+		        textArea.setMargin(new Insets(5,5,5,5));
+		        scrollPane.getViewport().setView(textArea);
+		  
+		        String input = JOptionPane.showInputDialog(frame, "Edit Product Description:", product.getDesc());
+		        //String input = JOptionPane.showInputDialog(frame, message);
+		        
+		        System.out.println(input);
+		        /*String input = JOptionPane.showInputDialog("Edit Product Description:", product.getDesc());
+				if(input!=null && !input.equals("")){
+					product.setDesc(input);
+					System.out.println(product.getDesc());
+					description.setText(product.getDesc());	
+	
+				}*/
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {}
+			
+		});
 		descEditor.add(description);
 		descEditor.add(editDesc);
 		gbc.gridx = 0;
@@ -157,13 +204,27 @@ public class ProductPageEditor extends ProductPage {
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				String[] deptList = {"Shoes", "Computers"}; //get from Store obj
-				String input = JOptionPane.showInputDialog(null, "Select Department:", "Input", JOptionPane.QUESTION_MESSAGE, null, deptList);
-				
+				String[] deptList = {"Shoes", "Electronics"}; //get from Store obj
+				int pos=0;
+				for(int i = 0; i < deptList.length; i++) {
+					if(deptList[i].equals(product.getDepartment().getName())) {
+						pos = i;
+					}
+				}
+				String input = (String) JOptionPane.showInputDialog(frame, 
+						"Select Department:", "Department", JOptionPane.QUESTION_MESSAGE, 
+						null, deptList, deptList[pos]);
+	
 				if(input!=null && !input.equals("")){
-					product.setName(input);
-					System.out.println(product.getName());
-					name.setText(product.getName());	
+					for(int i = 0; i < deptList.length; i++) {
+						if(deptList[i].equals(product.getDepartment().getName())) {
+							pos = i;
+						}
+					}
+					
+					product.setDepartment(new Department(input)); //store.getDepts().get(pos);
+					System.out.println(product.getDepartment().getName());
+					dept.setText("Department: " + product.getDepartment().getName());	
 	
 				}
 			}

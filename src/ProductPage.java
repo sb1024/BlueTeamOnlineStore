@@ -52,6 +52,7 @@ public class ProductPage {
 		
 		mainJPanel.setPreferredSize(new Dimension(1200, 670));
 		
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setPreferredSize(new Dimension(1200, 670));
 		frame.setTitle("Test");
 		frame.setContentPane(mainJPanel);
