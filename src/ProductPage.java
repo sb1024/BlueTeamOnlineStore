@@ -26,6 +26,8 @@ public class ProductPage {
 	
 	protected GridBagConstraints gbc;
 	
+	final protected NumberFormat USD = NumberFormat.getCurrencyInstance();
+	
 	//public ProductPage(MainWindow window, Product product) {
 	public ProductPage() {
 		frame = new JFrame();
@@ -73,7 +75,7 @@ public class ProductPage {
 		gbc.gridheight = 4;
 		mainJPanel.add(image, gbc);
 		
-		final NumberFormat USD = NumberFormat.getCurrencyInstance();
+		
 		
 		price = new JLabel("Price: " + USD.format(product.getPrice()));
 		price.setFont(new Font("Arial", Font.PLAIN, 32));

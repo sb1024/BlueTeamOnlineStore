@@ -1,11 +1,11 @@
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.math.BigDecimal;
 
 import javax.swing.*;
 
-public class ProductPageEditor extends ProductPage {
-	private MainWindow window;
-	private Product product;
-	
+public class ProductPageEditor extends ProductPage {	
 	private JPanel nameEditor, imageEditor, priceEditor, descEditor, deptEditor;
 	//public ProductPageEditor(MainWindow window, Product product) {
 	public ProductPageEditor() {
@@ -30,6 +30,33 @@ public class ProductPageEditor extends ProductPage {
 		nameEditor.setLayout(new BoxLayout(nameEditor, BoxLayout.LINE_AXIS));
 		nameEditor.setAlignmentX(Component.LEFT_ALIGNMENT);
 		JLabel editName = new JLabel(pencil);
+		editName.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				String input = JOptionPane.showInputDialog("Edit Product Name:");
+				if(input!=null && !input.equals("")){
+					product.setName(input);
+					System.out.println(product.getName());
+					name.setText(product.getName());	
+	
+				}
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {}
+			
+		});
+		
 		nameEditor.add(name);
 		nameEditor.add(editName);
 		gbc.gridx = 0;
@@ -58,6 +85,47 @@ public class ProductPageEditor extends ProductPage {
 		priceEditor.setAlignmentX(Component.LEFT_ALIGNMENT);
 		JLabel editPrice = new JLabel(pencil);
 		editPrice.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+		editPrice.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				String input = JOptionPane.showInputDialog("Edit Product Price:");
+				boolean error = true;
+				double newPrice = 0;
+				while(error) {
+					try {
+						newPrice = Double.parseDouble(input);
+						
+						if(newPrice != 0) {
+							error = false;
+							newPrice = round(newPrice);
+						}
+			
+					} catch (Exception e) {
+						input = JOptionPane.showInputDialog("The input was not understood. Please enter a decimal number. \nEdit Product Price:");
+					
+					}
+				}
+				if(input!=null && !input.equals("")){
+					product.setPrice(newPrice);
+					System.out.println(product.getPrice());
+					price.setText("Price: " + USD.format(product.getPrice()));	
+				}
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {}
+			
+		});
 		priceEditor.add(price);
 		priceEditor.add(editPrice);
 		gbc.gridx = 1;
@@ -85,11 +153,47 @@ public class ProductPageEditor extends ProductPage {
 		deptEditor.setAlignmentX(Component.LEFT_ALIGNMENT);
 		JLabel editDept = new JLabel(pencil);
 		editDept.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+		editDept.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				String[] deptList = {"Shoes", "Computers"}; //get from Store obj
+				String input = JOptionPane.showInputDialog(null, "Select Department:", "Input", JOptionPane.QUESTION_MESSAGE, null, deptList);
+				
+				if(input!=null && !input.equals("")){
+					product.setName(input);
+					System.out.println(product.getName());
+					name.setText(product.getName());	
+	
+				}
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {}
+			
+		});
 		deptEditor.add(dept);
 		deptEditor.add(editDept);
 		gbc.gridx = 2;
 		gbc.gridy = 0;
 		mainJPanel.add(deptEditor, gbc);
+	}
+	
+	private double round(double price) {
+		BigDecimal bigVal = new BigDecimal(price);
+		bigVal = bigVal.setScale(2, BigDecimal.ROUND_HALF_UP);
+		price = bigVal.doubleValue();
+		return price;
+		
 	}
 	
 	public static void main(String args[]){
