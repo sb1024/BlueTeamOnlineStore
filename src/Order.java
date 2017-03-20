@@ -2,7 +2,7 @@
 public class Order {
 
 	// variables
-	private int orderNumber;
+	private long orderNumber;
 	private String firstName;
 	private String surName;
 	private String address;
@@ -16,7 +16,7 @@ public class Order {
 	private ShoppingCart orderedItems;
 	
 	// constructor
-	Order(int inputOrderNumber, String inputFirstName, String inputSurName, String inputAddress, String inputCity, String inputState, int inputZip, long inputPhoneNum, 
+	Order(long inputOrderNumber, String inputFirstName, String inputSurName, String inputAddress, String inputCity, String inputState, int inputZip, long inputPhoneNum, 
 	long inputCcNum, int inputExpDate, double inputTotalPrice, ShoppingCart inputOrderedItems){
 		orderNumber = inputOrderNumber;
 		firstName = inputFirstName;
@@ -33,7 +33,7 @@ public class Order {
 	}
 	
 	// get methods
-	public int getOrderNumber(){
+	public long getOrderNumber(){
 		return orderNumber;
 	}
 	public String getFirstName(){
@@ -71,7 +71,7 @@ public class Order {
 	}
 	
 	// set methods
-	public void setOrderNumber(int inputOrderNumber){
+	public void setOrderNumber(long inputOrderNumber){
 		orderNumber = inputOrderNumber;
 	}
 	public void setFirstName(String inputFirstName){
