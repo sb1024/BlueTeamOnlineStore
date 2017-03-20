@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.imageio.*;
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -52,7 +51,7 @@ public class HomePageEditor extends HomePage {
 		pencilIcon = new JLabel(new ParsedImageIcon("pencil.png", 25, 25));
 		pencilIcon.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
-				setStoreName(JOptionPane.showInputDialog("Please enter the store's new name:", "Store name"));
+				setStoreName(JOptionPane.showInputDialog("Please enter the store's new name:", store.getStoreName()));
 			}
 			public void mouseEntered(MouseEvent e) {
 				mainPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -90,7 +89,7 @@ public class HomePageEditor extends HomePage {
 		pencilIcon = new JLabel(new ParsedImageIcon("pencil.png", 25, 25));
 		pencilIcon.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
-				setDescription(JOptionPane.showInputDialog("Please enter the store's new description:", "Store description"));
+				setDescription(JOptionPane.showInputDialog("Please enter the store's new description:", store.getStoreDescription()));
 			}
 			public void mouseEntered(MouseEvent e) {
 				mainPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -178,8 +177,7 @@ public class HomePageEditor extends HomePage {
 			public void mouseClicked(MouseEvent e) {
 				String departmentName = JOptionPane.showInputDialog("Please enter the new department's name:", "Department name");
 				if (departmentName != null && !departmentName.equals("")) {
-					Department newDepartment = new Department(departmentName);
-					//window.setContentArea(newDepartment);
+					addDepartment(departmentName);
 				}
 			}
 			public void mouseEntered(MouseEvent e) {
@@ -194,6 +192,15 @@ public class HomePageEditor extends HomePage {
 		
 		departmentsGrid.add(addDepartmentButton);
 		frameUpdate();
+	}
+	public void addDepartment(String departmentName) {
+		Department newDepartment = new Department(departmentName);
+		JPanel newDepartmentPanel = new JPanel();
+		newDepartmentPanel.setBackground(Color.WHITE);
+		departmentList.add(newDepartment);
+		departmentButtons.add(newDepartmentPanel);
+		departmentsGrid.add(newDepartmentPanel);
+		window.setContentArea(newDepartment);
 	}
 	public static void main(String[] args) {
 		new HomePageEditor();
