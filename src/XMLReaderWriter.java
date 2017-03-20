@@ -85,50 +85,50 @@ public class XMLReaderWriter {
 	        	
 	        	Element firstName = doc.createElement("firstName");
 	        	firstName.appendChild(doc.createTextNode(OL.get(x).getFirstName()));
-	        	firstName.appendChild(order);
+	        	order.appendChild(firstName);
 	        	
 	        	Element surName = doc.createElement("surName");
 	        	surName.appendChild(doc.createTextNode(OL.get(x).getSurName()));
-	        	surName.appendChild(order);
+	        	order.appendChild(surName);
 	        	
 	        	Element address = doc.createElement("address");
 	        	address.appendChild(doc.createTextNode(OL.get(x).getAddress()));
-	        	address.appendChild(order);
+	        	order.appendChild(address);
 	        	
 	        	Element city = doc.createElement("city");
 	        	city.appendChild(doc.createTextNode(OL.get(x).getCity()));
-	        	city.appendChild(order);
+	        	order.appendChild(city);
 	        	
 	        	Element state = doc.createElement("state");
 	        	state.appendChild(doc.createTextNode(OL.get(x).getState()));
-	        	state.appendChild(order);
+	        	order.appendChild(state);
 	        	
 	        	Element zip = doc.createElement("zipCode");
 	        	zip.appendChild(doc.createTextNode(Integer.toString(OL.get(x).getZip())));
-	        	zip.appendChild(order);
+	        	order.appendChild(zip);
 	        	
 	        	Element phone = doc.createElement("phoneNumber");
 	        	phone.appendChild(doc.createTextNode(Long.toString((OL.get(x).getPhoneNum()))));
-	        	phone.appendChild(order);
+	        	order.appendChild(phone);
 	        	
 	        	Element ccNum = doc.createElement("creditCardNumber");
 	        	ccNum.appendChild(doc.createTextNode(Long.toString((OL.get(x).getCcNum()))));
-	        	ccNum.appendChild(order);
+	        	order.appendChild(ccNum);
 	        	
 	        	Element expDate = doc.createElement("expirationDate");
 	        	expDate.appendChild(doc.createTextNode(Integer.toString(OL.get(x).getExpDate())));
-	        	expDate.appendChild(order);
+	        	order.appendChild(expDate);
 	        	
 	        	Element total = doc.createElement("totalPrice");
 	        	total.appendChild(doc.createTextNode(Double.toString(OL.get(x).getTotalPrice())));
-	        	total.appendChild(order);
+	        	order.appendChild(total);
 	        	
 	        	ArrayList <ProductOrder> POL = OL.get(x).getOrderedItems().getProductOrders();
 	        	for(int y=0; y < POL.size(); y++){
 	        		
 	        		Product p = POL.get(y).getProduct();
 	        		
-		        	Element product = doc.createElement("product");
+		        	Element product = doc.createElement("oProduct");
 		        	Attr productName = doc.createAttribute("name");
 		        	productName.setValue(p.getName());
 		        	product.setAttributeNode(productName);
@@ -158,6 +158,7 @@ public class XMLReaderWriter {
 		        		image.appendChild(doc.createTextNode("noImage.jpg"));
 		        	}
 		        	product.appendChild(image);
+		        	
 		        	
 	        	}
 	        }
@@ -252,9 +253,26 @@ public class XMLReaderWriter {
 				double totalPrice = Double.parseDouble(oE.getElementsByTagName("totalPrice").item(0).getTextContent());
 				
 				ArrayList <ProductOrder> pOAL = new ArrayList(0);
-				for(){
+				NodeList oPList = doc.getElementsByTagName("oProduct");
+				for(int y=0; y < oList.getLength(); y++){
+					Element oPE = (Element) oPList.item(y);
 					
+					double price = Double.parseDouble(oPE.getElementsByTagName("price").item(0).getTextContent());
+					String name = oPE.getAttribute("name");
+					String desc = oPE.getElementsByTagName("description").item(0).getTextContent();
+					boolean sale = Boolean.parseBoolean(oPE.getElementsByTagName("sale").item(0).getTextContent());
+					ParsedImageIcon image = new ParsedImageIcon(oPE.getElementsByTagName("image").item(0).getTextContent());
+					Product p = new Product(price, name, desc, sale, null, image);
+					
+					int quantity = Integer.parseInt(oPE.getElementsByTagName("quantity").item(0).getTextContent());
+					
+					ProductOrder pO = new ProductOrder(p,quantity);
+					pOAL.add(pO);
 				}
+				
+				ShoppingCart SC = new ShoppingCart(pOAL);
+				Order o = new Order(orderNumber, firstName, surName, address, city, state, zip, phoneNum, ccNum, expDate, totalPrice, SC);
+				s.addOrder(o);
 			}
 		
 			return(s);
@@ -269,24 +287,24 @@ public class XMLReaderWriter {
 		createStore(oStore);
 	}
 	
-	private Product loadProduct(Element pE){
-		double price = Double.parseDouble(pE.getElementsByTagName("price").item(0).getTextContent());
-		
-		String name = pE.getAttribute("name");
-		
-		String desc = pE.getElementsByTagName("description").item(0).getTextContent();
-		
-		boolean sale = Boolean.parseBoolean(pE.getElementsByTagName("sale").item(0).getTextContent());
-		
-		ParsedImageIcon image = new ParsedImageIcon(pE.getElementsByTagName("image").item(0).getTextContent());
-		
-		return(new Product(price, name, desc, sale, null, image));
-	}
-	
 	public static void main(String[] args){
 		createStore(createStore());
 		Store testStore = loadStore();
-		System.out.println(testStore.getStoreName());
+		ArrayList<Order> o = testStore.getOrders();
+		System.out.println(o.get(0).getAddress());
+		System.out.println(o.get(0).getCcNum());
+		System.out.println(o.get(0).getCity());
+		System.out.println(o.get(0).getExpDate());
+		System.out.println(o.get(0).getFirstName());
+		System.out.println(o.get(0).getSurName());
+		System.out.println(o.get(0).getOrderNumber());
+		System.out.println(o.get(0).getPhoneNum());
+		System.out.println(o.get(0).getState());
+		System.out.println(o.get(0).getTotalPrice());
+		System.out.println(o.get(0).getZip());
+
+
+		/*System.out.println(testStore.getStoreName());
 		System.out.println(testStore.getStoreDescription());
 		System.out.println(testStore.getStoreLogo().getFilePath());
 		System.out.println(testStore.getDepartments().get(0).getProductList().get(0).getName());
@@ -308,7 +326,7 @@ public class XMLReaderWriter {
 				System.out.println(pro.getSale());
 				System.out.println(pro.getPrice());
 			}
-		}
+		}*/
 	}
 	
 	public static Store createStore(){
@@ -327,7 +345,11 @@ public class XMLReaderWriter {
 		departments.add(genericDepartment);
 		
 		ArrayList<Order> orders = new ArrayList();
-		
+		ShoppingCart cart = new ShoppingCart();
+		cart.addProductOrder(genericProduct, 2);
+		Long l1 = Long.valueOf("4436903231");
+		Long l2 = Long.valueOf("11111111111");
+		orders.add(new Order(102, "John", "Doe", "4520 Lain Lane", "Some City", "New York", 51034, l1, l2, 2233, 20.0, cart));
 		return new Store(storeName, storeDescription, departments, orders, storeLogo);
 
 
@@ -337,12 +359,8 @@ public class XMLReaderWriter {
 
 /*KNOWN PROBLEMS:
  * XML DOES NOT SAVE THE DEPARTMENT IMAGE
- * 		-THERE IS NO IMAGE IN CONSTRUCTORS
- * XML DOES NOT SAVE ORDERS
  * XML DOES NOT SAVE IMAGE WIDTH / HEIGHT
  * 
- * ToDo:
- * -Add Loading Orders
- * - *fixed* cannot load store w/o orders
+ * 
  */
 
