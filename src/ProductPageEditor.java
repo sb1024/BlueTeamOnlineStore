@@ -11,9 +11,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class ProductPageEditor extends ProductPage {	
 	private JPanel nameEditor, imageEditor, priceEditor, descEditor, deptEditor;
-	//public ProductPageEditor(MainWindow window, Product product) {
-	public ProductPageEditor() {
-		super();
+	
+	public ProductPageEditor(MainWindow window, Product product) {
+	//public ProductPageEditor() {
+		super(window, product);
 
 		addEditorButtons();
 		
@@ -66,7 +67,7 @@ public class ProductPageEditor extends ProductPage {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.anchor = GridBagConstraints.LINE_START;
-		mainJPanel.add(nameEditor, gbc);
+		this.add(nameEditor, gbc);
 		
 		imageEditor = new JPanel();
 		imageEditor.setBackground(Color.white);
@@ -149,7 +150,7 @@ public class ProductPageEditor extends ProductPage {
 		gbc.gridy = 1;
 		gbc.gridheight = 4;
 		gbc.anchor = GridBagConstraints.LINE_START;
-		mainJPanel.add(imageEditor, gbc);
+		this.add(imageEditor, gbc);
 		
 		priceEditor = new JPanel();
 		priceEditor.setBackground(Color.white);
@@ -211,7 +212,7 @@ public class ProductPageEditor extends ProductPage {
 		gbc.gridy = 1;
 		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.LINE_START;
-		mainJPanel.add(priceEditor, gbc);
+		this.add(priceEditor, gbc);
 		
 		descEditor = new JPanel();
 		descEditor.setBackground(Color.white);
@@ -271,7 +272,7 @@ public class ProductPageEditor extends ProductPage {
 		gbc.gridx = 0;
 		gbc.gridy = 5;
 		gbc.gridheight = 2;
-		mainJPanel.add(descEditor, gbc);
+		this.add(descEditor, gbc);
 		
 		deptEditor = new JPanel();
 		deptEditor.setBackground(Color.white);
@@ -325,7 +326,7 @@ public class ProductPageEditor extends ProductPage {
 		deptEditor.add(editDept);
 		gbc.gridx = 2;
 		gbc.gridy = 0;
-		mainJPanel.add(deptEditor, gbc);
+		this.add(deptEditor, gbc);
 	}
 	
 	private double round(double price) {
@@ -336,7 +337,7 @@ public class ProductPageEditor extends ProductPage {
 		
 	}
 	
-	public static void main(String args[]){
+	/*public static void main(String args[]){
 		ProductPageEditor editor = new ProductPageEditor();
-	}
+	}*/
 }

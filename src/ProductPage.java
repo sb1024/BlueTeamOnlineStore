@@ -13,13 +13,13 @@ import java.text.NumberFormat;
 import javax.swing.*;
 
 
-public class ProductPage {
+public class ProductPage extends JPanel {
 	protected MainWindow window;
 	protected Product product;
 	
 	protected JFrame frame;
 	protected JButton addToCart;
-	protected JPanel mainJPanel;
+	//protected JPanel mainJPanel;
 	protected JLabel name, description, image, price, number, total, dept;
 	protected JPanel quantity;
 	private int num = 1;
@@ -28,12 +28,11 @@ public class ProductPage {
 	
 	final protected NumberFormat USD = NumberFormat.getCurrencyInstance();
 	
-	//public ProductPage(MainWindow window, Product product) {
-	public ProductPage() {
+	public ProductPage(MainWindow window, Product product) {
 		frame = new JFrame();
 		
-		//this.window = window;
-		//this.product = product;
+		this.window = window;
+		this.product = product;
 		product = new Product(0, null, null, false, null, null);
 		product.setName("Black Leather Boots");
 		product.setDesc("These boots are offered with fast two-day shipping!");
@@ -42,20 +41,20 @@ public class ProductPage {
 		product.setSale(false);
 		product.setDepartment(new Department("Shoes"));
 		
-		mainJPanel = new JPanel();
-		mainJPanel.setBackground(Color.white);
-		mainJPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-		mainJPanel.setLayout(new GridBagLayout());
+		//mainJPanel = new JPanel();
+		this.setBackground(Color.white);
+		this.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
 		
 		addProductInfo();
 		
-		mainJPanel.setPreferredSize(new Dimension(1200, 670));
+		this.setPreferredSize(new Dimension(1200, 670));
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setPreferredSize(new Dimension(1200, 670));
 		frame.setTitle("Test");
-		frame.setContentPane(mainJPanel);
+		frame.setContentPane(this);
 		frame.pack();
 		frame.setVisible(true);
 	}
@@ -67,7 +66,7 @@ public class ProductPage {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.anchor = GridBagConstraints.LINE_START;
-		mainJPanel.add(name, gbc);
+		this.add(name, gbc);
 		
 		if(product.getImage() == null) {
 			image.setIcon(new ParsedImageIcon("noImage.jpg", 350, 350));
@@ -78,7 +77,7 @@ public class ProductPage {
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.gridheight = 4;
-		mainJPanel.add(image, gbc);
+		this.add(image, gbc);
 		
 		
 		
@@ -88,7 +87,7 @@ public class ProductPage {
 		gbc.gridx = 1;
 		gbc.gridy = 1;
 		gbc.gridheight = 1;
-		mainJPanel.add(price, gbc);
+		this.add(price, gbc);
 
 		quantity = new JPanel();
 		quantity.setBackground(Color.white);
@@ -161,7 +160,7 @@ public class ProductPage {
 		
 		gbc.gridx = 1;
 		gbc.gridy = 2;
-		mainJPanel.add(quantity, gbc);
+		this.add(quantity, gbc);
 		
 		total = new JLabel("Total Price: " + USD.format(product.getPrice()));
 		total.setFont(new Font("Arial", Font.PLAIN, 32));
@@ -169,7 +168,7 @@ public class ProductPage {
 		total.setAlignmentX(Component.LEFT_ALIGNMENT);
 		gbc.gridx = 1;
 		gbc.gridy = 3;
-		mainJPanel.add(total, gbc);
+		this.add(total, gbc);
 		
 		addToCart = new JButton("Add to Shopping Cart");
 		addToCart.setFont(new Font("Arial", Font.PLAIN, 32));
@@ -186,7 +185,7 @@ public class ProductPage {
 		});
 		gbc.gridx = 1;
 		gbc.gridy = 4;
-		mainJPanel.add(addToCart, gbc);
+		this.add(addToCart, gbc);
 		
 		description = new JLabel(product.getDesc());
 		description.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -195,7 +194,7 @@ public class ProductPage {
 		gbc.gridy = 5;
 		gbc.gridwidth = 2;
 		gbc.gridheight = 2;
-		mainJPanel.add(description, gbc);
+		this.add(description, gbc);
 		
 		dept = new JLabel("Department: " + product.getDepartment().getName());
 		dept.setFont(new Font("Arial", Font.PLAIN, 24));
@@ -204,16 +203,16 @@ public class ProductPage {
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
-		mainJPanel.add(dept, gbc);
+		this.add(dept, gbc);
 	}
 	
 	private void addProductToCart(int num) {
-		//mainWindow.getStore().getShoppingCart().addProduct(product, num);
+		//window.getStore().g
 		System.out.println(num);
 	}
 	
-	public static void main(String args[]){
+	/*public static void main(String args[]){
 		ProductPage page = new ProductPage();
-	}
+	}*/
 	
 }
