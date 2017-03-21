@@ -1,9 +1,12 @@
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class ProductPageEditor extends ProductPage {	
 	private JPanel nameEditor, imageEditor, priceEditor, descEditor, deptEditor;
@@ -71,6 +74,61 @@ public class ProductPageEditor extends ProductPage {
 		JLabel editImage = new JLabel(pencil);
 		editImage.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		editImage.setVerticalAlignment(JLabel.BOTTOM);
+		editImage.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				final JFileChooser fc = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "jpeg");
+				fc.setFileFilter(filter);
+				
+				int returnVal = fc.showOpenDialog(frame);
+				
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+		            File file = fc.getSelectedFile();
+		            
+
+					System.out.println("Image: " + file.getName());
+					System.out.println("Path: " + file.getPath());
+					
+					//File currentDirFile = new File(".");
+	            	//String helper = currentDirFile.getAbsolutePath();
+	            	
+					System.out.println("dir: " + System.getProperty("user.dir"));
+					String currentDir = System.getProperty("user.dir");
+					
+	            	
+		            //if(!file.getPath().contains('\\BlueTeamOnlineStore\\')) { //copy file
+		            	File source = new File(file.getPath());
+		            	File dest = new File(currentDir);
+		            	
+		            	//***
+		            	///FileUtils.copyDirectory(source, dest);
+		            	
+		            	ParsedImageIcon newImage = new ParsedImageIcon(file.getName(), 350, 350);
+
+					product.setImage(newImage);
+					image.setIcon(product.getImage());
+		            
+		            
+		           
+		        } 
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {}
+			
+		});
 		imageEditor.add(image);
 		imageEditor.add(editImage);
 		gbc.gridx = 0;
@@ -84,6 +142,7 @@ public class ProductPageEditor extends ProductPage {
 		priceEditor.setLayout(new BoxLayout(priceEditor, BoxLayout.LINE_AXIS));
 		priceEditor.setAlignmentX(Component.LEFT_ALIGNMENT);
 		JLabel editPrice = new JLabel(pencil);
+		editPrice.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 		editPrice.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		editPrice.addMouseListener(new MouseListener() {
 
@@ -165,6 +224,12 @@ public class ProductPageEditor extends ProductPage {
 		        //String input = JOptionPane.showInputDialog(frame, message);
 		        
 		        System.out.println(input);
+		        if(input!=null && !input.equals("")){
+					product.setDesc(input);
+					System.out.println(product.getDesc());
+					description.setText(product.getDesc());	
+	
+				}
 		        /*String input = JOptionPane.showInputDialog("Edit Product Description:", product.getDesc());
 				if(input!=null && !input.equals("")){
 					product.setDesc(input);
