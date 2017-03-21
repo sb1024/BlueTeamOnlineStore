@@ -24,7 +24,7 @@ public class NavBar extends JPanel{
 		mainWindow=window;
 		editor=window.isEditor();
 		Store store = window.getStore();
-		ParsedImageIcon storeLogo = store.getStoreLogo();
+		ParsedImageIcon storeLogo = new ParsedImageIcon(store.getStoreLogo().getFilePath());
 		storeLogo.setHeight(50);
 		String storeTitle = store.getStoreName();
 		MouseListener homeButton = new MouseListener(){
@@ -108,7 +108,6 @@ public class NavBar extends JPanel{
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				System.out.println("Review Cart");
 				mainWindow.setContentArea(new CartPage(mainWindow));
 			}
 
@@ -179,6 +178,7 @@ public class NavBar extends JPanel{
 
 
 		this.setPreferredSize(new Dimension(1200, 50));
+		this.setMaximumSize(new Dimension(1200, 50));
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		this.setBackground(new Color(220, 220, 220));
 		
@@ -192,7 +192,7 @@ public class NavBar extends JPanel{
 		JComponent logoSpacer = (JComponent)Box.createRigidArea(new Dimension((int)this.getPreferredSize().getWidth()/60, 50));
 		JComponent logoSpacer2 = (JComponent)Box.createRigidArea(new Dimension((int)this.getPreferredSize().getWidth()/60, 50));
 		logoSpacer2.addMouseListener(homeButton);
-		JComponent logoSpacer3 = (JComponent)Box.createRigidArea(new Dimension((int)this.getPreferredSize().getWidth()/3, 50));
+		JComponent logoSpacer3 = (JComponent)Box.createRigidArea(new Dimension((int)this.getPreferredSize().getWidth()/8, 50));
 		JComponent buttonSpacer1 = (JComponent)Box.createRigidArea(new Dimension((int)this.getPreferredSize().getWidth()/60, 50));
 		buttonSpacer1.addMouseListener(reviewCartListener);
 		JComponent buttonSpacer2 = (JComponent)Box.createRigidArea(new Dimension((int)this.getPreferredSize().getWidth()/60, 50));
