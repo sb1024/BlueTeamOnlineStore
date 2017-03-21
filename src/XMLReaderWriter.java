@@ -41,6 +41,10 @@ public class XMLReaderWriter {
 		        department.setAttributeNode(departmentName);
 		        store.appendChild(department);
 		        
+		        Element depImage = doc.createElement("departmentImage");
+		        depImage.appendChild(doc.createTextNode(DL.get(0).getImage().getFilePath()));
+		        department.appendChild(depImage);
+		        
 		        ArrayList <Product> PL = DL.get(x).getProductList();
 		        
 		        // product elements in department
@@ -79,7 +83,7 @@ public class XMLReaderWriter {
 	        for(int x=0; x < OL.size(); x++){
 	        	Element order = doc.createElement("order");
 	        	Attr orderNum = doc.createAttribute("orderNumber");
-	        	orderNum.setValue(Integer.toString(OL.get(x).getOrderNumber()));
+	        	orderNum.setValue(Long.toString(OL.get(x).getOrderNumber()));
 	        	order.setAttributeNode(orderNum);
 	        	store.appendChild(order);
 	        	
@@ -172,10 +176,6 @@ public class XMLReaderWriter {
 	         StreamResult result =
 	         new StreamResult(new File("Z:\\Store.xml"));
 	         transformer.transform(source, result);
-	         // Output to console for testing
-	         /*StreamResult consoleResult =
-	         new StreamResult(System.out);
-	         transformer.transform(source, consoleResult);*/
 	         
 		}catch(Exception e){
 			e.printStackTrace();
@@ -203,6 +203,7 @@ public class XMLReaderWriter {
 			for(int x=0; x < dList.getLength(); x++){
 				Element dE = (Element) dList.item(x);
 				Department d = new Department(dE.getAttribute("name"));
+				d.setImage(new ParsedImageIcon(dE.getElementsByTagName("departmentImage").item(0).getTextContent()));
 			
 				NodeList pList = doc.getElementsByTagName("product");
 				// for loop defining each product in department
@@ -290,7 +291,7 @@ public class XMLReaderWriter {
 	public static void main(String[] args){
 		createStore(createStore());
 		Store testStore = loadStore();
-		ArrayList<Order> o = testStore.getOrders();
+		/*ArrayList<Order> o = testStore.getOrders();
 		System.out.println(o.get(0).getAddress());
 		System.out.println(o.get(0).getCcNum());
 		System.out.println(o.get(0).getCity());
@@ -303,8 +304,7 @@ public class XMLReaderWriter {
 		System.out.println(o.get(0).getTotalPrice());
 		System.out.println(o.get(0).getZip());
 
-
-		/*System.out.println(testStore.getStoreName());
+		System.out.println(testStore.getStoreName());
 		System.out.println(testStore.getStoreDescription());
 		System.out.println(testStore.getStoreLogo().getFilePath());
 		System.out.println(testStore.getDepartments().get(0).getProductList().get(0).getName());
@@ -358,9 +358,13 @@ public class XMLReaderWriter {
 }
 
 /*KNOWN PROBLEMS:
- * XML DOES NOT SAVE THE DEPARTMENT IMAGE
  * XML DOES NOT SAVE IMAGE WIDTH / HEIGHT
- * 
- * 
+ * {
+ * XML ONLY UNDER ONE NAME
+ * CANT CHANGE WHICH XML IS LOADED
+ * CAN ONLY SAVE 1 STORE AT A TIME
+ * } Idea to fix these:
+ * 	- Find where the save / load buttons are
+ * 	- add in a JFileChooser to save/ load different files
  */
 
