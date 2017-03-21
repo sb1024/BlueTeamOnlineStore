@@ -4,12 +4,12 @@ import java.util.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-public class DepartmentPage{
+public class DepartmentPage extends JPanel{
 	private ArrayList<Product> products;
 	private ArrayList<JPanel> productButtons=new ArrayList();
 	private JScrollBar mainJPanel;
 	private MainWindow mainWindow;
-	private JPanel mainPanel;
+	private JPanel mainPanel=this;
 	private Department mainDepartment;
 	private boolean editor;
 	private JPanel productsGrid;
@@ -18,41 +18,28 @@ public class DepartmentPage{
 	private ArrayList<Product> productList;
 
 	
-	DepartmentPage() {
-		Store store = createStore();
-
-		frame = new JFrame("Test");
-		 JScrollPane scrollPane = new JScrollPane();
-
-
-		Department department = store.getDepartments().get(0);
+	DepartmentPage(MainWindow window, Department department) {
+		mainWindow = window;
 		
-		products= department.getProductList();
+		Store store = mainWindow.getStore();
 		
-		
-		mainPanel = new JPanel();
-		mainPanel.setBackground(Color.white);
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		this.setBackground(Color.white);
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		
 		
-		scrollPane = new JScrollPane(mainPanel);
-		scrollPane.setPreferredSize(new Dimension(1200, 670));
 		
 		//Change to mainDepartment.getProducts()
-		productList = department.getProductList();
-		
-		
-
+		products = department.getProductList();
 
 		JComponent departmentNameSpacer1 = (JComponent)Box.createRigidArea(new Dimension(1200, 50));
 		JComponent departmentNameSpacer2 = (JComponent)Box.createRigidArea(new Dimension(1200, 50));
 		JLabel departmentName = new JLabel("<HTML><u><b>" + department.getName() + "</u></b></HTML>");
 		departmentName.setAlignmentX(Component.CENTER_ALIGNMENT); //I have no idea why without this,it aligns to the right.
 		departmentName.setFont(new Font("Arial", Font.PLAIN, 50));
-		mainPanel.add(departmentNameSpacer1);
-		mainPanel.add(departmentName);
-		mainPanel.add(departmentNameSpacer2);
+		this.add(departmentNameSpacer1);
+		this.add(departmentName);
+		this.add(departmentNameSpacer2);
 		
 
 		productsGrid = new JPanel();
@@ -70,16 +57,14 @@ public class DepartmentPage{
 		gridHolder.add(Box.createRigidArea(new Dimension(70, 100)));
 		gridHolder.add(productsGrid);
 		
-		mainPanel.add(gridHolder);
+		this.add(gridHolder);
 		
 
 
 
 		
-		mainPanel.repaint();
-		frame.add(scrollPane);
-		frame.setVisible(true);
-		frame.pack();
+		this.repaint();
+
 		
 	}
 	public void createDecorationForPanel() {
@@ -209,14 +194,12 @@ public class DepartmentPage{
 		return products;
 	}
 
-	public void frameUpdate(){
-		frame.pack();
-		frame.repaint();
-	}
+
 	public JPanel getProductsGrid(){ //Used when deleting items
 		return productsGrid;
 	}
 	public JPanel getMainPanel(){
 		return mainPanel;
 	}
+	
 }
