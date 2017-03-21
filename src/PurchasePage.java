@@ -41,9 +41,8 @@ public class PurchasePage extends JPanel implements ActionListener{
 	
 	// constructor
 	PurchasePage(MainWindow window){
-		this.setPreferredSize(new Dimension(1500, 800));
+		this.setPreferredSize(new Dimension(1200, 670));
 		this.setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
-		this.setBorder(BorderFactory.createEmptyBorder(20,50,20,50));
 		this.setBackground(Color.WHITE);
 		orderTotal = calculateTotal();
 		mainJPanel = new JPanel();
@@ -80,10 +79,10 @@ public class PurchasePage extends JPanel implements ActionListener{
 		this.add(title);
 		this.add(mainJPanel);
 		title.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
-		title.setBorder(BorderFactory.createEmptyBorder(20,50,20,50));
+		title.setBorder(BorderFactory.createEmptyBorder(20,30,20,10));
 		title.setFont(new Font("Arial", Font.PLAIN, 30));
 		orderInfoJPanel.setLayout(new GridLayout(0, 2));
-		orderInfoJPanel.setBorder(BorderFactory.createEmptyBorder(50,500,50,500));
+		orderInfoJPanel.setBorder(BorderFactory.createEmptyBorder(50,200,50,500));
 		mainJPanel.add(orderInfoJPanel);
 		mainJPanel.add(orderSummaryJPanel);
 		orderInfoJPanel.add(firstNameLabel);
@@ -106,6 +105,64 @@ public class PurchasePage extends JPanel implements ActionListener{
 			System.out.println(generateOrderNumber());
 			Order createdOrder = new Order(generateOrderNumber(), firstNameField.getText(), lastNameField.getText(), addressField.getText(), cityField.getText(), (String)stateDrop.getSelectedItem(), Integer.parseInt(zipField.getText()), 
 					Long.parseLong(phoneField.getText()), Long.parseLong(ccField.getText()), Integer.parseInt(expField.getText()), calculateTotal(), window.getShoppingCart());
+		}
+		
+	}
+	
+	//TODO: integrate this
+	private long generateOrderNumber(){
+		boolean generating = true;
+		long orderNumber = -1;
+		while(generating = true){
+			generating = false;
+			orderNumber = (long)(Math.random()*1000000000);
+			for(Order active : window.getStore().getOrders()){
+				if(active.getOrderNumber() == orderNumber){
+					generating = true;
+				}
+			}
+		}
+		return orderNumber;
+	}
+	
+	private boolean checkCompletion(){
+		ArrayList<Boolean> fields = new ArrayList<Boolean>();
+		boolean firstName = false;
+		boolean lastName = false;
+		boolean address = false;
+		boolean city = false;
+		boolean state = false;
+		boolean zip = false;
+		boolean phone = false;
+		boolean cc = false;
+		boolean exp = false;
+		
+		if(!(firstNameField.getText().equals(""))){
+			firstName = true;
+		}
+		if(!(lastNameField.getText().equals(""))){
+			lastName = true;
+		}
+		if(!(addressField.getText().equals(""))){
+			address = true;
+		}
+		if(!(cityField.getText().equals(""))){
+			city = true;
+		}
+		if(!(stateDrop.getSelectedItem().equals(""))){
+			state = true;
+		}
+		if(!(zipField.getText().equals(""))){
+			zip = true;
+		}
+		if(!(phoneField.getText().equals(""))){
+			phone = true;
+		}
+		if(!(ccField.getText().equals(""))){
+			cc = true;
+		}
+		if(!(expField.getText().equals(""))){
+			exp = true;
 		}
 		
 		if(firstNameField.getText().equals("")){
@@ -162,62 +219,6 @@ public class PurchasePage extends JPanel implements ActionListener{
 		else{
 			expLabel.setText("<html><font color='black'>Expiration Date:</font></html>");
 		}
-	}
-	
-	private long generateOrderNumber(){
-		boolean generating = true;
-		long orderNumber = 000000000;
-		while(generating = true){
-			generating = false;
-			orderNumber = (long)(Math.random()*1000000000);
-			for(Order active : window.getStore().getOrders()){
-				if(active.getOrderNumber() == orderNumber){
-					generating = true;
-				}
-			}
-		}
-		return orderNumber;
-	}
-	
-	private boolean checkCompletion(){
-		ArrayList<Boolean> fields = new ArrayList<Boolean>();
-		boolean firstName = false;
-		boolean lastName = false;
-		boolean address = false;
-		boolean city = false;
-		boolean state = false;
-		boolean zip = false;
-		boolean phone = false;
-		boolean cc = false;
-		boolean exp = false;
-		
-		if(!(firstNameField.getText().equals(""))){
-			firstName = true;
-		}
-		if(!(lastNameField.getText().equals(""))){
-			lastName = true;
-		}
-		if(!(addressField.getText().equals(""))){
-			address = true;
-		}
-		if(!(cityField.getText().equals(""))){
-			city = true;
-		}
-		if(!(stateDrop.getSelectedItem().equals(""))){
-			state = true;
-		}
-		if(!(zipField.getText().equals(""))){
-			zip = true;
-		}
-		if(!(phoneField.getText().equals(""))){
-			phone = true;
-		}
-		if(!(ccField.getText().equals(""))){
-			cc = true;
-		}
-		if(!(expField.getText().equals(""))){
-			exp = true;
-		}
 		
 		fields.add(firstName);fields.add(lastName);fields.add(address);fields.add(city);fields.add(state);fields.add(zip);fields.add(phone);fields.add(cc);fields.add(exp);
 		
@@ -229,24 +230,31 @@ public class PurchasePage extends JPanel implements ActionListener{
 		return true;
 	}
 	
-	
+	//TODO: integrate this
 	// loops through all productorders in the cart.
 	// gets the price of the productorder product, multiplies it by the productorder's quantity, adds to the total
 	private double calculateTotal(){
-		double total = 0;
+		/*double total = 0;
 		for(ProductOrder product : cart.getProductOrders()){
 			total+=((product.getProduct().getPrice())*product.getQuantity());
 		}
-		return total;
+		return total;*/
+		return 10;
 	}
 	
 	public void actionPerformed(ActionEvent event) {
 		String eventName = event.getActionCommand();
 		
 		if (eventName.equals("confirm")){
-			// open "are you sure?" dialogue
-			makeOrder();
-			// go to order number page
+			if(checkCompletion()){
+				int orderConfirm = JOptionPane.showConfirmDialog(mainJPanel, "Place your order?", "Confirm Order", JOptionPane.YES_NO_OPTION);
+				if(orderConfirm == 1){
+					System.out.println("DEBUG: confirm");
+				}
+				makeOrder();
+				//TODO: go to order number page
+			}
+
 		}
 		else if (eventName.equals("cancel")){
 			// call back button
