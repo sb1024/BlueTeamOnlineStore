@@ -10,8 +10,9 @@ public class DepartmentPageEditor extends DepartmentPage{
 	private JPanel productsGrid;
 	private Department department;
 	
-	DepartmentPageEditor() {
-		super();
+	DepartmentPageEditor(MainWindow mainWindow, Department department) {
+		super(mainWindow, department);
+		window=mainWindow;
 		productButtons = getProductButtons();
 		products = getProductList();
 		productsGrid = getProductsGrid();
@@ -81,8 +82,8 @@ public class DepartmentPageEditor extends DepartmentPage{
 							if(product==currentProduct){
 								products.remove(productCounter); //Will completely remove it from store. This list is stored in the store object which is used by every other page. ONLY needs to be called once.
 								productsGrid.remove(productButtons.remove(productCounter)); //Also need to remove from product buttons, otherwise multiple deletions will mess up indexing
+								
 								deleted=true;
-								frameUpdate();
 								
 							}
 						}
@@ -182,10 +183,9 @@ public class DepartmentPageEditor extends DepartmentPage{
 		
 		productsGrid.add(addProductButton);
 		
-		frameUpdate();
+		window.updateFrame();
 	}
 	public static void main(String args[]){
-		new DepartmentPageEditor();
 	}
 
 }
