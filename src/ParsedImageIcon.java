@@ -49,4 +49,22 @@ public class ParsedImageIcon extends ImageIcon{
 	public String getFilePath(){
 		return filePath;
 	}
+	
+	public void fitImage(int maxWidth, int maxHeight){
+		Image image = this.getImage();
+		int originalWidth = image.getWidth(getImageObserver());
+		int originalHeight = image.getHeight(getImageObserver());
+		double widthRatio = (maxWidth / originalWidth);
+		double heightRatio = (maxHeight / originalHeight);
+		int newWidth = (int)(originalWidth * widthRatio);
+		int newHeight = (int)(originalHeight * heightRatio);
+		if (newWidth <= newHeight){
+			newHeight = (int)(originalHeight * widthRatio);
+		}
+		else{
+			newWidth = (int)(originalWidth * heightRatio);
+		}
+		setWidth(newWidth);
+		setHeight(newHeight);
+	}
 }
