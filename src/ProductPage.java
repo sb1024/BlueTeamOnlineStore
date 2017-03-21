@@ -69,7 +69,11 @@ public class ProductPage {
 		gbc.anchor = GridBagConstraints.LINE_START;
 		mainJPanel.add(name, gbc);
 		
-		image = new JLabel(product.getImage());
+		if(product.getImage() == null) {
+			image.setIcon(new ParsedImageIcon("noImage.jpg", 350, 350));
+		} else {
+			image = new JLabel(product.getImage());
+		}
 		image.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 		gbc.gridx = 0;
 		gbc.gridy = 1;

@@ -4,6 +4,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -86,32 +87,45 @@ public class ProductPageEditor extends ProductPage {
 				
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 		            File file = fc.getSelectedFile();
-		            
-
+		       
 					System.out.println("Image: " + file.getName());
 					System.out.println("Path: " + file.getPath());
-					
-					//File currentDirFile = new File(".");
-	            	//String helper = currentDirFile.getAbsolutePath();
-	            	
 					System.out.println("dir: " + System.getProperty("user.dir"));
 					String currentDir = System.getProperty("user.dir");
 					
 	            	
-		            //if(!file.getPath().contains('\\BlueTeamOnlineStore\\')) { //copy file
+		            if(!file.getPath().contains("BlueTeamOnlineStore")) { //copy file
 		            	File source = new File(file.getPath());
-		            	File dest = new File(currentDir);
+		            	File dest = new File(currentDir, file.getName());
+						File checker = new File(dest.getPath());
+						System.out.println("exists? " + checker.exists());
+						int num = 1;
+						while(checker.exists()) {
+							int lastPd = file.getName().lastIndexOf(".");
+							String newFileName = file.getName().substring(0, lastPd) + "(" + num + ")" + file.getName().substring(lastPd);
+							System.out.println(newFileName);
+							dest = new File(currentDir, newFileName);
+							checker = new File(dest.getPath());
+							num++;
+						}
+						
+		            	System.out.println("source: " + source);
+		            	System.out.println("destination: " + dest);
 		            	
-		            	//***
-		            	///FileUtils.copyDirectory(source, dest);
-		            	
-		            	ParsedImageIcon newImage = new ParsedImageIcon(file.getName(), 350, 350);
+		            	try {
+							Files.copy(file.toPath(), dest.toPath());
+
+							file = dest;
+							System.out.println("New Path: " + dest.getPath());
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+		            }
+		            ParsedImageIcon newImage = new ParsedImageIcon(file.getName(), 350, 350);
 
 					product.setImage(newImage);
 					image.setIcon(product.getImage());
 		            
-		            
-		           
 		        } 
 				
 			}
