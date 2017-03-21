@@ -54,15 +54,15 @@ public class ParsedImageIcon extends ImageIcon{
 		Image image = this.getImage();
 		int originalWidth = image.getWidth(getImageObserver());
 		int originalHeight = image.getHeight(getImageObserver());
-		double widthRatio = (maxWidth / originalWidth);
-		double heightRatio = (maxHeight / originalHeight);
-		int newWidth = (int)(originalWidth * widthRatio);
-		int newHeight = (int)(originalHeight * heightRatio);
+		double widthRatio = (originalWidth / originalHeight);
+		double heightRatio = (originalHeight / originalWidth);
+		int newWidth = (int)(maxHeight * widthRatio);
+		int newHeight = (int)(maxWidth * heightRatio);
 		if (newWidth <= newHeight){
-			newHeight = (int)(originalHeight * widthRatio);
+			newHeight = maxHeight;
 		}
 		else{
-			newWidth = (int)(originalWidth * heightRatio);
+			newWidth = maxWidth;
 		}
 		setWidth(newWidth);
 		setHeight(newHeight);
