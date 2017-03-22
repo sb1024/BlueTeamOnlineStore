@@ -5,9 +5,9 @@ import java.awt.event.*;
 
 
 
-public class CartPage {
+public class CartPage extends JPanel{
 	private JFrame frame;
-	private JPanel mainPanel;
+	private JPanel mainPanel=this;
 	private ArrayList<JPanel> orderPanels= new ArrayList(); //Indexes should reflect indexes of productOrders arraylist in shoppingCart
 	private MainWindow window;
 	private ShoppingCart cart;
@@ -15,15 +15,13 @@ public class CartPage {
 	private JScrollPane checkOutArea;
 	private ArrayList<ProductOrder> productOrders;
 	private JPanel productsGrid; //Stored so product orders can be deleted
-	CartPage() {
-		frame = new JFrame("Test");
-		JScrollPane scrollPane = new JScrollPane();
-		cart=createCart();
+	CartPage(MainWindow mainWindow){
+		window = mainWindow;
+		cart=mainWindow.getShoppingCart();
 
 		productOrders=cart.getProductOrders(); //Sets product orders private variable. Used for creating product order panels and deleting orders
-		mainPanel = new JPanel();
-		mainPanel.setBackground(Color.white);
-		mainPanel.setLayout(new GridBagLayout());
+		this.setBackground(Color.white);
+		this.setLayout(new GridBagLayout());
 		
 		JLabel shoppingTitle = new JLabel("<HTML><u>Shopping Cart</u></HTML>");
 		shoppingTitle.setFont(new Font("Arial", Font.PLAIN, 50));
@@ -100,13 +98,12 @@ public class CartPage {
 
 		
 		
-		mainPanel.add(shoppingTitle);
-		mainPanel.add(checkOutArea, checkOutAreaC);
-		mainPanel.add(review, reviewC);
+		this.add(shoppingTitle);
+		this.add(checkOutArea, checkOutAreaC);
+		this.add(review, reviewC);
 		
 		
-		scrollPane = new JScrollPane(mainPanel);
-		scrollPane.setPreferredSize(new Dimension(1200, 670));
+
 		
 		productsGrid=new JPanel();
 		productsGrid.setBackground(new Color(180, 180, 180));
@@ -118,10 +115,7 @@ public class CartPage {
 		
 		checkOutArea.setViewportView(productsGrid); //Sets the productsgrid in the scroll pane of the check out area. Does not use mainwindow scroll pane.
 		
-		mainPanel.repaint();
-		frame.add(scrollPane);
-		frame.setVisible(true);
-		frame.pack();
+		this.repaint();
 		
 	}
 	
@@ -361,7 +355,7 @@ public class CartPage {
 						productOrders.remove(orderIndex);
 						productsGrid.remove(orderPanels.remove(orderIndex)); //Removes productorder panel
 						priceText.setText("Total: $" + cart.getPrice()); //Recalculates cart price
-						
+						window.updateFrame();
 						//ADDS METHOD CALL TO MAINWINDOW THAT REPAINTS ENTIRE FRAME
 					}
 
