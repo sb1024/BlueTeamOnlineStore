@@ -38,6 +38,7 @@ public class PurchasePage extends JPanel implements ActionListener{
 	private JButton confirm;
 	private JButton cancel;
 	private double orderTotal;
+	private Order order;
 	
 	// constructor
 	PurchasePage(MainWindow window){
@@ -100,13 +101,13 @@ public class PurchasePage extends JPanel implements ActionListener{
 		orderSummaryJPanel.add(cancel);
 	}
 	
-	private void makeOrder(){
+	private Order makeOrder(){
 		if(checkCompletion()){
-			System.out.println(generateOrderNumber());
 			Order createdOrder = new Order(generateOrderNumber(), firstNameField.getText(), lastNameField.getText(), addressField.getText(), cityField.getText(), (String)stateDrop.getSelectedItem(), Integer.parseInt(zipField.getText()), 
 					Long.parseLong(phoneField.getText()), Long.parseLong(ccField.getText()), Integer.parseInt(expField.getText()), calculateTotal(), window.getShoppingCart());
+			return createdOrder;
 		}
-		
+		return null;
 	}
 	
 	//TODO: integrate this
@@ -234,12 +235,11 @@ public class PurchasePage extends JPanel implements ActionListener{
 	// loops through all productorders in the cart.
 	// gets the price of the productorder product, multiplies it by the productorder's quantity, adds to the total
 	private double calculateTotal(){
-		/*double total = 0;
+		double total = 0;
 		for(ProductOrder product : cart.getProductOrders()){
 			total+=((product.getProduct().getPrice())*product.getQuantity());
 		}
-		return total;*/
-		return 10;
+		return total;
 	}
 	
 	public void actionPerformed(ActionEvent event) {
@@ -252,7 +252,8 @@ public class PurchasePage extends JPanel implements ActionListener{
 					System.out.println("DEBUG: confirm");
 				}
 				makeOrder();
-				//TODO: go to order number page
+				ConfirmationPage confirm = new ConfirmationPage(order);
+				window.setContentArea(confirm);
 			}
 
 		}
