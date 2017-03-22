@@ -41,11 +41,13 @@ public class PurchasePage extends JPanel implements ActionListener{
 	private Order order;
 	
 	// constructor
-	PurchasePage(MainWindow window){
+	PurchasePage(MainWindow mainWindow){
+		cart=mainWindow.getShoppingCart();
+		window = mainWindow;
 		this.setPreferredSize(new Dimension(1200, 670));
 		this.setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
 		this.setBackground(Color.WHITE);
-		orderTotal = calculateTotal();
+		orderTotal = cart.getPrice();
 		mainJPanel = new JPanel();
 		mainJPanel.setBackground(Color.WHITE);
 		orderInfoJPanel = new JPanel();
@@ -104,7 +106,7 @@ public class PurchasePage extends JPanel implements ActionListener{
 	private Order makeOrder(){
 		if(checkCompletion()){
 			Order createdOrder = new Order(generateOrderNumber(), firstNameField.getText(), lastNameField.getText(), addressField.getText(), cityField.getText(), (String)stateDrop.getSelectedItem(), Integer.parseInt(zipField.getText()), 
-					Long.parseLong(phoneField.getText()), Long.parseLong(ccField.getText()), Integer.parseInt(expField.getText()), calculateTotal(), window.getShoppingCart());
+					Long.parseLong(phoneField.getText()), Long.parseLong(ccField.getText()), expField.getText(), calculateTotal(), window.getShoppingCart());
 			return createdOrder;
 		}
 		return null;
@@ -114,7 +116,7 @@ public class PurchasePage extends JPanel implements ActionListener{
 	private long generateOrderNumber(){
 		boolean generating = true;
 		long orderNumber = -1;
-		while(generating = true){
+		while(generating == true){
 			generating = false;
 			orderNumber = (long)(Math.random()*1000000000);
 			for(Order active : window.getStore().getOrders()){
@@ -248,17 +250,26 @@ public class PurchasePage extends JPanel implements ActionListener{
 		if (eventName.equals("confirm")){
 			if(checkCompletion()){
 				int orderConfirm = JOptionPane.showConfirmDialog(mainJPanel, "Place your order?", "Confirm Order", JOptionPane.YES_NO_OPTION);
-				if(orderConfirm == 1){
-					System.out.println("DEBUG: confirm");
+				if(orderConfirm == JOptionPane.OK_OPTION){
+					Order newOrder = makeOrder();
+					ConfirmationPage confirm = new ConfirmationPage(newOrder);
+					window.setContentArea(confirm);
+				}else{
 				}
-				makeOrder();
-				ConfirmationPage confirm = new ConfirmationPage(order);
-				window.setContentArea(confirm);
+
 			}
 
 		}
 		else if (eventName.equals("cancel")){
-			// call back button
+			int orderConfirm = JOptionPane.showConfirmDialog(mainJPanel, "Are you sure you want to cancel your order?", "Confirm Cancel", JOptionPane.YES_NO_OPTION);
+			if(orderConfirm==JOptionPane.OK_OPTION){
+				if(window.isEditor()){
+					window.setContentArea(new HomePageEditor(window));
+				}else{
+					window.setContentArea(new HomePage(window));
+				}
+			}
+
 		}
 	}
 }
