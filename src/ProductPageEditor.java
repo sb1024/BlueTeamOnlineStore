@@ -51,10 +51,14 @@ public class ProductPageEditor extends ProductPage {
 			}
 
 			@Override
-			public void mouseEntered(MouseEvent arg0) {}
+			public void mouseEntered(MouseEvent arg0) {
+				page.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
 
 			@Override
-			public void mouseExited(MouseEvent arg0) {}
+			public void mouseExited(MouseEvent arg0) {
+				page.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
 
 			@Override
 			public void mousePressed(MouseEvent arg0) {}
@@ -134,10 +138,15 @@ public class ProductPageEditor extends ProductPage {
 			}
 
 			@Override
-			public void mouseEntered(MouseEvent arg0) {}
+			public void mouseEntered(MouseEvent arg0) {
+
+				page.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
 
 			@Override
-			public void mouseExited(MouseEvent arg0) {}
+			public void mouseExited(MouseEvent arg0) {
+				page.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
 
 			@Override
 			public void mousePressed(MouseEvent arg0) {}
@@ -196,10 +205,13 @@ public class ProductPageEditor extends ProductPage {
 			}
 
 			@Override
-			public void mouseEntered(MouseEvent arg0) {}
+			public void mouseEntered(MouseEvent arg0) {
+				page.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				}
 
 			@Override
-			public void mouseExited(MouseEvent arg0) {}
+			public void mouseExited(MouseEvent arg0) {
+				page.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));}
 
 			@Override
 			public void mousePressed(MouseEvent arg0) {}
@@ -257,10 +269,13 @@ public class ProductPageEditor extends ProductPage {
 			}
 
 			@Override
-			public void mouseEntered(MouseEvent arg0) {}
+			public void mouseEntered(MouseEvent arg0) {
+				page.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				}
 
 			@Override
-			public void mouseExited(MouseEvent arg0) {}
+			public void mouseExited(MouseEvent arg0) {
+				page.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));}
 
 			@Override
 			public void mousePressed(MouseEvent arg0) {}
@@ -316,10 +331,13 @@ public class ProductPageEditor extends ProductPage {
 			}
 
 			@Override
-			public void mouseEntered(MouseEvent arg0) {}
+			public void mouseEntered(MouseEvent arg0) {
+				page.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				}
 
 			@Override
-			public void mouseExited(MouseEvent arg0) {}
+			public void mouseExited(MouseEvent arg0) {
+				page.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));}
 
 			@Override
 			public void mousePressed(MouseEvent arg0) {}

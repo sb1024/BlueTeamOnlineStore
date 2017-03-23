@@ -31,7 +31,7 @@ public class ProductPage extends JPanel {
 	
 	public ProductPage(MainWindow window, Product sentProduct) {
 		
-		
+		page = this;
 		this.window = window;
 		this.product = sentProduct;
 		/*product = new Product(0, null, null, false, null, null);
@@ -108,10 +108,13 @@ public class ProductPage extends JPanel {
 			}
 
 			@Override
-			public void mouseEntered(MouseEvent arg0) {	}
+			public void mouseEntered(MouseEvent arg0) {	
+				page.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
 
 			@Override
-			public void mouseExited(MouseEvent arg0) {	}
+			public void mouseExited(MouseEvent arg0) {	
+				page.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));}
 
 			@Override
 			public void mousePressed(MouseEvent arg0) {	}
@@ -144,7 +147,9 @@ public class ProductPage extends JPanel {
 			}
 
 			@Override
-			public void mouseExited(MouseEvent arg0) {	}
+			public void mouseExited(MouseEvent arg0) {	
+				page.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
 
 			@Override
 			public void mousePressed(MouseEvent arg0) {	}
@@ -171,14 +176,37 @@ public class ProductPage extends JPanel {
 		addToCart.setFont(new Font("Arial", Font.PLAIN, 32));
 		addToCart.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		addToCart.setAlignmentX(Component.LEFT_ALIGNMENT);
-		addToCart.addActionListener(new ActionListener() {
+		/*addToCart.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				addProductToCart(num);
+				
 				
 			}
 			
+		});*/
+		addToCart.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				addProductToCart(num);
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {	
+				page.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {	
+				page.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {	}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {	}
 		});
 		gbc.gridx = 1;
 		gbc.gridy = 4;
