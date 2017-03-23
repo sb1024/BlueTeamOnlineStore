@@ -139,7 +139,7 @@ public class MainWindow {
 		editor = editMode;
 		navBar = new NavBar(this);
 		
-		frame = new JFrame("Store");
+		frame = new JFrame(store.getStoreName());
 		
 		mainContentScrollPanel.setSize(new Dimension(1200, 670));
 		HomePage homePage;
@@ -241,6 +241,9 @@ public class MainWindow {
 		
 		return shoppingCart;
 
+	}
+	public NavBar getNavBar(){ //Used by HomePageEditor to update NavBar logo if changed
+		return navBar;
 	}
 
 	
