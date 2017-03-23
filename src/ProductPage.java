@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -16,11 +17,11 @@ import javax.swing.*;
 public class ProductPage extends JPanel {
 	protected MainWindow window;
 	protected Product product;
+	protected ProductPage page;
 	
-	protected JFrame frame;
 	protected JButton addToCart;
 	//protected JPanel mainJPanel;
-	protected JLabel name, description, image, price, number, total, dept;
+	protected JLabel name, description, image, price, number, total, dept, sale;
 	protected JPanel quantity;
 	private int num = 1;
 	
@@ -28,18 +29,18 @@ public class ProductPage extends JPanel {
 	
 	final protected NumberFormat USD = NumberFormat.getCurrencyInstance();
 	
-	public ProductPage(MainWindow window, Product product) {
-		frame = new JFrame();
+	public ProductPage(MainWindow window, Product sentProduct) {
+		
 		
 		this.window = window;
-		this.product = product;
-		product = new Product(0, null, null, false, null, null);
+		this.product = sentProduct;
+		/*product = new Product(0, null, null, false, null, null);
 		product.setName("Black Leather Boots");
 		product.setDesc("These boots are offered with fast two-day shipping!");
 		product.setImage(new ParsedImageIcon("noImage.jpg", 350, 350));
 		product.setPrice(12.30);
 		product.setSale(false);
-		product.setDepartment(new Department("Shoes"));
+		product.setDepartment(new Department("Shoes"));*/
 		
 		//mainJPanel = new JPanel();
 		this.setBackground(Color.white);
@@ -50,13 +51,6 @@ public class ProductPage extends JPanel {
 		addProductInfo();
 		
 		this.setPreferredSize(new Dimension(1200, 670));
-		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setPreferredSize(new Dimension(1200, 670));
-		frame.setTitle("Test");
-		frame.setContentPane(this);
-		frame.pack();
-		frame.setVisible(true);
 	}
 	
 	private void addProductInfo() {
@@ -69,6 +63,7 @@ public class ProductPage extends JPanel {
 		this.add(name, gbc);
 		
 		if(product.getImage() == null) {
+			image = new JLabel();
 			image.setIcon(new ParsedImageIcon("noImage.jpg", 350, 350));
 		} else {
 			image = new JLabel(product.getImage());
@@ -144,7 +139,9 @@ public class ProductPage extends JPanel {
 			}
 
 			@Override
-			public void mouseEntered(MouseEvent arg0) {	}
+			public void mouseEntered(MouseEvent arg0) {	
+				page.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
 
 			@Override
 			public void mouseExited(MouseEvent arg0) {	}
@@ -204,15 +201,37 @@ public class ProductPage extends JPanel {
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
 		this.add(dept, gbc);
+		
+		sale = new JLabel("On Sale");
+		sale.setForeground(Color.red);
+		sale.setFont(new Font("Arial", Font.PLAIN, 24));
+		sale.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+		gbc.gridx = 2;
+		gbc.gridy = 1;
+		this.add(sale, gbc);
+		sale.setVisible(product.getSale());
 	}
 	
 	private void addProductToCart(int num) {
-		//window.getStore().g
-		System.out.println(num);
+		window.getShoppingCart().addProductOrder(product, num);
+		//window.getStore().get
+		//System.out.println(num);
+		for(ProductOrder order : window.getShoppingCart().getProductOrders()) {
+
+			System.out.println(order.getProduct().getName());
+			System.out.println(order.getQuantity());
+		}
+		
+		window.setContentArea(new CartPage(window));
+	}
+	
+	public Product getProduct() {
+		return product;
 	}
 	
 	/*public static void main(String args[]){
 		ProductPage page = new ProductPage();
 	}*/
-	
+	//
+	//change mouse cursors & work with cart page & change departments in xml
 }
