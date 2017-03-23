@@ -18,14 +18,17 @@ import javax.swing.JPanel;
 
 public class NavBar extends JPanel{
 	private JPanel mainPanel = this;
+	private JLabel logo;
 	private MainWindow mainWindow;
 	private boolean editor;
+	private Store store;
 	public NavBar(MainWindow window){
 		mainWindow=window;
 		editor=window.isEditor();
-		Store store = window.getStore();
+		store = window.getStore();
 		ParsedImageIcon storeLogo = new ParsedImageIcon(store.getStoreLogo().getFilePath());
 		storeLogo.setHeight(50);
+		storeLogo.setWidth(100);
 		String storeTitle = store.getStoreName();
 		MouseListener homeButton = new MouseListener(){
 
@@ -203,7 +206,7 @@ public class NavBar extends JPanel{
 
 
 
-		JLabel logo = new JLabel(storeLogo);
+		logo = new JLabel(storeLogo);
 		logo.addMouseListener(homeButton);
 		JLabel storeName = new JLabel(storeTitle);
 		storeName.setFont(new Font("Arial", Font.PLAIN, 50));
@@ -234,6 +237,10 @@ public class NavBar extends JPanel{
 		this.add(buttonSpacer3);
 		this.add(makePurchase);
 		
+	}
+	public void refreshLogo(){
+		ParsedImageIcon logoImage = new ParsedImageIcon(store.getStoreLogo().getFilePath(), 50, 100);
+		logo.setIcon(logoImage);
 	}
 	
 
