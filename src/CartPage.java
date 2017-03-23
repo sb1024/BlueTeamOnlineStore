@@ -57,7 +57,7 @@ public class CartPage extends JPanel{
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				window.setContentArea(new PurchasePage());
+				window.setContentArea(new PurchasePage(window));
 				
 			}
 
@@ -209,94 +209,6 @@ public class CartPage extends JPanel{
 			JLabel minus = new JLabel("-");
 			minus.setFont(new Font("Arial", Font.PLAIN, 24));
 			JLabel delete = new JLabel(new ParsedImageIcon("trashBin.png", 35, 35));
-			plus.addMouseListener(new MouseListener(){
-
-				@Override
-				public void mouseClicked(MouseEvent arg0) {
-					int quantity = order.getQuantity();
-					quantity++;
-					order.setQuantity(quantity); //Updates actual quantity in order object which in turn is stored in the shopping cart in an arraylist
-					counter.setText(""+ quantity); //Updates displayed quantity
-					costOfItem.setText("$" + quantity * order.getProduct().getPrice()); //Updates the displayed price of the item
-					priceText.setText("$" + cart.getPrice()); //Updates the displayed price of the shopping cart
-					
-					
-					
-				}
-
-				@Override
-				public void mouseEntered(MouseEvent arg0) {
-					// TODO Auto-generated method stub
-					mainPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-					
-				}
-
-				@Override
-				public void mouseExited(MouseEvent arg0) {
-					// TODO Auto-generated method stub
-					mainPanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-
-					
-				}
-
-				@Override
-				public void mousePressed(MouseEvent arg0) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void mouseReleased(MouseEvent arg0) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-			});
-			minus.addMouseListener(new MouseListener(){
-
-				@Override
-				public void mouseClicked(MouseEvent arg0) {
-					int quantity = order.getQuantity();
-					if(quantity>1){
-						quantity--;
-					}
-					order.setQuantity(quantity); //Updates actual quantity in order object which in turn is stored in the shopping cart in an arraylist
-					counter.setText(" "+ quantity + " "); //Updates displayed quantity
-					costOfItem.setText("$" + quantity * order.getProduct().getPrice()); //Updates the displayed price of the item
-					priceText.setText("Total: $" + cart.getPrice()); //Updates the displayed price of the shopping cart
-					
-					
-					
-				}
-
-				@Override
-				public void mouseEntered(MouseEvent arg0) {
-					// TODO Auto-generated method stub
-					mainPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-					
-				}
-
-				@Override
-				public void mouseExited(MouseEvent arg0) {
-					// TODO Auto-generated method stub
-					mainPanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-
-					
-				}
-
-				@Override
-				public void mousePressed(MouseEvent arg0) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void mouseReleased(MouseEvent arg0) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-			});
 			plus.addMouseListener(new MouseListener(){
 
 				@Override
