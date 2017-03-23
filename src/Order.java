@@ -11,13 +11,13 @@ public class Order {
 	private int zip;
 	private long phoneNum;
 	private long ccNum;
-	private int expDate;
+	private String expDate;
 	private double totalPrice;
 	private ShoppingCart orderedItems;
 	
 	// constructor
 	Order(long inputOrderNumber, String inputFirstName, String inputSurName, String inputAddress, String inputCity, String inputState, int inputZip, long inputPhoneNum, 
-	long inputCcNum, int inputExpDate, double inputTotalPrice, ShoppingCart inputOrderedItems){
+	long inputCcNum, String inputExpDate, double inputTotalPrice, ShoppingCart inputOrderedItems){
 		orderNumber = inputOrderNumber;
 		firstName = inputFirstName;
 		surName = inputSurName;
@@ -60,7 +60,7 @@ public class Order {
 	public long getCcNum(){
 		return ccNum;
 	}
-	public int getExpDate(){
+	public String getExpDate(){
 		return expDate;
 	}
 	public double getTotalPrice(){
@@ -98,7 +98,7 @@ public class Order {
 	public void setCcNum(long inputCcNum){
 		ccNum = inputCcNum;
 	}
-	public void setExpDate(int inputExpDate){
+	public void setExpDate(String inputExpDate){
 		expDate = inputExpDate;
 	}
 	public void setTotalPrice(double inputTotalPrice){
