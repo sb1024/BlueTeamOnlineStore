@@ -1,32 +1,34 @@
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class ProductPageEditor extends ProductPage {	
 	private JPanel nameEditor, imageEditor, priceEditor, descEditor, deptEditor;
+	private JCheckBox onSaleEditor;
 	
 	public ProductPageEditor(MainWindow window, Product product) {
 	//public ProductPageEditor() {
 		super(window, product);
-
+		
 		addEditorButtons();
 		
-		frame.setTitle("EditorTest");
-		frame.pack();
-		frame.repaint();
 	}
 
 	private void addEditorButtons() {
 		quantity.setVisible(false);
 		total.setVisible(false);
 		addToCart.setVisible(false);
+		sale.setVisible(false);
 		
 		ParsedImageIcon pencil = new ParsedImageIcon("pencil.png",30, 30);
 		
@@ -84,7 +86,7 @@ public class ProductPageEditor extends ProductPage {
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "jpeg");
 				fc.setFileFilter(filter);
 				
-				int returnVal = fc.showOpenDialog(frame);
+				int returnVal = fc.showOpenDialog(page);
 				
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 		            File file = fc.getSelectedFile();
@@ -235,7 +237,7 @@ public class ProductPageEditor extends ProductPage {
 		        textArea.setMargin(new Insets(5,5,5,5));
 		        scrollPane.getViewport().setView(textArea);
 		  
-		        String input = JOptionPane.showInputDialog(frame, "Edit Product Description:", product.getDesc());
+		        String input = JOptionPane.showInputDialog(page, "Edit Product Description:", product.getDesc());
 		        //String input = JOptionPane.showInputDialog(frame, message);
 		        
 		        System.out.println(input);
@@ -284,20 +286,24 @@ public class ProductPageEditor extends ProductPage {
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				String[] deptList = {"Shoes", "Electronics"}; //get from Store obj
+				ArrayList<Department> deptObjList = window.getStore().getDepartments(); //get from Store obj
+				ArrayList<String> deptList = new ArrayList<>();
+				for(Department dept : deptObjList) {
+					 deptList.add(dept.getName());
+				}
 				int pos=0;
-				for(int i = 0; i < deptList.length; i++) {
-					if(deptList[i].equals(product.getDepartment().getName())) {
+				for(int i = 0; i < deptList.size(); i++) {
+					if(deptList.get(i).equals(product.getDepartment().getName())) {
 						pos = i;
 					}
 				}
-				String input = (String) JOptionPane.showInputDialog(frame, 
+				String input = (String) JOptionPane.showInputDialog(page, 
 						"Select Department:", "Department", JOptionPane.QUESTION_MESSAGE, 
-						null, deptList, deptList[pos]);
+						null, deptList.toArray(), deptList.get(pos));
 	
 				if(input!=null && !input.equals("")){
-					for(int i = 0; i < deptList.length; i++) {
-						if(deptList[i].equals(product.getDepartment().getName())) {
+					for(int i = 0; i < deptList.size(); i++) {
+						if(deptList.get(i).equals(product.getDepartment().getName())) {
 							pos = i;
 						}
 					}
@@ -327,6 +333,24 @@ public class ProductPageEditor extends ProductPage {
 		gbc.gridx = 2;
 		gbc.gridy = 0;
 		this.add(deptEditor, gbc);
+		
+		onSaleEditor = new JCheckBox("On Sale");
+		onSaleEditor.setBackground(Color.white);
+		onSaleEditor.setFont(new Font("Arial", Font.PLAIN, 24));
+		onSaleEditor.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+		onSaleEditor.setSelected(product.getSale());
+		onSaleEditor.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				product.setSale(!product.getSale());
+				System.out.println(product.getSale());
+			}
+			
+		});
+		gbc.gridx = 2;
+		gbc.gridy = 1;
+		this.add(onSaleEditor, gbc);
 	}
 	
 	private double round(double price) {
