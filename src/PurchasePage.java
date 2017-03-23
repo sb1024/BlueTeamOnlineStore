@@ -39,6 +39,8 @@ public class PurchasePage extends JPanel implements ActionListener{
 	private JButton cancel;
 	private double orderTotal;
 	private Order order;
+	private JPanel buttons;
+	private JScrollPane checkOutArea;
 	
 	// constructor
 	PurchasePage(MainWindow mainWindow){
@@ -54,6 +56,8 @@ public class PurchasePage extends JPanel implements ActionListener{
 		orderInfoJPanel.setBackground(Color.WHITE);
 		orderSummaryJPanel = new JPanel();
 		orderSummaryJPanel.setBackground(Color.WHITE);
+		buttons = new JPanel();
+		buttons.setBackground(Color.WHITE);
 		title = new JLabel("<html><b>Make Purchase</b></html>");
 		firstNameLabel = new JLabel("First Name:");firstNameField = new JTextField();
 		lastNameLabel = new JLabel("Last Name:");lastNameField = new JTextField();
@@ -77,17 +81,27 @@ public class PurchasePage extends JPanel implements ActionListener{
 		cancel = new JButton("Cancel");
 		cancel.setActionCommand("cancel");
 		cancel.addActionListener(this);
+		checkOutArea=new JScrollPane();
+		checkOutArea.setPreferredSize(new Dimension(250, 180));
+		checkOutArea.setBackground(new Color(180, 180, 180));
+		GridBagConstraints checkOutAreaC = new GridBagConstraints();
+		checkOutAreaC.gridy=1;
+		GridBagConstraints reviewC = new GridBagConstraints();
+		reviewC.gridy=2;
+		reviewC.gridx=0;
+		reviewC.anchor=GridBagConstraints.EAST;
 		
 		mainJPanel.setLayout(new BoxLayout(mainJPanel,BoxLayout.PAGE_AXIS));
 		this.add(title);
 		this.add(mainJPanel);
 		title.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
-		title.setBorder(BorderFactory.createEmptyBorder(20,30,20,10));
+		title.setBorder(BorderFactory.createEmptyBorder(10,30,10,10));
 		title.setFont(new Font("Arial", Font.PLAIN, 30));
 		orderInfoJPanel.setLayout(new GridLayout(0, 2));
-		orderInfoJPanel.setBorder(BorderFactory.createEmptyBorder(50,200,50,500));
+		orderInfoJPanel.setBorder(BorderFactory.createEmptyBorder(20,280,20,410));
 		mainJPanel.add(orderInfoJPanel);
 		mainJPanel.add(orderSummaryJPanel);
+		mainJPanel.add(buttons);
 		orderInfoJPanel.add(firstNameLabel);
 		orderInfoJPanel.add(firstNameField);
 		orderInfoJPanel.add(lastNameLabel);orderInfoJPanel.add(lastNameField);
@@ -99,8 +113,24 @@ public class PurchasePage extends JPanel implements ActionListener{
 		orderInfoJPanel.add(ccLabel);orderInfoJPanel.add(ccField);
 		orderInfoJPanel.add(expLabel);orderInfoJPanel.add(expField);
 		orderSummaryJPanel.add(totalLabel);
-		orderSummaryJPanel.add(confirm);
-		orderSummaryJPanel.add(cancel);
+		orderSummaryJPanel.add(checkOutArea);
+		cartList();
+		buttons.add(confirm);
+		buttons.add(cancel);
+	}
+	
+	//TODO
+	private void cartList(){
+		for(ProductOrder active : cart.getProductOrders()){
+			String name;
+			int quantity;
+			double price;
+			name = ((Product)active.getProduct).getName();
+			quantity = active.getQuantity();
+			price = ((Product)active.getProduct).getPrice()*active.getQuantity();
+			JLabel product = new JLabel(name + " " + quantity + " " + price);
+			checkOutArea.add(product);
+		}
 	}
 	
 	private Order makeOrder(){
