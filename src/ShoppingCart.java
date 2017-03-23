@@ -26,9 +26,10 @@ public class ShoppingCart {
 	public void addProductOrder(Product inputProduct, int inputQuantity){
 		boolean duplicate = false;
 		int duplicateIndex = 0;
-		for(ProductOrder activeProductOrder : productOrders){
+		for(int productCounter=0; productCounter<productOrders.size(); productCounter++){
+			ProductOrder activeProductOrder = productOrders.get(productCounter);
 			if(activeProductOrder.getProduct() == inputProduct){
-				duplicateIndex = productOrders.indexOf(this);
+				duplicateIndex = productCounter;
 				duplicate = true;
 			}
 		}
