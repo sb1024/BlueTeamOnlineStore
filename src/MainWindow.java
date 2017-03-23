@@ -142,6 +142,7 @@ public class MainWindow {
 		frame = new JFrame(store.getStoreName());
 		
 		mainContentScrollPanel.setSize(new Dimension(1200, 670));
+		mainContentScrollPanel.getVerticalScrollBar().setUnitIncrement(10);
 		HomePage homePage;
 		if(editor){
 			homePage = new HomePageEditor(this);
@@ -245,7 +246,4 @@ public class MainWindow {
 	public NavBar getNavBar(){ //Used by HomePageEditor to update NavBar logo if changed
 		return navBar;
 	}
-
-	
-	
 }
