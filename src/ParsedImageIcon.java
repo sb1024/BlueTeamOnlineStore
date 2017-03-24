@@ -51,9 +51,8 @@ public class ParsedImageIcon extends ImageIcon{
 	}
 	
 	public void fitImage(int maxWidth, int maxHeight){
-		Image image = this.getImage();
-		int originalWidth = image.getWidth(getImageObserver());
-		int originalHeight = image.getHeight(getImageObserver());
+		double originalWidth = this.getIconWidth();
+		double originalHeight = this.getIconHeight();
 		double widthRatio = (originalWidth / originalHeight);
 		double heightRatio = (originalHeight / originalWidth);
 		int newWidth = (int)(maxHeight * widthRatio);
