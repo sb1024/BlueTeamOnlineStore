@@ -1,4 +1,6 @@
 import javax.swing.*;
+
+import java.text.NumberFormat;
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -15,6 +17,8 @@ public class CartPage extends JPanel{
 	private JScrollPane checkOutArea;
 	private ArrayList<ProductOrder> productOrders;
 	private JPanel productsGrid; //Stored so product orders can be deleted
+	final protected NumberFormat USD = NumberFormat.getCurrencyInstance();
+	
 	CartPage(MainWindow mainWindow){
 		window = mainWindow;
 		cart=mainWindow.getShoppingCart();
@@ -43,7 +47,7 @@ public class CartPage extends JPanel{
 		review.setBackground(new Color(180, 180, 180));
 		
 		JPanel price=new JPanel();
-		priceText = new JLabel("Total: $" + cart.getPrice());
+		priceText = new JLabel("Total: " + USD.format(cart.getPrice()));
 		priceText.setFont(new Font("Arial", Font.PLAIN, 18));
 		price.add(priceText);
 		
@@ -119,9 +123,10 @@ public class CartPage extends JPanel{
 		
 	}
 	
-	public static void main(String args[]){
+	/*public static void main(String args[]){
 		new CartPage();
-	}
+	}*/
+	
 	public ShoppingCart createCart(){
 		ShoppingCart shoppingCart = new ShoppingCart();
 		String storeName = "Generic Store";
@@ -188,7 +193,7 @@ public class CartPage extends JPanel{
 			pricePanelConstraints.anchor=GridBagConstraints.EAST;
 			orderPanel.add(pricePanel, pricePanelConstraints);
 			
-			final JLabel costOfItem = new JLabel("$" + product.getPrice()*order.getQuantity());
+			final JLabel costOfItem = new JLabel(USD.format(product.getPrice()*order.getQuantity()));
 			GridBagConstraints pricePanelBottomConstraints = new GridBagConstraints();  //Puts everything in the bottom, right
 			pricePanelBottomConstraints.gridx=0;
 			pricePanelBottomConstraints.gridy=1;
@@ -217,8 +222,8 @@ public class CartPage extends JPanel{
 					quantity++;
 					order.setQuantity(quantity); //Updates actual quantity in order object which in turn is stored in the shopping cart in an arraylist
 					counter.setText(" "+ quantity + " "); //Updates displayed quantity
-					costOfItem.setText("$" + quantity * order.getProduct().getPrice()); //Updates the displayed price of the item
-					priceText.setText("Total: $" + cart.getPrice()); //Updates the displayed price of the shopping cart
+					costOfItem.setText(USD.format(quantity * order.getProduct().getPrice())); //Updates the displayed price of the item
+					priceText.setText("Total: " + USD.format(cart.getPrice())); //Updates the displayed price of the shopping cart
 					
 					
 					
@@ -266,7 +271,7 @@ public class CartPage extends JPanel{
 						}
 						productOrders.remove(orderIndex);
 						productsGrid.remove(orderPanels.remove(orderIndex)); //Removes productorder panel
-						priceText.setText("Total: $" + cart.getPrice()); //Recalculates cart price
+						priceText.setText("Total: " + USD.format(cart.getPrice())); //Recalculates cart price
 						window.updateFrame();
 						//ADDS METHOD CALL TO MAINWINDOW THAT REPAINTS ENTIRE FRAME
 					}
@@ -314,8 +319,8 @@ public class CartPage extends JPanel{
 					}
 					order.setQuantity(quantity); //Updates actual quantity in order object which in turn is stored in the shopping cart in an arraylist
 					counter.setText(" "+ quantity + " "); //Updates displayed quantity
-					costOfItem.setText("$" + quantity * order.getProduct().getPrice()); //Updates the displayed price of the item
-					priceText.setText("Total: $" + cart.getPrice()); //Updates the displayed price of the shopping cart
+					costOfItem.setText(USD.format(quantity * order.getProduct().getPrice())); //Updates the displayed price of the item
+					priceText.setText("Total: " + USD.format(cart.getPrice())); //Updates the displayed price of the shopping cart
 					
 					
 					

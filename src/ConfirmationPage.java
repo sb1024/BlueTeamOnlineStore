@@ -54,7 +54,7 @@ public class ConfirmationPage extends JPanel{
 		this.add(holder, BorderLayout.CENTER);
 	}
 	
-	public static void main(String args[]){
+	/*public static void main(String args[]){
 		JFrame frame = new JFrame("Test"); 
 		frame.setPreferredSize(new Dimension(1200, 670));
 		Order order = new Order(111222333, null, null, null,  null,  null, 21042, 34234, 
@@ -62,6 +62,6 @@ public class ConfirmationPage extends JPanel{
 		frame.add(new ConfirmationPage(order));
 		frame.setVisible(true);
 		frame.pack();
-	}
+	}*/
 
 }
