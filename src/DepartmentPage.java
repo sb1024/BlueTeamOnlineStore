@@ -146,10 +146,7 @@ public class DepartmentPage extends JPanel{
 
 		}
 	}
-	/*public static void main(String args[]){
-		new DepartmentPage();
-	}*/
-	
+
 	public Store createStore(){
 		String storeName = "Generic Store";
 		ParsedImageIcon storeLogo = new ParsedImageIcon("logo.png", 256, 256);
