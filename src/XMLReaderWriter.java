@@ -25,7 +25,11 @@ public class XMLReaderWriter {
 	        store.setAttributeNode(storeName);
 	        
 	        Element storeLogo = doc.createElement("logo");
-	        storeLogo.appendChild(doc.createTextNode(oStore.getStoreLogo().getFilePath()));
+	        try{
+	        	storeLogo.appendChild(doc.createTextNode(oStore.getStoreLogo().getFilePath()));
+	        }catch(Exception e){
+	        	storeLogo.appendChild(doc.createTextNode("null"));
+	        }
 	        store.appendChild(storeLogo);
 	        
 	        Element storeDesc = doc.createElement("storeDescription");
@@ -37,12 +41,16 @@ public class XMLReaderWriter {
 	        for(int x=0; x < DL.size(); x++){
 	        	Element department = doc.createElement("department"); 
 		        Attr departmentName = doc.createAttribute("name");
-		        departmentName.setValue(DL.get(0).getName());
+		        departmentName.setValue(DL.get(x).getName());
 		        department.setAttributeNode(departmentName);
 		        store.appendChild(department);
 		        
 		        Element depImage = doc.createElement("departmentImage");
-		        depImage.appendChild(doc.createTextNode(DL.get(0).getImage().getFilePath()));
+		        try{
+		        	depImage.appendChild(doc.createTextNode(DL.get(x).getImage().getFilePath()));
+		        }catch(Exception e){
+		        	depImage.appendChild(doc.createTextNode("null"));
+		        }
 		        department.appendChild(depImage);
 		        
 		        ArrayList <Product> PL = DL.get(x).getProductList();
@@ -159,7 +167,7 @@ public class XMLReaderWriter {
 		        	try{
 		        		image.appendChild(doc.createTextNode(p.getImage().getFilePath()));
 		        	}catch(Exception e){
-		        		image.appendChild(doc.createTextNode("noImage.jpg"));
+		        		image.appendChild(doc.createTextNode("null"));
 		        	}
 		        	product.appendChild(image);
 		        	
@@ -196,31 +204,46 @@ public class XMLReaderWriter {
 			Store s = new Store();
 			s.setStoreName(sE.getAttribute("name"));
 			s.setStoreDescription(sE.getElementsByTagName("storeDescription").item(0).getTextContent());
-			s.setStoreLogo(new ParsedImageIcon(sE.getElementsByTagName("logo").item(0).getTextContent()));
+			
+			String lTest = sE.getElementsByTagName("logo").item(0).getTextContent();
+			if(!lTest.equals("null")){
+				s.setStoreLogo(new ParsedImageIcon(lTest));
+			}
 		
 			NodeList dList = doc.getElementsByTagName("department");
 			// for loop defining each department in store
 			for(int x=0; x < dList.getLength(); x++){
 				Element dE = (Element) dList.item(x);
 				Department d = new Department(dE.getAttribute("name"));
-				d.setImage(new ParsedImageIcon(dE.getElementsByTagName("departmentImage").item(0).getTextContent()));
+				
+				lTest = dE.getChildNodes().item(0).getTextContent();
+				if(!lTest.equals("null")){
+					d.setImage(new ParsedImageIcon(lTest));
+				}
 			
-				NodeList pList = doc.getElementsByTagName("product");
+				NodeList pList = dE.getChildNodes();
+				
 				// for loop defining each product in department
-				for(int y=0; y < pList.getLength(); y++){
+				for(int y=1; y < pList.getLength(); y++){
 					Element pE = (Element) pList.item(y);
 					
-					double price = Double.parseDouble(pE.getElementsByTagName("price").item(0).getTextContent());
+					double price = Double.parseDouble(pE.getChildNodes().item(0).getTextContent());
 					
 					String name = pE.getAttribute("name");
 					
-					String desc = pE.getElementsByTagName("description").item(0).getTextContent();
+					String desc = pE.getChildNodes().item(1).getTextContent();
 					
-					boolean sale = Boolean.parseBoolean(pE.getElementsByTagName("sale").item(0).getTextContent());
+					boolean sale = Boolean.parseBoolean(pE.getChildNodes().item(2).getTextContent());
 					
-					ParsedImageIcon image = new ParsedImageIcon(pE.getElementsByTagName("image").item(0).getTextContent());
+					Product p;
 					
-					Product p = new Product(price, name, desc, sale, null, image);
+					lTest = pE.getChildNodes().item(3).getTextContent();
+					if(!lTest.equals("null")){
+						ParsedImageIcon image = new ParsedImageIcon(lTest);
+						p = new Product(price, name, desc, sale, null, image);
+					}else{
+						p = new Product(price, name, desc, sale, null, null);
+					}
 					
 					d.addProduct(p);
 				}
@@ -233,39 +256,45 @@ public class XMLReaderWriter {
 				
 				int orderNumber = Integer.parseInt(oE.getAttribute("orderNumber"));
 				
-				String firstName = oE.getElementsByTagName("firstName").item(0).getTextContent();
+				String firstName = oE.getChildNodes().item(0).getTextContent();
 				
-				String surName = oE.getElementsByTagName("surName").item(0).getTextContent();
+				String surName = oE.getChildNodes().item(1).getTextContent();
 				
-				String address = oE.getElementsByTagName("address").item(0).getTextContent();
+				String address = oE.getChildNodes().item(2).getTextContent();
 				
-				String city = oE.getElementsByTagName("city").item(0).getTextContent();
+				String city = oE.getChildNodes().item(3).getTextContent();
 				
-				String state = oE.getElementsByTagName("state").item(0).getTextContent();
+				String state = oE.getChildNodes().item(4).getTextContent();
 				
-				int zip = Integer.parseInt(oE.getElementsByTagName("zipCode").item(0).getTextContent());
+				int zip = Integer.parseInt(oE.getChildNodes().item(5).getTextContent());
 				
-				long phoneNum = Long.parseLong(oE.getElementsByTagName("phoneNumber").item(0).getTextContent());
+				long phoneNum = Long.parseLong(oE.getChildNodes().item(6).getTextContent());
 				
-				long ccNum = Long.parseLong(oE.getElementsByTagName("creditCardNumber").item(0).getTextContent());
+				long ccNum = Long.parseLong(oE.getChildNodes().item(7).getTextContent());
 				
-				int expDate = Integer.parseInt(oE.getElementsByTagName("expirationDate").item(0).getTextContent());
+				int expDate = Integer.parseInt(oE.getChildNodes().item(8).getTextContent());
 				
-				double totalPrice = Double.parseDouble(oE.getElementsByTagName("totalPrice").item(0).getTextContent());
+				double totalPrice = Double.parseDouble(oE.getChildNodes().item(9).getTextContent());
 				
 				ArrayList <ProductOrder> pOAL = new ArrayList(0);
-				NodeList oPList = doc.getElementsByTagName("oProduct");
-				for(int y=0; y < oList.getLength(); y++){
+				NodeList oPList = oE.getChildNodes();
+				for(int y=10; y < oList.getLength(); y++){
 					Element oPE = (Element) oPList.item(y);
-					
-					double price = Double.parseDouble(oPE.getElementsByTagName("price").item(0).getTextContent());
+					//Starts at first product in order(10) and continues
+					double price = Double.parseDouble(oPE.getChildNodes().item(1).getTextContent());
 					String name = oPE.getAttribute("name");
-					String desc = oPE.getElementsByTagName("description").item(0).getTextContent();
-					boolean sale = Boolean.parseBoolean(oPE.getElementsByTagName("sale").item(0).getTextContent());
-					ParsedImageIcon image = new ParsedImageIcon(oPE.getElementsByTagName("image").item(0).getTextContent());
-					Product p = new Product(price, name, desc, sale, null, image);
+					String desc = oPE.getChildNodes().item(2).getTextContent();
+					boolean sale = Boolean.parseBoolean(oPE.getChildNodes().item(3).getTextContent());
+					Product p;
 					
-					int quantity = Integer.parseInt(oPE.getElementsByTagName("quantity").item(0).getTextContent());
+					lTest = oPE.getChildNodes().item(4).getTextContent();
+					if(!lTest.equals("null")){
+						ParsedImageIcon image = new ParsedImageIcon(oPE.getChildNodes().item(4).getTextContent());
+						p = new Product(price, name, desc, sale, null, image);
+					}else{
+						p = new Product(price, name, desc, sale, null, null);
+					}
+					int quantity = Integer.parseInt(oPE.getChildNodes().item(0).getTextContent());
 					
 					ProductOrder pO = new ProductOrder(p,quantity);
 					pOAL.add(pO);
@@ -287,84 +316,17 @@ public class XMLReaderWriter {
 		// rewrites store of same name
 		createStore(oStore);
 	}
-	
-	public static void main(String[] args){
-		createStore(createStore());
-		Store testStore = loadStore();
-		/*ArrayList<Order> o = testStore.getOrders();
-		System.out.println(o.get(0).getAddress());
-		System.out.println(o.get(0).getCcNum());
-		System.out.println(o.get(0).getCity());
-		System.out.println(o.get(0).getExpDate());
-		System.out.println(o.get(0).getFirstName());
-		System.out.println(o.get(0).getSurName());
-		System.out.println(o.get(0).getOrderNumber());
-		System.out.println(o.get(0).getPhoneNum());
-		System.out.println(o.get(0).getState());
-		System.out.println(o.get(0).getTotalPrice());
-		System.out.println(o.get(0).getZip());
-
-		System.out.println(testStore.getStoreName());
-		System.out.println(testStore.getStoreDescription());
-		System.out.println(testStore.getStoreLogo().getFilePath());
-		System.out.println(testStore.getDepartments().get(0).getProductList().get(0).getName());
-		System.out.println(testStore.getDepartments().get(0).getName());
-		System.out.println(testStore.getStoreDescription());
-		System.out.println(testStore.getStoreName());
-		System.out.println(testStore.getStoreLogo().getFilePath());
-		
-		ArrayList <Department> arris = testStore.getDepartments();
-		for(int x=0; x<arris.size(); x++){
-			Department Partment = arris.get(x);
-			System.out.println(Partment.getName());
-			System.out.println(Partment.getImage());
-			ArrayList <Product> ducts = Partment.getProductList();
-			for(int y=0; y<ducts.size();y++){
-				Product pro = ducts.get(y);
-				System.out.println(pro.getName());
-				System.out.println(pro.getDesc());
-				System.out.println(pro.getSale());
-				System.out.println(pro.getPrice());
-			}
-		}*/
-	}
-	
-	public static Store createStore(){
-		String storeName = "Generic Store";
-		ParsedImageIcon storeLogo = new ParsedImageIcon("logo.png", 256, 256);
-		String storeDescription = "A generic store. All values should be changed";
-		
-		
-		ArrayList<Department> departments = new ArrayList();
-		Department genericDepartment = new Department("Electronics");
-		ParsedImageIcon departmentLogo = new ParsedImageIcon("departmentLogo.png", 300, 300);
-		genericDepartment.setImage(departmentLogo);
-		Product genericProduct = new Product(10.0, "Phone", "A lovely new phone", false, genericDepartment, null);
-		genericDepartment.addProduct(genericProduct);
-		
-		departments.add(genericDepartment);
-		
-		ArrayList<Order> orders = new ArrayList();
-		ShoppingCart cart = new ShoppingCart();
-		cart.addProductOrder(genericProduct, 2);
-		Long l1 = Long.valueOf("4436903231");
-		Long l2 = Long.valueOf("11111111111");
-		orders.add(new Order(102, "John", "Doe", "4520 Lain Lane", "Some City", "New York", 51034, l1, l2, 2233, 20.0, cart));
-		return new Store(storeName, storeDescription, departments, orders, storeLogo);
-
-
-	}
-	
 }
 
 /*KNOWN PROBLEMS:
- * XML DOES NOT SAVE IMAGE WIDTH / HEIGHT
- * {
  * XML ONLY UNDER ONE NAME
  * CANT CHANGE WHICH XML IS LOADED
  * CAN ONLY SAVE 1 STORE AT A TIME
- * } Idea to fix these:
+ *  Idea to fix these:
  * 	- Find where the save / load buttons are
  * 	- add in a JFileChooser to save/ load different files
+ * 
+ * STUFF TO DO TMRW:
+ *  -123 Expdate becomes a string
  */
 
