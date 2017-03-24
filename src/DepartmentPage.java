@@ -1,5 +1,6 @@
 import javax.swing.*;
 
+import java.text.NumberFormat;
 import java.util.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -17,7 +18,7 @@ public class DepartmentPage extends JPanel{
 
 	private ArrayList<Product> productList;
 
-	
+	final protected NumberFormat USD = NumberFormat.getCurrencyInstance();
 	DepartmentPage(MainWindow window, Department department) {
 		mainWindow = window;
 		
@@ -94,7 +95,7 @@ public class DepartmentPage extends JPanel{
 			JLabel productName = new JLabel(product.getName());
 			productName.setAlignmentX(Component.CENTER_ALIGNMENT);//Aligns horizontally in cell
 			productButtonSubPanel.add(productName);
-			JLabel price = new JLabel("$" + product.getPrice());//Aligns horizontally in cell
+			JLabel price = new JLabel(USD.format(product.getPrice()));//Aligns horizontally in cell
 			price.setAlignmentX(Component.CENTER_ALIGNMENT);
 			if(product.getSale()){ //If it is a sale
 				price.setText("Sale -- " + price.getText());
