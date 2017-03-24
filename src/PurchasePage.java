@@ -84,12 +84,7 @@ public class PurchasePage extends JPanel implements ActionListener{
 		checkOutArea=new JScrollPane();
 		checkOutArea.setPreferredSize(new Dimension(250, 180));
 		checkOutArea.setBackground(new Color(180, 180, 180));
-		GridBagConstraints checkOutAreaC = new GridBagConstraints();
-		checkOutAreaC.gridy=1;
-		GridBagConstraints reviewC = new GridBagConstraints();
-		reviewC.gridy=2;
-		reviewC.gridx=0;
-		reviewC.anchor=GridBagConstraints.EAST;
+		checkOutArea.setLayout(new ScrollPaneLayout());
 		
 		mainJPanel.setLayout(new BoxLayout(mainJPanel,BoxLayout.PAGE_AXIS));
 		this.add(title);
@@ -113,8 +108,8 @@ public class PurchasePage extends JPanel implements ActionListener{
 		orderInfoJPanel.add(ccLabel);orderInfoJPanel.add(ccField);
 		orderInfoJPanel.add(expLabel);orderInfoJPanel.add(expField);
 		orderSummaryJPanel.add(totalLabel);
-		orderSummaryJPanel.add(checkOutArea);
 		cartList();
+		orderSummaryJPanel.add(checkOutArea);
 		buttons.add(confirm);
 		buttons.add(cancel);
 	}
@@ -125,11 +120,16 @@ public class PurchasePage extends JPanel implements ActionListener{
 			String name;
 			int quantity;
 			double price;
-			name = ((Product)active.getProduct).getName();
-			quantity = active.getQuantity();
-			price = ((Product)active.getProduct).getPrice()*active.getQuantity();
-			JLabel product = new JLabel(name + " " + quantity + " " + price);
-			checkOutArea.add(product);
+			try{
+				Product activeProduct = active.getProduct();
+				name = activeProduct.getName();
+				quantity = active.getQuantity();
+				price = activeProduct.getPrice()*active.getQuantity();
+				JLabel product = new JLabel(name + " " + quantity + " " + price);
+				checkOutArea.add(product);
+			}
+			catch(Exception e){
+			}
 		}
 	}
 	
@@ -142,7 +142,6 @@ public class PurchasePage extends JPanel implements ActionListener{
 		return null;
 	}
 	
-	//TODO: integrate this
 	private long generateOrderNumber(){
 		boolean generating = true;
 		long orderNumber = -1;
@@ -263,7 +262,6 @@ public class PurchasePage extends JPanel implements ActionListener{
 		return true;
 	}
 	
-	//TODO: integrate this
 	// loops through all productorders in the cart.
 	// gets the price of the productorder product, multiplies it by the productorder's quantity, adds to the total
 	private double calculateTotal(){
