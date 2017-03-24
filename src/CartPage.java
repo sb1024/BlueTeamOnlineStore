@@ -33,6 +33,7 @@ public class CartPage extends JPanel{
 		checkOutArea=new JScrollPane();
 		checkOutArea.setPreferredSize(new Dimension(900, 470));
 		checkOutArea.setBackground(new Color(180, 180, 180));
+		checkOutArea.getVerticalScrollBar().setUnitIncrement(10);
 		GridBagConstraints checkOutAreaC = new GridBagConstraints();
 		checkOutAreaC.gridy=1;
 		GridBagConstraints reviewC = new GridBagConstraints();
@@ -58,21 +59,21 @@ public class CartPage extends JPanel{
 		JPanel makePurchasePanel = new JPanel();
 		makePurchasePanel.addMouseListener(new MouseListener(){
 
-			@Override
+			
 			public void mouseClicked(MouseEvent arg0) {
 				// TODO Auto-generated method stub
 				window.setContentArea(new PurchasePage(window));
 				
 			}
 
-			@Override
+			
 			public void mouseEntered(MouseEvent arg0) {
 				// TODO Auto-generated method stub
 				mainPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 				
 			}
 
-			@Override
+			
 			public void mouseExited(MouseEvent arg0) {
 				// TODO Auto-generated method stub
 				mainPanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -80,13 +81,13 @@ public class CartPage extends JPanel{
 				
 			}
 
-			@Override
+			
 			public void mousePressed(MouseEvent arg0) {
 				// TODO Auto-generated method stub
 				
 			}
 
-			@Override
+			
 			public void mouseReleased(MouseEvent arg0) {
 				// TODO Auto-generated method stub
 				
@@ -216,7 +217,7 @@ public class CartPage extends JPanel{
 			JLabel delete = new JLabel(new ParsedImageIcon("trashBin.png", 35, 35));
 			plus.addMouseListener(new MouseListener(){
 
-				@Override
+				
 				public void mouseClicked(MouseEvent arg0) {
 					int quantity = order.getQuantity();
 					quantity++;
@@ -229,14 +230,14 @@ public class CartPage extends JPanel{
 					
 				}
 
-				@Override
+				
 				public void mouseEntered(MouseEvent arg0) {
 					// TODO Auto-generated method stub
 					mainPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 					
 				}
 
-				@Override
+				
 				public void mouseExited(MouseEvent arg0) {
 					// TODO Auto-generated method stub
 					mainPanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -244,13 +245,13 @@ public class CartPage extends JPanel{
 					
 				}
 
-				@Override
+				
 				public void mousePressed(MouseEvent arg0) {
 					// TODO Auto-generated method stub
 					
 				}
 
-				@Override
+				
 				public void mouseReleased(MouseEvent arg0) {
 					// TODO Auto-generated method stub
 					
@@ -259,7 +260,7 @@ public class CartPage extends JPanel{
 			});
 			delete.addMouseListener(new MouseListener(){
 
-				@Override
+				
 				public void mouseClicked(MouseEvent arg0) {
 					int delete = JOptionPane.showConfirmDialog(mainPanel, "Are you sure you want to remove the " + order.getProduct().getName() + "(s) from your cart?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
 					if(delete==0){
@@ -281,14 +282,14 @@ public class CartPage extends JPanel{
 					
 				}
 
-				@Override
+				
 				public void mouseEntered(MouseEvent arg0) {
 					// TODO Auto-generated method stub
 					mainPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 					
 				}
 
-				@Override
+				
 				public void mouseExited(MouseEvent arg0) {
 					// TODO Auto-generated method stub
 					mainPanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -296,13 +297,13 @@ public class CartPage extends JPanel{
 					
 				}
 
-				@Override
+				
 				public void mousePressed(MouseEvent arg0) {
 					// TODO Auto-generated method stub
 					
 				}
 
-				@Override
+				
 				public void mouseReleased(MouseEvent arg0) {
 					// TODO Auto-generated method stub
 					
@@ -311,7 +312,7 @@ public class CartPage extends JPanel{
 			});
 			minus.addMouseListener(new MouseListener(){
 
-				@Override
+				
 				public void mouseClicked(MouseEvent arg0) {
 					int quantity = order.getQuantity();
 					if(quantity>1){
@@ -326,14 +327,14 @@ public class CartPage extends JPanel{
 					
 				}
 
-				@Override
+				
 				public void mouseEntered(MouseEvent arg0) {
 					// TODO Auto-generated method stub
 					mainPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 					
 				}
 
-				@Override
+				
 				public void mouseExited(MouseEvent arg0) {
 					// TODO Auto-generated method stub
 					mainPanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -341,13 +342,13 @@ public class CartPage extends JPanel{
 					
 				}
 
-				@Override
+				
 				public void mousePressed(MouseEvent arg0) {
 					// TODO Auto-generated method stub
 					
 				}
 
-				@Override
+				
 				public void mouseReleased(MouseEvent arg0) {
 					// TODO Auto-generated method stub
 					
