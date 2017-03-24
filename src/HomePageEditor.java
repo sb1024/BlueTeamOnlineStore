@@ -41,7 +41,8 @@ public class HomePageEditor extends HomePage {
 		if (result == JFileChooser.APPROVE_OPTION) {
 			File file = fc.getSelectedFile();
 			try {
-				ParsedImageIcon logo = new ParsedImageIcon(file.getPath(), 150, 150);
+				ParsedImageIcon logo = new ParsedImageIcon(file.getPath());
+				logo.fitImage(300, 150);
 				store.setStoreLogo(logo);
 				getStoreLogoLabel().setIcon(logo);
 				window.getNavBar().refreshLogo(); //Used to update the logo on the NavBar
