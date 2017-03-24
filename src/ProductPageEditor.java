@@ -31,6 +31,7 @@ public class ProductPageEditor extends ProductPage {
 		sale.setVisible(false);
 		
 		ParsedImageIcon pencil = new ParsedImageIcon("pencil.png",30, 30);
+		ParsedImageIcon pictureIcon = new ParsedImageIcon("photo.png",30, 30);
 		
 		nameEditor = new JPanel();
 		nameEditor.setBackground(Color.white);
@@ -79,7 +80,7 @@ public class ProductPageEditor extends ProductPage {
 		imageEditor.setBackground(Color.white);
 		imageEditor.setLayout(new BoxLayout(imageEditor, BoxLayout.LINE_AXIS));
 		imageEditor.setAlignmentX(Component.LEFT_ALIGNMENT);
-		JLabel editImage = new JLabel(pencil);
+		JLabel editImage = new JLabel(pictureIcon);
 		editImage.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		editImage.setVerticalAlignment(JLabel.BOTTOM);
 		editImage.addMouseListener(new MouseListener() {
@@ -364,6 +365,28 @@ public class ProductPageEditor extends ProductPage {
 				product.setSale(!product.getSale());
 				System.out.println(product.getSale());
 			}
+			
+		});
+		onSaleEditor.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) { }
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				page.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				page.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {}
 			
 		});
 		gbc.gridx = 2;

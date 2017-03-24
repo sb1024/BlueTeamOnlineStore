@@ -62,12 +62,15 @@ public class ProductPage extends JPanel {
 		gbc.anchor = GridBagConstraints.LINE_START;
 		this.add(name, gbc);
 		
+		ParsedImageIcon productIcon;
 		if(product.getImage() == null) {
-			image = new JLabel();
-			image.setIcon(new ParsedImageIcon("noImage.jpg", 350, 350));
+			productIcon = new ParsedImageIcon("noImage.jpg");
 		} else {
-			image = new JLabel(product.getImage());
+			productIcon = product.getImage();
 		}
+		productIcon.fitImage(400, 400);
+		image = new JLabel(productIcon);
+		
 		image.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 		gbc.gridx = 0;
 		gbc.gridy = 1;
