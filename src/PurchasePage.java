@@ -40,7 +40,8 @@ public class PurchasePage extends JPanel implements ActionListener{
 	private double orderTotal;
 	private Order order;
 	private JPanel buttons;
-	private JScrollPane checkOutArea;
+	private JScrollPane checkOutAreaScrollPane;
+	private JPanel checkOutArea;
 	
 	// constructor
 	PurchasePage(MainWindow mainWindow){
@@ -81,10 +82,9 @@ public class PurchasePage extends JPanel implements ActionListener{
 		cancel = new JButton("Cancel");
 		cancel.setActionCommand("cancel");
 		cancel.addActionListener(this);
-		checkOutArea=new JScrollPane();
-		checkOutArea.setPreferredSize(new Dimension(250, 180));
-		checkOutArea.setBackground(new Color(180, 180, 180));
-		checkOutArea.setLayout(new ScrollPaneLayout());
+		checkOutAreaScrollPane=new JScrollPane();
+		checkOutAreaScrollPane.setPreferredSize(new Dimension(250, 180));
+		checkOutAreaScrollPane.setBackground(new Color(180, 180, 180));
 		
 		mainJPanel.setLayout(new BoxLayout(mainJPanel,BoxLayout.PAGE_AXIS));
 		this.add(title);
@@ -116,6 +116,17 @@ public class PurchasePage extends JPanel implements ActionListener{
 	
 	//TODO
 	private void cartList(){
+		checkOutArea = new JPanel();
+		checkOutArea.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+
+		checkOutArea.setBackground(Color.white);
+		checkOutArea.setLayout(new GridLayout(0, 3, 5, 5));
+		JLabel nameKey = new JLabel("<html><b>Product Name:</b></html>");
+		JLabel quantityKey = new JLabel("<html><b>Quantity:</b></html>");
+		JLabel priceKey = new JLabel("<html><b>Price:</b></html>");
+		checkOutArea.add(nameKey);
+		checkOutArea.add(quantityKey);
+		checkOutArea.add(priceKey);
 		for(ProductOrder active : cart.getProductOrders()){
 			String name;
 			int quantity;
@@ -125,12 +136,18 @@ public class PurchasePage extends JPanel implements ActionListener{
 				name = activeProduct.getName();
 				quantity = active.getQuantity();
 				price = activeProduct.getPrice()*active.getQuantity();
-				JLabel product = new JLabel(name + " " + quantity + " " + price);
-				checkOutArea.add(product);
+				
+				JLabel nameLabel = new JLabel(name);
+				JLabel quantityLabel = new JLabel("" + quantity);
+				JLabel priceLabel = new JLabel("$" + price);
+				checkOutArea.add(nameLabel);
+				checkOutArea.add(quantityLabel);
+				checkOutArea.add(priceLabel);
 			}
 			catch(Exception e){
 			}
 		}
+		checkOutAreaScrollPane.setViewportView(checkOutArea);
 	}
 	
 	private Order makeOrder(){
