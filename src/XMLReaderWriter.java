@@ -128,7 +128,7 @@ public class XMLReaderWriter {
 	        	order.appendChild(ccNum);
 	        	
 	        	Element expDate = doc.createElement("expirationDate");
-	        	expDate.appendChild(doc.createTextNode(Integer.toString(OL.get(x).getExpDate())));
+	        	expDate.appendChild(doc.createTextNode(OL.get(x).getExpDate()));
 	        	order.appendChild(expDate);
 	        	
 	        	Element total = doc.createElement("totalPrice");
@@ -254,7 +254,7 @@ public class XMLReaderWriter {
 			for(int x=0; x < oList.getLength(); x++){
 				Element oE = (Element) oList.item(x);
 				
-				int orderNumber = Integer.parseInt(oE.getAttribute("orderNumber"));
+				long orderNumber = Long.parseLong(oE.getAttribute("orderNumber"));
 				
 				String firstName = oE.getChildNodes().item(0).getTextContent();
 				
@@ -272,7 +272,7 @@ public class XMLReaderWriter {
 				
 				long ccNum = Long.parseLong(oE.getChildNodes().item(7).getTextContent());
 				
-				int expDate = Integer.parseInt(oE.getChildNodes().item(8).getTextContent());
+				String expDate = oE.getChildNodes().item(8).getTextContent();
 				
 				double totalPrice = Double.parseDouble(oE.getChildNodes().item(9).getTextContent());
 				
@@ -329,4 +329,5 @@ public class XMLReaderWriter {
  * STUFF TO DO TMRW:
  *  -123 Expdate becomes a string
  */
+
 
