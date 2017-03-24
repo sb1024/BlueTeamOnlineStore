@@ -130,7 +130,7 @@ public class MainWindow {
 			
 			store = new Store(storeName, storeDescription, departments, orders, storeLogo);
 			
-			currentShoppingCart = createCart(); //TESTING METHOD. DELETE AFTER
+			currentShoppingCart = new ShoppingCart();
 			
 			xmlReaderWriter.createStore(store);
 
@@ -142,7 +142,6 @@ public class MainWindow {
 		frame = new JFrame(store.getStoreName());
 		
 		mainContentScrollPanel.setSize(new Dimension(1200, 670));
-		mainContentScrollPanel.getVerticalScrollBar().setUnitIncrement(10);
 		HomePage homePage;
 		if(editor){
 			homePage = new HomePageEditor(this);
@@ -246,4 +245,26 @@ public class MainWindow {
 	public NavBar getNavBar(){ //Used by HomePageEditor to update NavBar logo if changed
 		return navBar;
 	}
+	public void back(){
+		String className = currentContentPane.getClass().getSimpleName();
+		
+		if(className.indexOf("ProductPage")>=0){
+			Product product = ((ProductPage)currentContentPane).getProduct();
+			setContentArea(product.getDepartment()); //setContentArea method automatically checks for editor
+		}else if(className.indexOf("PurchasePage")>=0){
+			setContentArea(new CartPage(this));
+		}else if(className.indexOf("HomePage")>=0){
+			//Do nothing because you are already on the "highest" page
+		}else{ //Fall back if not specified. A majority of pages, like department page, should return to the home page
+			if(editor){
+				setContentArea(new HomePageEditor(this));
+			}else{
+				setContentArea(new HomePage(this));
+			}
+		}
+		
+	}
+
+	
+	
 }
