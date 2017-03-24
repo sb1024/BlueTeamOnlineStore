@@ -57,8 +57,8 @@ public class ParsedImageIcon extends ImageIcon{
 		double heightRatio = (originalHeight / originalWidth);
 		int newWidth = (int)(maxHeight * widthRatio);
 		int newHeight = (int)(maxWidth * heightRatio);
-		if (newWidth <= newHeight){
-			newHeight = maxHeight;
+		if (newHeight <= maxHeight){
+			newHeight=maxHeight;
 		}
 		else{
 			newWidth = maxWidth;
