@@ -79,8 +79,7 @@ public class HomePage extends JPanel {
 		logoTitlePanel.setLayout(new BoxLayout(logoTitlePanel, BoxLayout.X_AXIS));
 		
 		logoImage = getStoreLogo();
-		logoImage.setWidth(150);
-		logoImage.setHeight(logoImage.getIconWidth());
+		logoImage.fitImage(300, 150);
 		storeLogo = new JLabel(logoImage);
 
 
