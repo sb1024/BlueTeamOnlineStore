@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.swing.*;
+import javax.swing.GroupLayout.Alignment;
 
 public class PurchasePage extends JPanel implements ActionListener{
 	
@@ -42,14 +43,16 @@ public class PurchasePage extends JPanel implements ActionListener{
 	private JPanel buttons;
 	private JScrollPane checkOutAreaScrollPane;
 	private JPanel checkOutArea;
+	private JPanel cartArea;
 	
 	// constructor
 	PurchasePage(MainWindow mainWindow){
 		cart=mainWindow.getShoppingCart();
 		window = mainWindow;
 		this.setPreferredSize(new Dimension(1200, 670));
-		this.setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
 		this.setBackground(Color.WHITE);
+		this.setLayout(new GridLayout(1, 0, 0, 0)); //Divides the panel into two for the checkout and order summary
+		
 		orderTotal = cart.getPrice();
 		mainJPanel = new JPanel();
 		mainJPanel.setBackground(Color.WHITE);
@@ -86,16 +89,24 @@ public class PurchasePage extends JPanel implements ActionListener{
 		checkOutAreaScrollPane.setPreferredSize(new Dimension(250, 180));
 		checkOutAreaScrollPane.setBackground(new Color(180, 180, 180));
 		
-		mainJPanel.setLayout(new BoxLayout(mainJPanel,BoxLayout.PAGE_AXIS));
-		this.add(title);
-		this.add(mainJPanel);
+		mainJPanel.setLayout(new BoxLayout(mainJPanel,BoxLayout.Y_AXIS));
+		
+
+		cartArea = new JPanel(); //Holds the payment info (name, address...)
+		cartArea.setLayout(new BoxLayout(cartArea,BoxLayout.Y_AXIS));
+		cartArea.add(title);
+		cartArea.add(mainJPanel);
+		cartArea.setBackground(Color.white);
+		this.add(cartArea);
+		this.add(orderSummaryJPanel);
+		orderSummaryJPanel.setBackground(Color.white);
+		orderSummaryJPanel.setLayout(new GridBagLayout());
+		
 		title.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
 		title.setBorder(BorderFactory.createEmptyBorder(10,30,10,10));
 		title.setFont(new Font("Arial", Font.PLAIN, 30));
 		orderInfoJPanel.setLayout(new GridLayout(0, 2));
-		orderInfoJPanel.setBorder(BorderFactory.createEmptyBorder(20,280,20,410));
 		mainJPanel.add(orderInfoJPanel);
-		mainJPanel.add(orderSummaryJPanel);
 		mainJPanel.add(buttons);
 		orderInfoJPanel.add(firstNameLabel);
 		orderInfoJPanel.add(firstNameField);
@@ -107,9 +118,18 @@ public class PurchasePage extends JPanel implements ActionListener{
 		orderInfoJPanel.add(phoneLabel);orderInfoJPanel.add(phoneField);
 		orderInfoJPanel.add(ccLabel);orderInfoJPanel.add(ccField);
 		orderInfoJPanel.add(expLabel);orderInfoJPanel.add(expField);
-		orderSummaryJPanel.add(totalLabel);
+		
+		GridBagConstraints totalLabelConstraints = new GridBagConstraints();
+		totalLabelConstraints.weighty=1;
+		totalLabelConstraints.anchor=GridBagConstraints.CENTER;
+		totalLabelConstraints.insets = new Insets(0, 0, 0, 20);
+		orderSummaryJPanel.add(totalLabel, totalLabelConstraints);
 		cartList();
-		orderSummaryJPanel.add(checkOutArea);
+		GridBagConstraints checkOutAreaConstraints = new GridBagConstraints(); //Checkoutarea is the order summary area.
+		checkOutAreaConstraints.weighty=1;
+		checkOutAreaConstraints.gridx=1;
+		checkOutAreaConstraints.anchor=GridBagConstraints.CENTER;
+		orderSummaryJPanel.add(checkOutArea, checkOutAreaConstraints);
 		buttons.add(confirm);
 		buttons.add(cancel);
 	}
