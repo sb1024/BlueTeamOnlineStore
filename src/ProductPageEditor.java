@@ -319,12 +319,15 @@ public class ProductPageEditor extends ProductPage {
 	
 				if(input!=null && !input.equals("")){
 					for(int i = 0; i < deptList.size(); i++) {
-						if(deptList.get(i).equals(product.getDepartment().getName())) {
+						if(deptList.get(i).equals(input)){
 							pos = i;
 						}
 					}
+					product.getDepartment().deleteProduct(product); //Removes the product from its old department's product list
+					Department newDepartment = deptObjList.get(pos); //Gets the product's new department
+					product.setDepartment(newDepartment); //Sets the prouduct's new department
+					newDepartment.addProduct(product); //Adds the product to the new department's product list
 					
-					product.setDepartment(new Department(input)); //store.getDepts().get(pos);
 					System.out.println(product.getDepartment().getName());
 					dept.setText("Department: " + product.getDepartment().getName());	
 	
