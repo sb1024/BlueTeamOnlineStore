@@ -134,8 +134,7 @@ public class HomePage extends JPanel {
 			departmentLogo = department.getImage();
 			if (departmentLogo == null)
 				departmentLogo = new ParsedImageIcon("noImage.jpg");
-			departmentLogo.setWidth(200);
-			departmentLogo.setHeight(200);
+			departmentLogo.fitImage(200, 200);
 			departmentLogoLabel = new JLabel(departmentLogo);
 			departmentLogoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 			departmentLogoLabels.add(departmentLogoLabel); //Adds to the arraylist that will be accessed by editor
