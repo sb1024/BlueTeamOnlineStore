@@ -1,4 +1,6 @@
 import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -22,7 +24,8 @@ public class MainWindow {
 		xmlReaderWriter = new XMLReaderWriter();
 		currentShoppingCart = new ShoppingCart();
 		try{
-			throw new Exception();
+			store = xmlReaderWriter.loadStore();
+			System.out.println("Load store");
 		}catch(Exception ex){ //If a store does not exist, a generic store will be created
 			String storeName = "Generic Store";
 			ParsedImageIcon storeLogo = new ParsedImageIcon("logo.png", 256, 256);
@@ -133,6 +136,8 @@ public class MainWindow {
 			currentShoppingCart = new ShoppingCart();
 			
 			xmlReaderWriter.createStore(store);
+			System.out.println("Create store");
+
 
 		}
 		
@@ -162,6 +167,19 @@ public class MainWindow {
 		frame.add(new JScrollPane(mainPanel));
 		frame.pack();
 		frame.setVisible(true);
+	    frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+	    frame.addWindowListener(new WindowAdapter() {
+	        @Override
+	        public void windowClosing(WindowEvent event) {
+	            System.out.println("Save store");
+	            xmlReaderWriter.saveStore(store);
+	        	//Standard close operations
+	            frame.dispose(); 
+	            System.exit(0);
+
+	            
+	        }
+	    });
 	}
 	
 	public Store getStore(){
@@ -208,7 +226,7 @@ public class MainWindow {
 		return editor;
 	}
 	public static void main(String args[]){
-		new MainWindow(true);
+		new MainWindow(false);
 	}
 	public void updateFrame(){
 		frame.repaint();
