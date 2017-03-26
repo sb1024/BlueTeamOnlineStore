@@ -66,7 +66,7 @@ public class ProductPage extends JPanel {
 		if(product.getImage() == null) {
 			productIcon = new ParsedImageIcon("noImage.jpg");
 		} else {
-			productIcon = product.getImage();
+			productIcon = new ParsedImageIcon(product.getImage().getFilePath());
 		}
 		productIcon.fitImage(400, 400);
 		image = new JLabel(productIcon);
