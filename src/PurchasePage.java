@@ -44,14 +44,16 @@ public class PurchasePage extends JPanel implements ActionListener{
 	private JScrollPane checkOutAreaScrollPane;
 	private JPanel checkOutArea;
 	private JPanel cartArea;
+	private Store store;
 	
 	// constructor
 	PurchasePage(MainWindow mainWindow){
 		cart=mainWindow.getShoppingCart();
+		store=mainWindow.getStore();
 		window = mainWindow;
 		this.setPreferredSize(new Dimension(1200, 670));
 		this.setBackground(Color.WHITE);
-		this.setLayout(new GridLayout(1, 0, 0, 0)); //Divides the panel into two for the checkout and order summary
+		this.setLayout(new GridLayout(0, 2, 0, 0)); //Divides the panel into two for the checkout and order summary
 		
 		orderTotal = cart.getPrice();
 		mainJPanel = new JPanel();
@@ -107,7 +109,6 @@ public class PurchasePage extends JPanel implements ActionListener{
 		title.setFont(new Font("Arial", Font.PLAIN, 30));
 		orderInfoJPanel.setLayout(new GridLayout(0, 2));
 		mainJPanel.add(orderInfoJPanel);
-		mainJPanel.add(buttons);
 		orderInfoJPanel.add(firstNameLabel);
 		orderInfoJPanel.add(firstNameField);
 		orderInfoJPanel.add(lastNameLabel);orderInfoJPanel.add(lastNameField);
@@ -118,6 +119,10 @@ public class PurchasePage extends JPanel implements ActionListener{
 		orderInfoJPanel.add(phoneLabel);orderInfoJPanel.add(phoneField);
 		orderInfoJPanel.add(ccLabel);orderInfoJPanel.add(ccField);
 		orderInfoJPanel.add(expLabel);orderInfoJPanel.add(expField);
+		orderInfoJPanel.add(Box.createRigidArea(new Dimension(20, 20))); //Filler so the buttons can be put in the 2nd column
+		orderInfoJPanel.add(buttons);
+		orderInfoJPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 100, 0));
+
 		
 		GridBagConstraints totalLabelConstraints = new GridBagConstraints();
 		totalLabelConstraints.weighty=1;
@@ -185,7 +190,7 @@ public class PurchasePage extends JPanel implements ActionListener{
 		while(generating == true){
 			generating = false;
 			orderNumber = (long)(Math.random()*1000000000);
-			for(Order active : window.getStore().getOrders()){
+			for(Order active : store.getOrders()){
 				if(active.getOrderNumber() == orderNumber){
 					generating = true;
 				}
@@ -317,6 +322,8 @@ public class PurchasePage extends JPanel implements ActionListener{
 				int orderConfirm = JOptionPane.showConfirmDialog(mainJPanel, "Place your order?", "Confirm Order", JOptionPane.YES_NO_OPTION);
 				if(orderConfirm == JOptionPane.OK_OPTION){
 					Order newOrder = makeOrder();
+					store.addOrder(newOrder);
+					
 					ConfirmationPage confirm = new ConfirmationPage(newOrder);
 					window.setContentArea(confirm);
 				}else{
