@@ -51,7 +51,7 @@ public class PurchasePage extends JPanel implements ActionListener{
 		cart=mainWindow.getShoppingCart();
 		store=mainWindow.getStore();
 		window = mainWindow;
-		this.setPreferredSize(new Dimension(1200, 670));
+		this.setPreferredSize(new Dimension(1180, 670));
 		this.setBackground(Color.WHITE);
 		this.setLayout(new GridLayout(0, 2, 0, 0)); //Divides the panel into two for the checkout and order summary
 		
@@ -99,6 +99,7 @@ public class PurchasePage extends JPanel implements ActionListener{
 		cartArea.add(title);
 		cartArea.add(mainJPanel);
 		cartArea.setBackground(Color.white);
+		cartArea.setBorder(BorderFactory.createEmptyBorder(0, 130, 0, 0));
 		this.add(cartArea);
 		this.add(orderSummaryJPanel);
 		orderSummaryJPanel.setBackground(Color.white);
