@@ -33,8 +33,8 @@ public class DepartmentPage extends JPanel{
 		//Change to mainDepartment.getProducts()
 		products = department.getProductList();
 
-		JComponent departmentNameSpacer1 = (JComponent)Box.createRigidArea(new Dimension(1200, 50));
-		JComponent departmentNameSpacer2 = (JComponent)Box.createRigidArea(new Dimension(1200, 50));
+		JComponent departmentNameSpacer1 = (JComponent)Box.createRigidArea(new Dimension(1100, 50));
+		JComponent departmentNameSpacer2 = (JComponent)Box.createRigidArea(new Dimension(1100, 50));
 		JLabel departmentName = new JLabel("<HTML><u><b>" + department.getName() + "</u></b></HTML>");
 		departmentName.setAlignmentX(Component.CENTER_ALIGNMENT); //I have no idea why without this,it aligns to the right.
 		departmentName.setFont(new Font("Arial", Font.PLAIN, 50));
