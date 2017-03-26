@@ -182,7 +182,7 @@ public class XMLReaderWriter {
 	         transformerFactory.newTransformer();
 	         DOMSource source = new DOMSource(doc);
 	         StreamResult result =
-	         new StreamResult(new File("Z:\\Store.xml"));
+	         new StreamResult(new File("Store.xml"));
 	         transformer.transform(source, result);
 	         
 		}catch(Exception e){
@@ -190,10 +190,10 @@ public class XMLReaderWriter {
 		}
 	}
 	
-	public static Store loadStore(){
+	public static Store loadStore() throws Exception{
 		try{
 			// loads file title Store.xml, parses information into store
-			File inputFile = new File("Z:\\Store.xml");
+			File inputFile = new File("Store.xml");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(inputFile);
@@ -240,7 +240,7 @@ public class XMLReaderWriter {
 					lTest = pE.getChildNodes().item(3).getTextContent();
 					if(!lTest.equals("null")){
 						ParsedImageIcon image = new ParsedImageIcon(lTest);
-						p = new Product(price, name, desc, sale, null, image);
+						p = new Product(price, name, desc, sale, d, image); //Added department parameter to product instance creation. 
 					}else{
 						p = new Product(price, name, desc, sale, null, null);
 					}
@@ -307,8 +307,7 @@ public class XMLReaderWriter {
 		
 			return(s);
 		}catch(Exception e){
-			e.printStackTrace();
-			return(null);
+			throw new Exception();
 		}
 	}
 	
