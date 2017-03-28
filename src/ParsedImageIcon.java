@@ -31,7 +31,12 @@ public class ParsedImageIcon extends ImageIcon{
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("Image file could not be found");
+			System.out.println("Image file could not be found:" + pathOfFile);
+			try{
+				this.setImage(ImageIO.read(new File("noImage.jpg")));
+			}catch(Exception ex){
+				System.out.println("Failed to load back-up image.");
+			}
 		}
 		
 	}
