@@ -327,6 +327,7 @@ public class PurchasePage extends JPanel implements ActionListener{
 					
 					ConfirmationPage confirm = new ConfirmationPage(newOrder);
 					window.setContentArea(confirm);
+					window.resetShoppingCart();
 				}else{
 				}
 
