@@ -188,6 +188,9 @@ public class MainWindow {
 	public ShoppingCart getShoppingCart(){
 		return currentShoppingCart;
 	}
+	public void resetShoppingCart(){
+		currentShoppingCart = new ShoppingCart();
+	}
 	public void setContentArea(Product product){
 		JPanel newContentPane;
 		if(editor){
@@ -226,7 +229,7 @@ public class MainWindow {
 		return editor;
 	}
 	public static void main(String args[]){
-		new MainWindow(false);
+		new MainWindow(true);
 	}
 	public void updateFrame(){
 		frame.repaint();
