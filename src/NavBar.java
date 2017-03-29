@@ -24,6 +24,8 @@ public class NavBar extends JPanel{
 	private MainWindow mainWindow;
 	private boolean editor;
 	private Store store;
+	private JLabel storeName;
+	private JLabel backButtonText;
 	public NavBar(MainWindow window){
 		mainWindow=window;
 		editor=window.isEditor();
@@ -186,8 +188,24 @@ public class NavBar extends JPanel{
 		this.setLayout(new GridBagLayout());
 		this.setBackground(new Color(220, 220, 220));
 		
-		JLabel backButton = new JLabel(new ParsedImageIcon("back.png", 60, 50));
+		JPanel backButtonPanel = new JPanel();
+		backButtonPanel.setBackground(new Color(220, 220, 220));
+		backButtonPanel.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
+		
+		backButtonPanel.setLayout(new BoxLayout(backButtonPanel, BoxLayout.Y_AXIS));
+		ParsedImageIcon backButtonImage = new ParsedImageIcon("backReal.png");
+		backButtonImage.fitImage(100, 20);
+		JLabel backButton = new JLabel(backButtonImage);
+		backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		backButton.addMouseListener(backButtonListener);
+
+		backButtonText = new JLabel("Home");
+		backButtonText.setFont(new Font("Arial", Font.PLAIN, 20));
+		backButtonText.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
+		backButtonPanel.add(backButton);
+		backButtonPanel.add(backButtonText);
+		
 		
 		JComponent backSpacer1 = (JComponent)Box.createRigidArea(new Dimension((int)this.getPreferredSize().getWidth()/20, 50));
 		backSpacer1.addMouseListener(backButtonListener);
@@ -208,7 +226,7 @@ public class NavBar extends JPanel{
 
 		logo = new JLabel(storeLogo);
 		logo.addMouseListener(homeButton);
-		JLabel storeName = new JLabel(storeTitle);
+		storeName = new JLabel(storeTitle);
 		storeName.setFont(new Font("Arial", Font.PLAIN, 50));
 		storeName.addMouseListener(homeButton);
 		
@@ -240,7 +258,7 @@ public class NavBar extends JPanel{
 		rightSide.add(Box.createRigidArea(new Dimension((int)this.getPreferredSize().getWidth()/60, 50)));
 		
 		this.add(backSpacer1); //Creates gap between side and back back button
-		this.add(backButton);
+		this.add(backButtonPanel);
 		this.add(backSpacer2);
 		this.add(logoSpacer);
 		this.add(logo);
@@ -253,6 +271,12 @@ public class NavBar extends JPanel{
 		ParsedImageIcon logoImage = new ParsedImageIcon(store.getStoreLogo().getFilePath());
 		logoImage.fitImage(300, 50);
 		logo.setIcon(logoImage);
+	}
+	public void refreshTitle(){
+		storeName.setText(store.getStoreName());
+	}
+	public void setBackText(String text){
+		backButtonText.setText(text);
 	}
 	
 
