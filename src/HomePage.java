@@ -134,7 +134,7 @@ public class HomePage extends JPanel {
 			departmentLogo = department.getImage();
 			if (departmentLogo == null)
 				departmentLogo = new ParsedImageIcon("noImage.jpg");
-			departmentLogo.fitImage(200, 200);
+			//departmentLogo.fitImage(200, 200);
 			departmentLogoLabel = new JLabel(departmentLogo);
 			departmentLogoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 			departmentLogoLabels.add(departmentLogoLabel); //Adds to the arraylist that will be accessed by editor
@@ -147,6 +147,8 @@ public class HomePage extends JPanel {
 			
 			MouseListener departmentListener = new MouseListener() {
 				public void mouseClicked(MouseEvent e) {
+					System.out.println(department.getName());
+
 					mainWindow.setContentArea(department);
 				}
 				public void mouseEntered(MouseEvent e) {
