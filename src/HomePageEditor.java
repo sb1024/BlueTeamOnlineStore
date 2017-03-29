@@ -30,6 +30,7 @@ public class HomePageEditor extends HomePage {
 	public void setStoreName(String name) {
 		store.setStoreName(name);
 		getStoreNameLabel().setText(name);
+		window.getNavBar().refreshTitle();
 	}
 	public void setDescription(String description) {
 		store.setStoreDescription(description);
@@ -129,7 +130,7 @@ public class HomePageEditor extends HomePage {
 					if (result == JFileChooser.APPROVE_OPTION) {
 						File file = fc.getSelectedFile();
 						try {
-							ParsedImageIcon logo = new ParsedImageIcon(file.getPath(), 150, 150);
+							ParsedImageIcon logo = new ParsedImageIcon(file.getPath());
 							boolean found=false;
 							for (int i = 0; i < departments.size() && !found; i++) {
 								Department department = departments.get(i);
