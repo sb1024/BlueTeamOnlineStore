@@ -45,7 +45,6 @@ public class ProductPageEditor extends ProductPage {
 				String input = JOptionPane.showInputDialog("Edit Product Name:", product.getName());
 				if(input!=null && !input.equals("")){
 					product.setName(input);
-					System.out.println(product.getName());
 					name.setText(product.getName());	
 	
 				}
@@ -95,10 +94,6 @@ public class ProductPageEditor extends ProductPage {
 				
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 		            File file = fc.getSelectedFile();
-		       
-					System.out.println("Image: " + file.getName());
-					System.out.println("Path: " + file.getPath());
-					System.out.println("dir: " + System.getProperty("user.dir"));
 					String currentDir = System.getProperty("user.dir");
 					
 	            	
@@ -106,25 +101,20 @@ public class ProductPageEditor extends ProductPage {
 		            	File source = new File(file.getPath());
 		            	File dest = new File(currentDir, file.getName());
 						File checker = new File(dest.getPath());
-						System.out.println("exists? " + checker.exists());
 						int num = 1;
 						while(checker.exists()) {
 							int lastPd = file.getName().lastIndexOf(".");
 							String newFileName = file.getName().substring(0, lastPd) + "(" + num + ")" + file.getName().substring(lastPd);
-							System.out.println(newFileName);
 							dest = new File(currentDir, newFileName);
 							checker = new File(dest.getPath());
 							num++;
 						}
 						
-		            	System.out.println("source: " + source);
-		            	System.out.println("destination: " + dest);
 		            	
 		            	try {
 							Files.copy(file.toPath(), dest.toPath());
 
 							file = dest;
-							System.out.println("New Path: " + dest.getPath());
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
@@ -178,7 +168,6 @@ public class ProductPageEditor extends ProductPage {
 				String input = JOptionPane.showInputDialog("Edit Product Price:", product.getPrice());
 				boolean error = true;
 				double newPrice = 0;
-				System.out.println(input);
 				while(error) {
 					try {
 						if(input == null) {
@@ -200,7 +189,6 @@ public class ProductPageEditor extends ProductPage {
 				}
 				if(input!=null && !input.equals("")){
 					product.setPrice(newPrice);
-					System.out.println(product.getPrice());
 					price.setText("Price: " + USD.format(product.getPrice()));	
 				}
 			}
@@ -253,10 +241,8 @@ public class ProductPageEditor extends ProductPage {
 		        String input = JOptionPane.showInputDialog(page, "Edit Product Description:", product.getDesc());
 		        //String input = JOptionPane.showInputDialog(frame, message);
 		        
-		        System.out.println(input);
 		        if(input!=null && !input.equals("")){
 					product.setDesc(input);
-					System.out.println(product.getDesc());
 					description.setText(product.getDesc());	
 	
 				}
@@ -328,7 +314,6 @@ public class ProductPageEditor extends ProductPage {
 					product.setDepartment(newDepartment); //Sets the prouduct's new department
 					newDepartment.addProduct(product); //Adds the product to the new department's product list
 					
-					System.out.println(product.getDepartment().getName());
 					dept.setText("Department: " + product.getDepartment().getName());	
 	
 				}
@@ -366,7 +351,6 @@ public class ProductPageEditor extends ProductPage {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				product.setSale(!product.getSale());
-				System.out.println(product.getSale());
 			}
 			
 		});
