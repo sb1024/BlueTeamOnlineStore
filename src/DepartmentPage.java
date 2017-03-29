@@ -87,7 +87,7 @@ public class DepartmentPage extends JPanel{
 			if(productLogo==null){ //If the product doesn't have an image
 				productLogo = new ParsedImageIcon("NoImage.jpg");
 			}
-			productLogo.fitImage(200, 200);
+			//productLogo.fitImage(200, 200);
 			JLabel productLogoLabel = new JLabel(productLogo);
 			productLogoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);//Aligns horizontally in cell
 			productButtonSubPanel.add(productLogoLabel);
