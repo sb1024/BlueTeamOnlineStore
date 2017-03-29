@@ -4,7 +4,7 @@ public class Department {
 	
 	// variables
 	private String name;
-	private ParsedImageIcon image;
+	private String filePath;
 	private ArrayList<Product> productList;
 	
 	// constructor
@@ -21,7 +21,7 @@ public class Department {
 		return name;
 	}
 	public ParsedImageIcon getImage(){
-		return image;
+		return new ParsedImageIcon(filePath);
 	}
 	public ArrayList<Product> getProductList(){
 		return productList;
@@ -32,7 +32,7 @@ public class Department {
 		name = inputName;
 	}
 	public void setImage(ParsedImageIcon inputImage){
-		image = inputImage;
+		filePath = inputImage.getFilePath();
 	}
 	
 	// other methods
