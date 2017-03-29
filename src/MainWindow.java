@@ -25,7 +25,6 @@ public class MainWindow {
 		currentShoppingCart = new ShoppingCart();
 		try{
 			store = xmlReaderWriter.loadStore();
-			System.out.println("Load store");
 		}catch(Exception ex){ //If a store does not exist, a generic store will be created
 			String storeName = "Generic Store";
 			ParsedImageIcon storeLogo = new ParsedImageIcon("logo.png", 256, 256);
