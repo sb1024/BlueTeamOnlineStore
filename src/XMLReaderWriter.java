@@ -316,17 +316,3 @@ public class XMLReaderWriter {
 		createStore(oStore);
 	}
 }
-
-/*KNOWN PROBLEMS:
- * XML ONLY UNDER ONE NAME
- * CANT CHANGE WHICH XML IS LOADED
- * CAN ONLY SAVE 1 STORE AT A TIME
- *  Idea to fix these:
- * 	- Find where the save / load buttons are
- * 	- add in a JFileChooser to save/ load different files
- * 
- * STUFF TO DO TMRW:
- *  -123 Expdate becomes a string
- */
-
-
