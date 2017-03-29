@@ -147,8 +147,6 @@ public class HomePage extends JPanel {
 			
 			MouseListener departmentListener = new MouseListener() {
 				public void mouseClicked(MouseEvent e) {
-					System.out.println(department.getName());
-
 					mainWindow.setContentArea(department);
 				}
 				public void mouseEntered(MouseEvent e) {
