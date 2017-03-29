@@ -135,7 +135,6 @@ public class MainWindow {
 			currentShoppingCart = new ShoppingCart();
 			
 			xmlReaderWriter.createStore(store);
-			System.out.println("Create store");
 
 
 		}
