@@ -248,9 +248,6 @@ public class ProductPage extends JPanel {
 		//window.getStore().get
 		//System.out.println(num);
 		for(ProductOrder order : window.getShoppingCart().getProductOrders()) {
-
-			System.out.println(order.getProduct().getName());
-			System.out.println(order.getQuantity());
 		}
 		
 		window.setContentArea(new CartPage(window));
