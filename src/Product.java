@@ -7,7 +7,7 @@ public class Product {
 	private String desc;
 	private boolean sale;
 	private Department department;
-	private ParsedImageIcon image;
+	private String filePath;
 	
 	// constructor
 	Product(double inputPrice, String inputName, String inputDesc, boolean inputSale, Department inputDepartment, ParsedImageIcon inputImage){
@@ -16,7 +16,7 @@ public class Product {
 		desc = inputDesc;
 		sale = inputSale;
 		department = inputDepartment;
-		image = inputImage;
+		filePath = inputImage.getFilePath();
 	}
 	
 	// get methods
@@ -36,7 +36,7 @@ public class Product {
 		return department;
 	}
 	public ParsedImageIcon getImage(){
-		return image;
+		return new ParsedImageIcon(filePath);
 	}
 	
 	// set methods
@@ -56,6 +56,6 @@ public class Product {
 		department = inputDepartment;
 	}
 	public void setImage(ParsedImageIcon inputImage){
-		image = inputImage;
+		filePath = inputImage.getFilePath();
 	}
 }

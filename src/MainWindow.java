@@ -25,6 +25,7 @@ public class MainWindow {
 		currentShoppingCart = new ShoppingCart();
 		try{
 			store = xmlReaderWriter.loadStore();
+			System.out.println("Load store");
 		}catch(Exception ex){ //If a store does not exist, a generic store will be created
 			String storeName = "Generic Store";
 			ParsedImageIcon storeLogo = new ParsedImageIcon("logo.png", 256, 256);
@@ -135,6 +136,7 @@ public class MainWindow {
 			currentShoppingCart = new ShoppingCart();
 			
 			xmlReaderWriter.createStore(store);
+			System.out.println("Create store");
 
 
 		}
@@ -196,11 +198,12 @@ public class MainWindow {
 		}else{
 			newContentPane = new ProductPage(this, product);
 		}
-		mainPanel.remove(currentContentPane); //Removes the old pane. 
+		mainPanel.remove(currentContentPane); //Removes the old pane.
+		navBar.setBackText(product.getDepartment().getName());
 		mainContentScrollPanel.setViewportView(newContentPane);  //Places the new content pane
 		updateFrame();
 		currentContentPane = newContentPane; //Stores the newContentPane in the currentContentPane becausae it is now the the current content pane being displayed
-	
+
 	}
 	public void setContentArea(Department department){
 		JPanel newContentPane;
@@ -210,7 +213,7 @@ public class MainWindow {
 			newContentPane = new DepartmentPage(this, department);
 		}
 		mainPanel.remove(currentContentPane); //Removes the old pane. 
-		
+		navBar.setBackText("Home");
 		mainContentScrollPanel.setViewportView(newContentPane);
 
 		updateFrame();
@@ -219,9 +222,22 @@ public class MainWindow {
 	public void setContentArea(JPanel newPage){
 		JPanel newContentPane=newPage;
 		mainPanel.remove(currentContentPane); //Removes the old pane. 
+		
+		currentContentPane = newContentPane; //Stores the newContentPane in the currentContentPane becausae it is now the the current content pane being displayed
+
+		String className = currentContentPane.getClass().getSimpleName();
+		
+		//Determines what the text of the NavBar "back" button
+		String backText;
+		if(className.indexOf("PurchasePage")>=0){
+			backText="Review Cart";
+		}else{
+			backText = "Home";
+		}
+		navBar.setBackText(backText);
+		
 		mainContentScrollPanel.setViewportView(newContentPane);  //Places the new content pane
 		updateFrame();
-		currentContentPane = newContentPane; //Stores the newContentPane in the currentContentPane becausae it is now the the current content pane being displayed
 	}
 	public boolean isEditor(){
 		return editor;
@@ -285,3 +301,4 @@ public class MainWindow {
 		
 	}
 }
+
